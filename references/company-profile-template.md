@@ -1,32 +1,31 @@
-# Company Profile
+# 公司/律所画像
 
-*Shared by all Claude for Legal plugins. The first plugin you set up writes this; the rest read it.
-Edit directly or re-run any plugin's `/setup` to update.*
+*由所有 Claude for Legal 插件共享。你首次设置的插件写入此文件；其余插件读取。直接编辑或重新运行任意插件的冷启动面试来更新。*
 
-**Practice setting:** [Solo/small firm | Midsize/large firm | In-house | Government/legal aid/clinic]
-**Name:** [Company or firm name]
-**Industry:** [What the company does / the firm's primary practice areas]
-**What we sell / deliver:** [Products, services, who to — or "N/A, law firm"]
-**Size:** [Employee count / lawyers / relevant headcount]
+**实务环境：** [个人执业/小型律所 | 中型/大型律所 | 企业内部法务 | 政府/法律援助/法律诊所]
+**名称：** [公司或律所名称]
+**行业：** [公司主营业务 / 律所主要业务领域]
+**我们提供什么：** [产品、服务、面向谁——或填写"不适用，律所"]
+**规模：** [员工数 / 律师数 / 相关人数]
 
-## Geographic and regulatory footprint
+## 地理和监管版图
 
-**Jurisdictions we operate in:** [e.g., US (CA, NY, TX), UK, EU (DE, FR), AU, SG]
-**Primary jurisdiction:** [Where the bulk of work happens]
-**Regulators we're subject to:** [SEC, FTC, ICO, EDPB, ASIC, OAIC, etc. — only what applies]
-**Open regulatory matters:** [or none]
+**经营覆盖省份/地区：** [如：浙江（宁波、杭州）、上海、北京]
+**主要管辖地：** [大部分业务发生的地区]
+**所受监管机构：** [市场监管总局、税务局、网信办、金融监管局等——仅列适用的]
+**正在进行的监管事项：** [或填"无"]
 
-## Risk posture
+## 风险姿态
 
-**Overall risk appetite:** [Conservative / middle / aggressive]
-**What keeps us up at night:** [The thing that would be a very bad day]
-**The question leadership always asks:** [or not known yet]
+**整体风险偏好：** [保守 / 中等 / 积极]
+**让我们睡不着的：** [会造成非常糟糕后果的事项]
+**管理层最常问的问题：** [或尚未知晓]
 
-## Key people
+## 关键人员
 
-**GC / Head of Legal:** [Name]
-**Escalation chain:** [Name → Name → Name, or "set per plugin"]
+**法务负责人 / 主任：** [姓名]
+**升级链条：** [姓名 → 姓名 → 姓名，或"按插件分别设置"]
 
 ---
 
-*Per-plugin practice profiles (playbooks, review frameworks, house style, matter workspaces) live alongside this file in each plugin's folder. This file holds the facts that are true regardless of which plugin you're using.*
+*各插件的实践画像（审查指引、审查框架、内部风格、事项工作空间）与本文件并列存放在各插件文件夹中。本文件存放的是无论使用哪个插件都通用的事实。*

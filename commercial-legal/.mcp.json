@@ -1,56 +1,50 @@
 {
   "mcpServers": {
-    "Ironclad": {
+    "e签宝": {
       "type": "http",
-      "url": "https://mcp.na1.ironcladapp.com/mcp",
-      "title": "Ironclad",
-      "description": "Search your contract repository and workflows using plain language — expiring MSAs, termination clauses, vendor agreements — scoped to your permissions."
+      "url": "https://openapi.esign.cn/mcp",
+      "title": "e签宝",
+      "description": "电子签名服务 — 合同签署状态追踪、签署流程管理、电子存证查询，覆盖中国法域内电子签名法律效力。"
     },
-    "DocuSign": {
+    "法大大": {
       "type": "http",
-      "url": "https://mcp.docusign.com/mcp",
-      "title": "DocuSign",
-      "description": "Agreement search, status tracking, and signature workflows."
+      "url": "https://openapi.fadada.com/mcp",
+      "title": "法大大",
+      "description": "电子合同签署与管理平台 — 合同生命周期管理、签署流程、电子证据保全。"
     },
-    "iManage": {
+    "飞书": {
       "type": "http",
-      "url": "https://cloudimanage.com/mcp/work",
-      "title": "iManage",
-      "description": "Governed iManage content connected to Claude — documents stay in iManage, access is permission-bound and auditable."
+      "url": "https://open.feishu.cn/mcp",
+      "title": "飞书",
+      "description": "即时通讯与文档协作 — 搜索消息、阅读频道、查找讨论，管理云文档。"
     },
-    "TopCounsel": {
-      "type": "http",
-      "url": "https://api.techgc.co/api/mcp/topcounsel",
-      "title": "TopCounsel",
-      "description": "Outside counsel recommendations from The L Suite — 5,000+ in-house counsel community sentiment, rankings, and expertise evidence."
-    },
-    "Definely": {
-      "type": "http",
-      "url": "https://mcp.uk.definely.com/api/proxy/core-mcp",
-      "title": "Definely",
-      "description": "Live, deterministic access to contract structure — resolve definitions, validate cross-references, map dependencies, run structural diffs."
+    "yuandian": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "yuandian-mcp-server"],
+      "title": "yuandian（源点）",
+      "description": "中国法律法规与案例检索 — 语义搜索法律法规、法条条文、裁判文书，支持案由/法院/地区/日期范围过滤。"
     },
     "Slack": {
       "type": "http",
       "url": "https://mcp.slack.com/mcp",
       "title": "Slack",
-      "description": "Search messages, read channels, find discussions across your workspace."
+      "description": "搜索消息、阅读频道、查找讨论。"
     },
     "Google Drive": {
       "type": "http",
       "url": "https://drivemcp.googleapis.com/mcp/v1",
       "title": "Google Drive",
-      "description": "Search, read, and fetch documents from Google Drive."
+      "description": "搜索、读取、获取Google Drive文档。"
     }
   },
   "recommendedCategories": [
     "contract-management",
     "e-signature",
+    "legal-research-cn",
     "legal-document-management",
-    "email",
     "documents",
     "chat",
-    "contract-review",
-    "outside-counsel-network"
+    "contract-review"
   ]
 }

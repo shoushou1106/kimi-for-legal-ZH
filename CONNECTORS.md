@@ -1,66 +1,55 @@
-# Adding a Connector
+# 添加连接器
 
-The plugins are at their best when connected to authoritative sources. If you build or operate a legal data source, research tool, CLM, DMS, eDiscovery platform, or practice management system, we want your MCP connector in the suite.
+插件连接权威数据源时效果最佳。如果你构建或运营中国法律数据源、检索工具、合同管理系统（CLM）、电子签约平台、电子取证平台或律所管理系统，欢迎将你的 MCP 连接器加入本套件。
 
-## What makes a good legal MCP connector
+## 优秀法律 MCP 连接器的标准
 
-- **Remote MCP server over HTTPS** with OAuth or API-key auth (streamable HTTP or SSE transport)
-- **Read-heavy tools** — search, fetch, list. Write tools (create, send, file) need an explicit confirmation prompt on the client side; say so in your tool descriptions.
-- **Provenance in results** — return the source, date retrieved, and a citation-ready identifier. The plugins tag every cite by source; your connector should make that possible.
-- **No instruction-like content in results** — the plugins treat retrieved content as data, not commands. If your tool results include metadata or system notes, mark them clearly so they don't look like embedded directives.
-- **Rate limits and errors that degrade gracefully** — the plugins have a fallback for when a connector isn't responding; a clean error is better than a timeout.
+- **基于 HTTPS 的远程 MCP 服务**，支持 OAuth 或 API-key 认证（streamable HTTP 或 SSE 传输）
+- **以读取为主的工具**——搜索、获取、列表。写入类工具（创建、发送、提交）需要在客户端有明确的确认提示，请在工具描述中说明。
+- **结果中标注来源**——返回来源、检索日期和可用于引用的标识符。插件按来源标注每条引用，你的连接器应使其成为可能。
+- **结果中不含指令式内容**——插件将检索内容视为数据而非命令。如果你的工具结果包含元数据或系统注释，请明确标记，以免被误认为嵌入式指令。
+- **速率限制和优雅降级**——插件在连接器不可用时有备选方案；清晰的错误响应好于超时。
 
-## How to submit
+## 如何提交
 
-1. Publish your MCP server and document its tools, auth flow, and data coverage.
-2. Open a PR adding your server to the relevant plugin's `.mcp.json` with the URL, auth method, and a one-line description of what it gives Claude.
-3. Include a note on which practice areas / plugins it's most useful for.
-4. We'll test against the plugin workflows and merge. Connectors that pass the retrieval-quality and injection-resistance checks go in the default `.mcp.json`; others get documented in the plugin README for users to add themselves.
+1. 发布你的 MCP 服务，并文档化其工具、认证流程和数据覆盖范围。
+2. 提交 PR，将你的服务添加到相关插件的 `.mcp.json` 中，包含 URL、认证方式和服务说明。
+3. 说明它最适合哪些业务领域/插件。
+4. 我们将对照插件工作流进行测试后合并。通过检索质量和注入防御检查的连接器进入默认 `.mcp.json`；其他则在插件 README 中记录，供用户自行添加。
 
-## Current connectors
+## 当前连接器
 
-Connectors shipped in the default `.mcp.json` of each plugin:
+各插件默认 `.mcp.json` 中预配的连接器：
 
-| Connector | Plugins |
+| 连接器 | 适用插件 |
 |---|---|
-| **Slack** | all 12 |
-| **Google Drive** (`gdrive`) | all 12 |
-| **CourtListener** | legal-clinic, ip-legal, litigation-legal, law-student |
-| **Descrybe** | legal-clinic, ip-legal, law-student |
-| **Definely** | commercial-legal, corporate-legal |
-| **iManage** | commercial-legal, corporate-legal |
-| **Solve Intelligence** | corporate-legal, ip-legal |
-| **TopCounsel** | commercial-legal, corporate-legal, litigation-legal |
-| **Box** | corporate-legal |
-| **Ironclad** | commercial-legal |
-| **DocuSign / DocuSign CLM** | commercial-legal |
-| **Everlaw** | litigation-legal |
-| **Trellis** | litigation-legal |
-| **Aurora** | litigation-legal |
-| **Courtroom5** | legal-clinic |
-| **Lawve AI** | legal-builder-hub |
-| **Linear** | product-legal |
-| **Atlassian (Jira)** | product-legal |
-| **Asana** | product-legal |
+| **yuandian（元典）** | 全部 12 个插件 |
+| **飞书（Lark）** | 全部 12 个插件 |
+| **Google Drive** | 全部 12 个插件（可选） |
+| **北大法宝** | ip-legal, litigation-legal, law-student, legal-clinic |
+| **威科先行** | commercial-legal, corporate-legal, litigation-legal |
+| **e签宝 / 法大大** | commercial-legal |
+| **聚法案例** | litigation-legal |
+| **国家知识产权局** | ip-legal |
+| **中国政府网 / 司法部法律法规数据库** | regulatory-legal, ai-governance-legal |
+| **Linear / Jira / Asana** | product-legal（可选） |
 
-See the `.mcp.json` in each plugin directory for the authoritative list.
+各插件 `.mcp.json` 中以权威列表为准。
 
-## Wanted connectors
+## 期望的连接器
 
-These would make specific plugins significantly more useful. If you build or operate one, see "How to submit" above.
+以下服务能显著增强特定插件的实用性。如果你构建或运营其中一项，见上"如何提交"：
 
-- **IP management systems** (Anaqua, Clarivate IPfolio, AppColl, Patrix, Alt Legal, FoundationIP) — full docket sync for `ip-legal` portfolio tracking
-- **USPTO by customer number** — full portfolio status and deadlines, not just per-application lookup
-- **USPTO TSDR / Trademark Status** — trademark status and deadlines for `ip-legal` brand management
-- **Jira / Linear / Asana for OSS requests** — `ip-legal` OSS clearance can monitor and respond to incoming tickets
-- **Thomson Reuters** (CoCounsel, Practical Law, Westlaw) — research and drafting for every plugin
-- **SS&C Intralinks / Datasite** — VDR access for `corporate-legal` diligence
-- **Relativity / Everlaw beyond read** — eDiscovery workflow for `litigation-legal`
-- **State bar CLE trackers** — `law-student` bar prep
-- **Court e-filing systems** (PACER write, state e-filing) — with a hard irreversibility gate, obviously
-- **Global AI Regulation Tracker** (techieray.com/GlobalAIRegulationTracker) — jurisdiction-tagged AI regulation tracking with structured API. Curated, verified, multi-jurisdiction. Would be a primary-source-adjacent feed for `ai-governance-legal` and `regulatory-legal`.
-- **Regulatory primary sources** — a connector to official registers (eCFR, Federal Register, EUR-Lex, legislation.gov.uk, Federal Register of Legislation AU, Singapore Statutes Online) that bypasses the agent-blockers many legislative sites use. A curated regulatory knowledge base would be a high-value addition.
+- **知识产权管理系统**——对接国家知识产权局批量查询、续展节点同步，用于 `ip-legal` 组合管理
+- **商标状态查询**（国知局商标局 TSDR 等价物）——商标状态和节点，用于 `ip-legal` 品牌管理
+- **法院电子送达/网上立案系统**——用于 `litigation-legal` 案件管理，需设置不可逆操作门槛
+- **企业信用信息公示系统**——用于 `corporate-legal` 尽职调查和合规检查
+- **不动产登记信息查询**——用于房地产和建筑领域法律实务
+- **证监会/交易所信息披露**——用于 `corporate-legal` 上市公司合规
+- **中国 AI 法规追踪器**——结构化、多地域的 AI 法规追踪 API，用于 `ai-governance-legal` 和 `regulatory-legal`
+- **监管法规主要来源**——连接国务院、各部委、地方政府官方法规数据库，绕过部分官方网站的反爬限制
+- **劳动仲裁/法院立案信息**——用于 `employment-legal` 劳动争议管理
 
-## Questions
+## 问题
 
-Open an issue on this repo. For partnership or integration questions, see the contact on each plugin's README.
+在本仓库提交 Issue。合作或集成事宜，见各插件 README。

@@ -12,29 +12,23 @@
       "title": "Google Drive",
       "description": "Search, read, and fetch documents from Google Drive."
     },
-    "CourtListener": {
+    "yuandian": {
       "type": "http",
-      "url": "https://mcp.courtlistener.com/",
-      "title": "CourtListener",
-      "description": "Free Law Project's legal research platform — millions of U.S. court opinions, PACER dockets, judge profiles, oral arguments, and citation verification."
+      "url": "https://mcp.yuandian.com/mcp",
+      "title": "元典",
+      "description": "中国法律智能检索平台 — 法律法规、司法解释、裁判文书、权威案例全覆盖检索，支持语义检索与法条原文定位。"
     },
-    "Courtroom5": {
+    "pkulaw": {
       "type": "http",
-      "url": "https://mcp.courtroom5.com",
-      "description": "Courtroom5 — jurisdiction-aware guidance for self-represented litigants: case intake, deadline calculations, procedural next steps"
-    },
-    "Descrybe": {
-      "type": "http",
-      "url": "https://mcp.descrybe.com/mcp",
-      "title": "Descrybe",
-      "description": "Primary law research — search cases by concept or wording, find cases from citations, extract authorities, check treatment, verify quoted language."
+      "url": "https://mcp.pkulaw.com/mcp",
+      "title": "北大法宝",
+      "description": "中国法律资源总库 — 法律法规、司法案例、法学期刊、英文译本、法律援助与法律诊所实践指引检索。"
     }
   },
   "recommendedCategories": [
     "case-management",
     "legal-research",
     "case-law",
-    "licensing-boards",
     "documents",
     "chat"
   ]

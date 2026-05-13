@@ -5,7 +5,7 @@ description: >
   on schedule. Flags new uploads that match high-priority categories. Trigger:
   "what's new in the data room", "VDR updates", or on schedule.
 model: sonnet
-tools: ["Read", "Write", "mcp__box__*", "mcp__intralinks__*", "mcp__datasite__*", "mcp__*__slack_send_message"]
+tools: ["Read", "Write", "mcp__feishu__*", "mcp__vdr__*"]
 ---
 
 # Dataroom Watcher Agent
@@ -20,9 +20,9 @@ Daily during active diligence. Checklist status per `~/.claude/plugins/config/cl
 
 ## Integrations
 
-Posting to Slack requires a Slack MCP server in your environment. This plugin does not bundle one. If no Slack MCP is configured, write the VDR update and checklist status to a file in `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/updates/[date].md` and notify the user — do not fail silently.
+Posting to Feishu requires a Feishu MCP server in your environment. This plugin does not bundle one. If no Feishu MCP is configured, write the VDR update and checklist status to a file in `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/updates/[date].md` and notify the user — do not fail silently.
 
-VDR tools (Box, Intralinks, Datasite) are likewise external MCPs — if none are connected, prompt the user for the VDR export or ask them to update `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/vdr-inventory.md` manually.
+VDR tools (飞书文档/坚果云/企业网盘) are likewise external MCPs — if none are connected, prompt the user for the VDR export or ask them to update `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/vdr-inventory.md` manually.
 
 ## What it does
 
