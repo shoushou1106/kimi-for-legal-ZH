@@ -648,12 +648,38 @@ scripts/                  # deploy-managed-agent.sh · validate.py · orchestrat
   <img src="docs/assets/testimonial.png" alt="用户评价" width="800">
 </p>
 
+## 社区贡献者
+
+感谢每一位为本项目做出贡献的社区成员 🎉
+
+<table align="center">
+  <tr>
+    <td align="center" width="300">
+      <a href="https://github.com/kanekanefy">
+        <img src="https://github.com/kanekanefy.png" width="80" style="border-radius: 50%;" alt="kanekanefy"><br>
+        <b>@kanekanefy</b>
+      </a><br>
+      Codex 多端适配层<br>一键安装脚本
+    </td>
+    <td align="center" width="300">
+      <a href="https://github.com/icedfish">
+        <img src="https://github.com/icedfish.png" width="80" style="border-radius: 50%;" alt="Xiaopai"><br>
+        <b>@icedfish</b>（Xiaopai）
+      </a><br>
+      知识库检索约定收敛<br>民诉法条号修正
+    </td>
+  </tr>
+</table>
+
+<p align="center"><sub>头像来自 GitHub，点击可跳转至贡献者主页</sub></p>
+
+---
+
 ## 致谢
 
 - **[Anthropic](https://www.anthropic.com/)** — 提供 `claude-for-legal` 开源插件框架和 Claude 模型能力，为中国法本地化改造奠定了坚实基础
 - **[DeepSeek-V4](https://www.deepseek.com/)** — 提供优惠算力支持，使大规模法律技能文件的本地化改造在经济上可行
 - **[浙江海泰律师事务所](https://www.hightac.com/)** — 提供专业成长环境和实务土壤，本版本中融入的合同审查方法论、诉讼分析框架和风险评价体系均源于海泰的长期培养
-- **社区贡献者** — 感谢 [@kanekanefy](https://github.com/kanekanefy) 贡献 Codex 多端适配层与一键安装脚本，以及 [@icedfish](https://github.com/icedfish)（Xiaopai）贡献知识库检索约定收敛与民诉法条号修正
 
 ---
 
