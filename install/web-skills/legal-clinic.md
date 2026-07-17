@@ -13,8 +13,8 @@
 ## 开工前的画像门禁（每次必做）
 
 1. 从 KIMI 记忆中读取你的画像：共享公司画像（company-profile）和本领域画像（legal-clinic）。
-2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
-3. 共享安全规则（发送目的地检查、来源溯源标签、律师审查门槛）见 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/profile-template.md` 的「共享安全机制」段，所有输出适用。
+2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆，**每条记忆以「kimi-for-legal-ZH 法律画像」开头标注来源，并注明仅在法律工作任务中适用**（KIMI 的记忆在所有会话中始终生效，标注是防止法律画像渗入无关对话）。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
+3. 共享安全规则（发送目的地检查、来源溯源标签、律师审查门槛）见 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/profile-template.md` 的「共享安全机制」段，所有输出适用。
 
 ## 工作流路由
 
@@ -22,24 +22,24 @@
 
 | 用户意图 | 读取 URL |
 |---|---|
-| 帮助诊所指导老师撰写实践领域指南，配置面向学生技能的行为——接待问题、 教学姿态（assist … | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/build-guide/SKILL.md |
-| 记录当事人沟通——电话、邮件、短信、信函、面谈、语音留言 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/client-comms-log/SKILL.md |
-| 结构化接待——实践领域模板、跨领域考点识别、利益冲突标记、分流分类 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/client-intake/SKILL.md |
-| 基于模板的常规当事人信函——预约确认、文件索取、"已提交"简报 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/client-letter/SKILL.md |
-| **首次使用：冷启动访谈（配置画像）** | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/cold-start-interview/SKILL.md |
-| 引导式定制你的法律诊所画像——无需重新运行整个冷启动访谈即可更改一项内容 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/customize/SKILL.md |
-| 追踪案件截止日期——添加、跨案汇总报告、更新、完成、关闭 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/deadlines/SKILL.md |
-| 常见诊所文件的初稿——实践领域模板（劳动争议仲裁申请书、离婚起诉状、 人身保护令申请书、律师函等… | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/draft/SKILL.md |
-| IRAC 框架化的案件分析备忘录，标注检索缺口——提供框架结构而非分析结论 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/memo/SKILL.md |
-| 学生学期导入——诊所程序、工具导览、真实案件之前的实践练习 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/ramp/SKILL.md |
-| 法律问题的检索路线图——需查阅的法条、需调查的案例法领域、行政监管框架、 北大法宝/法信/元典检… | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/research-start/SKILL.md |
-| 学期末案件交接备忘录——/ramp 的镜像 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/semester-handoff/SKILL.md |
-| 按受众的案件状态摘要——面向当事人（通俗语言）、面向内部（供指导老师）、 或面向法院（按本地规则… | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/status/SKILL.md |
-| 指导老师审查队列——学生输出在此等待指导老师批准后才能发给当事人或法院 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/legal-clinic/skills/supervisor-review-queue/SKILL.md |
+| 帮助诊所指导老师撰写实践领域指南，配置面向学生技能的行为——接待问题、 教学姿态（assist … | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/build-guide/SKILL.md |
+| 记录当事人沟通——电话、邮件、短信、信函、面谈、语音留言 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/client-comms-log/SKILL.md |
+| 结构化接待——实践领域模板、跨领域考点识别、利益冲突标记、分流分类 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/client-intake/SKILL.md |
+| 基于模板的常规当事人信函——预约确认、文件索取、"已提交"简报 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/client-letter/SKILL.md |
+| **首次使用：冷启动访谈（配置画像）** | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/cold-start-interview/SKILL.md |
+| 引导式定制你的法律诊所画像——无需重新运行整个冷启动访谈即可更改一项内容 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/customize/SKILL.md |
+| 追踪案件截止日期——添加、跨案汇总报告、更新、完成、关闭 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/deadlines/SKILL.md |
+| 常见诊所文件的初稿——实践领域模板（劳动争议仲裁申请书、离婚起诉状、 人身保护令申请书、律师函等… | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/draft/SKILL.md |
+| IRAC 框架化的案件分析备忘录，标注检索缺口——提供框架结构而非分析结论 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/memo/SKILL.md |
+| 学生学期导入——诊所程序、工具导览、真实案件之前的实践练习 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/ramp/SKILL.md |
+| 法律问题的检索路线图——需查阅的法条、需调查的案例法领域、行政监管框架、 北大法宝/法信/元典检… | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/research-start/SKILL.md |
+| 学期末案件交接备忘录——/ramp 的镜像 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/semester-handoff/SKILL.md |
+| 按受众的案件状态摘要——面向当事人（通俗语言）、面向内部（供指导老师）、 或面向法院（按本地规则… | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/status/SKILL.md |
+| 指导老师审查队列——学生输出在此等待指导老师批准后才能发给当事人或法院 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/legal-clinic/skills/supervisor-review-queue/SKILL.md |
 
 ## 相对路径解析规则
 
-工作流文件中引用的所有相对路径（如 `legal-clinic/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/` 后作为 URL 读取。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/claude-for-legal-ZH/tree/main/<目录>` 查看文件列表。
+工作流文件中引用的所有相对路径（如 `legal-clinic/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/` 后作为 URL 读取。如果该地址无法访问（网络原因），改用 Gitee 镜像前缀 `https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/`。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 或 Gitee 页面 `https://gitee.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 查看文件列表。
 
 ## 检索与引用规则
 

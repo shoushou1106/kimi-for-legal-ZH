@@ -17,7 +17,10 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "install" / "web-skills"
 
 # 仓库改名或换默认分支时，改这里并重跑
-RAW_BASE = "https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main"
+RAW_BASE = "https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main"
+# Gitee 镜像（国内访问兜底），目录浏览用 Gitee tree 页面
+GITEE_RAW_BASE = "https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main"
+GITEE_TREE = "https://gitee.com/shoushou1106/kimi-for-legal-ZH/tree/main"
 
 DOMAINS = {
     "commercial-legal": ("legal-commercial", "商事合同",
@@ -59,7 +62,7 @@ TEMPLATE = """# KIMI 自定义技能定义：{skill}
 ## 开工前的画像门禁（每次必做）
 
 1. 从 KIMI 记忆中读取你的画像：共享公司画像（company-profile）和本领域画像（{domain}）。
-2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `{RAW_BASE}/{domain}/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
+2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `{RAW_BASE}/{domain}/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆，**每条记忆以「kimi-for-legal-ZH 法律画像」开头标注来源，并注明仅在法律工作任务中适用**（KIMI 的记忆在所有会话中始终生效，标注是防止法律画像渗入无关对话）。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
 3. 共享安全规则（发送目的地检查、来源溯源标签、律师审查门槛）见 `{RAW_BASE}/{domain}/profile-template.md` 的「共享安全机制」段，所有输出适用。
 
 ## 工作流路由
@@ -70,7 +73,7 @@ TEMPLATE = """# KIMI 自定义技能定义：{skill}
 
 ## 相对路径解析规则
 
-工作流文件中引用的所有相对路径（如 `{domain}/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `{RAW_BASE}/` 后作为 URL 读取。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/claude-for-legal-ZH/tree/main/<目录>` 查看文件列表。
+工作流文件中引用的所有相对路径（如 `{domain}/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `{RAW_BASE}/` 后作为 URL 读取。如果该地址无法访问（网络原因），改用 Gitee 镜像前缀 `{GITEE_RAW_BASE}/`。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 或 Gitee 页面 `{GITEE_TREE}/<目录>` 查看文件列表。
 
 ## 检索与引用规则
 
@@ -130,7 +133,8 @@ def main() -> None:
             f"| {i} | {u} |" for i, u in rows)
         (OUT / f"{skill}.md").write_text(
             TEMPLATE.format(skill=skill, display=display, triggers=triggers,
-                            domain=domain, table=table, RAW_BASE=RAW_BASE),
+                            domain=domain, table=table, RAW_BASE=RAW_BASE,
+                            GITEE_RAW_BASE=GITEE_RAW_BASE, GITEE_TREE=GITEE_TREE),
             encoding="utf-8")
         print(f"wrote install/web-skills/{skill}.md ({len(rows)} workflows)")
 

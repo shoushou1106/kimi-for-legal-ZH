@@ -1,6 +1,6 @@
 ---
 name: legal-ai-governance
-description: 中国法AI 治理法律工作入口。AI 应用登记、算法安全评估、科技伦理审查、生成式 AI 合规、AI 供应商审查、AI 治理。当用户提出AI 治理相关任务时使用本技能，它将路由到 claude-for-legal-ZH（KIMI 版）仓库中对应的专业工作流文件。
+description: 中国法AI 治理法律工作入口。AI 应用登记、算法安全评估、科技伦理审查、生成式 AI 合规、AI 供应商审查、AI 治理。当用户提出AI 治理相关任务时使用本技能，它将路由到 kimi-for-legal-ZH 仓库中对应的专业工作流文件。
 ---
 
 # AI 治理（KIMI 版）

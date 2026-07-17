@@ -13,8 +13,8 @@
 ## 开工前的画像门禁（每次必做）
 
 1. 从 KIMI 记忆中读取你的画像：共享公司画像（company-profile）和本领域画像（law-student）。
-2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
-3. 共享安全规则（发送目的地检查、来源溯源标签、律师审查门槛）见 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/profile-template.md` 的「共享安全机制」段，所有输出适用。
+2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆，**每条记忆以「kimi-for-legal-ZH 法律画像」开头标注来源，并注明仅在法律工作任务中适用**（KIMI 的记忆在所有会话中始终生效，标注是防止法律画像渗入无关对话）。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
+3. 共享安全规则（发送目的地检查、来源溯源标签、律师审查门槛）见 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/profile-template.md` 的「共享安全机制」段，所有输出适用。
 
 ## 工作流路由
 
@@ -22,23 +22,23 @@
 
 | 用户意图 | 读取 URL |
 |---|---|
-| 法考备考题目——客观题或主观题，针对你的薄弱科目和考试类型 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/bar-prep-questions/SKILL.md |
-| 按你偏好的格式撰写案例摘要 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/case-brief/SKILL.md |
-| 课堂提问准备——预测老师可能提问的问题并以苏格拉底式追问训练，标注你的薄弱 环节以便课前重温 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/cold-call-prep/SKILL.md |
-| **首次使用：冷启动访谈（配置画像）** | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/cold-start-interview/SKILL.md |
-| 引导式自定义你的法学学习画像——无需重新运行完整的新手导入访谈即可修改单项设置 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/customize/SKILL.md |
-| 分析同一授课教师的历年考题以揭示模式——科目权重、反复出现的考点陷阱、 偏好的案例假设类型、政策… | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/exam-forecast/SKILL.md |
-| 生成或训练法条概念记忆卡片——莱特纳式记忆桶，按科目的 Markdown 存储， 带自我评估的训… | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/flashcards/SKILL.md |
-| 给 IRAC 论文评分——结构、考点识别、规则准确性、分析深度和组织 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/irac-practice/SKILL.md |
-| 对法律写作草稿（备忘录、代理词、论文、法考主观题答案）的结构性反馈—— 组织结构、分析深度、清晰… | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/legal-writing/SKILL.md |
-| 按你的格式从课堂笔记和教材构建或扩展课程知识大纲 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/outline-builder/SKILL.md |
-| 在一个科目上运行一场集中的 N 题练习——客观题、主观题或记忆卡片 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/session/SKILL.md |
-| 苏格拉底式追问训练——我问，你答，我追问 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/socratic-drill/SKILL.md |
-| 构建或更新长期法考备考（或期末备考）学习计划——分阶段、按薄弱科目的权重分配、 每日练习安排，根… | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/law-student/skills/study-plan/SKILL.md |
+| 法考备考题目——客观题或主观题，针对你的薄弱科目和考试类型 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/bar-prep-questions/SKILL.md |
+| 按你偏好的格式撰写案例摘要 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/case-brief/SKILL.md |
+| 课堂提问准备——预测老师可能提问的问题并以苏格拉底式追问训练，标注你的薄弱 环节以便课前重温 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/cold-call-prep/SKILL.md |
+| **首次使用：冷启动访谈（配置画像）** | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/cold-start-interview/SKILL.md |
+| 引导式自定义你的法学学习画像——无需重新运行完整的新手导入访谈即可修改单项设置 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/customize/SKILL.md |
+| 分析同一授课教师的历年考题以揭示模式——科目权重、反复出现的考点陷阱、 偏好的案例假设类型、政策… | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/exam-forecast/SKILL.md |
+| 生成或训练法条概念记忆卡片——莱特纳式记忆桶，按科目的 Markdown 存储， 带自我评估的训… | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/flashcards/SKILL.md |
+| 给 IRAC 论文评分——结构、考点识别、规则准确性、分析深度和组织 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/irac-practice/SKILL.md |
+| 对法律写作草稿（备忘录、代理词、论文、法考主观题答案）的结构性反馈—— 组织结构、分析深度、清晰… | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/legal-writing/SKILL.md |
+| 按你的格式从课堂笔记和教材构建或扩展课程知识大纲 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/outline-builder/SKILL.md |
+| 在一个科目上运行一场集中的 N 题练习——客观题、主观题或记忆卡片 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/session/SKILL.md |
+| 苏格拉底式追问训练——我问，你答，我追问 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/socratic-drill/SKILL.md |
+| 构建或更新长期法考备考（或期末备考）学习计划——分阶段、按薄弱科目的权重分配、 每日练习安排，根… | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/law-student/skills/study-plan/SKILL.md |
 
 ## 相对路径解析规则
 
-工作流文件中引用的所有相对路径（如 `law-student/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/` 后作为 URL 读取。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/claude-for-legal-ZH/tree/main/<目录>` 查看文件列表。
+工作流文件中引用的所有相对路径（如 `law-student/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/` 后作为 URL 读取。如果该地址无法访问（网络原因），改用 Gitee 镜像前缀 `https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/`。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 或 Gitee 页面 `https://gitee.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 查看文件列表。
 
 ## 检索与引用规则
 

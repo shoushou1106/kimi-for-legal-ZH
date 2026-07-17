@@ -13,8 +13,8 @@
 ## 开工前的画像门禁（每次必做）
 
 1. 从 KIMI 记忆中读取你的画像：共享公司画像（company-profile）和本领域画像（corporate-legal）。
-2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
-3. 共享安全规则（发送目的地检查、来源溯源标签、律师审查门槛）见 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/profile-template.md` 的「共享安全机制」段，所有输出适用。
+2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆，**每条记忆以「kimi-for-legal-ZH 法律画像」开头标注来源，并注明仅在法律工作任务中适用**（KIMI 的记忆在所有会话中始终生效，标注是防止法律画像渗入无关对话）。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
+3. 共享安全规则（发送目的地检查、来源溯源标签、律师审查门槛）见 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/profile-template.md` 的「共享安全机制」段，所有输出适用。
 
 ## 工作流路由
 
@@ -22,23 +22,23 @@
 
 | 用户意图 | 读取 URL |
 |---|---|
-| 检测 AI 辅助审查工具（如 Luminance、Kira 等）是否在使用中，将大批量条款提取 … | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/ai-tool-handoff/SKILL.md |
-| 按你的内部格式起草董事会或专门委员会会议纪要 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/board-minutes/SKILL.md |
-| 什么在阻碍交割——维护交割检查表，包含状态、关键路径和距交割天数 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/closing-checklist/SKILL.md |
-| **首次使用：冷启动访谈（配置画像）** | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/cold-start-interview/SKILL.md |
-| 公司业务实务画像的引导式定制——修改一项配置而无需重新运行完整的冷启动访谈 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/customize/SKILL.md |
-| 将尽调发现汇总为适合受众层级的交易团队简报——面向领导层的执行摘要、面向团队的 工作摘要 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/deal-team-summary/SKILL.md |
-| 读取数据室文件并按内部类别和重要性阈值提取问题，以内部备忘录格式产出发现 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/diligence-issue-extraction/SKILL.md |
-| 主体合规追踪器——初始化、报告即将到来的截止日、更新状态、运行健康审计、 导出为 CSV | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/entity-compliance/SKILL.md |
-| 交割后并购整合追踪器——分阶段工作计划、同意追踪、规模化合同转让、 每周状态报告 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/integration-management/SKILL.md |
-| 从尽调发现构建重大合同披露清单，适用股权收购协议的重大合同定义，并按 协议清单格式排版 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/material-contract-schedule/SKILL.md |
-| 管理事项工作区——创建、列出、切换、关闭或分离活跃事项，使多客户执业者将一个 客户的上下文与其他… | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/matter-workspace/SKILL.md |
-| 表格审查——一行一文件，一列一数据点，每个单元格标注来源 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/tabular-review/SKILL.md |
-| 以内部格式起草董事会或专门委员会的一致书面决议，从决议存储库中检索先例 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/corporate-legal/skills/written-consent/SKILL.md |
+| 检测 AI 辅助审查工具（如 Luminance、Kira 等）是否在使用中，将大批量条款提取 … | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/ai-tool-handoff/SKILL.md |
+| 按你的内部格式起草董事会或专门委员会会议纪要 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/board-minutes/SKILL.md |
+| 什么在阻碍交割——维护交割检查表，包含状态、关键路径和距交割天数 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/closing-checklist/SKILL.md |
+| **首次使用：冷启动访谈（配置画像）** | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/cold-start-interview/SKILL.md |
+| 公司业务实务画像的引导式定制——修改一项配置而无需重新运行完整的冷启动访谈 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/customize/SKILL.md |
+| 将尽调发现汇总为适合受众层级的交易团队简报——面向领导层的执行摘要、面向团队的 工作摘要 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/deal-team-summary/SKILL.md |
+| 读取数据室文件并按内部类别和重要性阈值提取问题，以内部备忘录格式产出发现 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/diligence-issue-extraction/SKILL.md |
+| 主体合规追踪器——初始化、报告即将到来的截止日、更新状态、运行健康审计、 导出为 CSV | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/entity-compliance/SKILL.md |
+| 交割后并购整合追踪器——分阶段工作计划、同意追踪、规模化合同转让、 每周状态报告 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/integration-management/SKILL.md |
+| 从尽调发现构建重大合同披露清单，适用股权收购协议的重大合同定义，并按 协议清单格式排版 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/material-contract-schedule/SKILL.md |
+| 管理事项工作区——创建、列出、切换、关闭或分离活跃事项，使多客户执业者将一个 客户的上下文与其他… | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/matter-workspace/SKILL.md |
+| 表格审查——一行一文件，一列一数据点，每个单元格标注来源 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/tabular-review/SKILL.md |
+| 以内部格式起草董事会或专门委员会的一致书面决议，从决议存储库中检索先例 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/corporate-legal/skills/written-consent/SKILL.md |
 
 ## 相对路径解析规则
 
-工作流文件中引用的所有相对路径（如 `corporate-legal/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/` 后作为 URL 读取。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/claude-for-legal-ZH/tree/main/<目录>` 查看文件列表。
+工作流文件中引用的所有相对路径（如 `corporate-legal/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/` 后作为 URL 读取。如果该地址无法访问（网络原因），改用 Gitee 镜像前缀 `https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/`。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 或 Gitee 页面 `https://gitee.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 查看文件列表。
 
 ## 检索与引用规则
 

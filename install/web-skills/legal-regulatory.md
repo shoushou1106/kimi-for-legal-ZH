@@ -13,8 +13,8 @@
 ## 开工前的画像门禁（每次必做）
 
 1. 从 KIMI 记忆中读取你的画像：共享公司画像（company-profile）和本领域画像（regulatory-legal）。
-2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/regulatory-legal/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
-3. 共享安全规则（发送目的地检查、来源溯源标签、律师审查门槛）见 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/regulatory-legal/profile-template.md` 的「共享安全机制」段，所有输出适用。
+2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/regulatory-legal/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆，**每条记忆以「kimi-for-legal-ZH 法律画像」开头标注来源，并注明仅在法律工作任务中适用**（KIMI 的记忆在所有会话中始终生效，标注是防止法律画像渗入无关对话）。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
+3. 共享安全规则（发送目的地检查、来源溯源标签、律师审查门槛）见 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/regulatory-legal/profile-template.md` 的「共享安全机制」段，所有输出适用。
 
 ## 工作流路由
 
@@ -22,19 +22,19 @@
 
 | 用户意图 | 读取 URL |
 |---|---|
-| **首次使用：冷启动访谈（配置画像）** | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/regulatory-legal/skills/cold-start-interview/SKILL.md |
-| 审阅公开的征求意见期，记录决策，跟踪截止日期 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/regulatory-legal/skills/comments/SKILL.md |
-| 指导式定制监管实践配置——在不重新运行完整冷启动访谈的情况下对单项进行调整 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/regulatory-legal/skills/customize/SKILL.md |
-| 开放差距跟踪器——已标记但尚未关闭的事项 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/regulatory-legal/skills/gaps/SKILL.md |
-| 管理事务工作区——创建、列表、切换、关闭或解除活跃事务（实践层面） | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/regulatory-legal/skills/matter-workspace/SKILL.md |
-| 将特定法规变化与已索引的政策库进行差异分析 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/regulatory-legal/skills/policy-diff/SKILL.md |
-| 产出关闭一个差距的政策修订建议稿（带标记版） | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/regulatory-legal/skills/policy-redraft/SKILL.md |
-| 检查法规动态源，报告自上次检查以来的新事项，按重要度阈值过滤 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/regulatory-legal/skills/reg-feed-watcher/SKILL.md |
-| 支持 「gaps」工作流（加载 regulatory-legal/skills/gaps/SKI…（参考） | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/regulatory-legal/skills/gap-surfacer/SKILL.md |
+| **首次使用：冷启动访谈（配置画像）** | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/regulatory-legal/skills/cold-start-interview/SKILL.md |
+| 审阅公开的征求意见期，记录决策，跟踪截止日期 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/regulatory-legal/skills/comments/SKILL.md |
+| 指导式定制监管实践配置——在不重新运行完整冷启动访谈的情况下对单项进行调整 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/regulatory-legal/skills/customize/SKILL.md |
+| 开放差距跟踪器——已标记但尚未关闭的事项 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/regulatory-legal/skills/gaps/SKILL.md |
+| 管理事务工作区——创建、列表、切换、关闭或解除活跃事务（实践层面） | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/regulatory-legal/skills/matter-workspace/SKILL.md |
+| 将特定法规变化与已索引的政策库进行差异分析 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/regulatory-legal/skills/policy-diff/SKILL.md |
+| 产出关闭一个差距的政策修订建议稿（带标记版） | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/regulatory-legal/skills/policy-redraft/SKILL.md |
+| 检查法规动态源，报告自上次检查以来的新事项，按重要度阈值过滤 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/regulatory-legal/skills/reg-feed-watcher/SKILL.md |
+| 支持 「gaps」工作流（加载 regulatory-legal/skills/gaps/SKI…（参考） | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/regulatory-legal/skills/gap-surfacer/SKILL.md |
 
 ## 相对路径解析规则
 
-工作流文件中引用的所有相对路径（如 `regulatory-legal/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/` 后作为 URL 读取。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/claude-for-legal-ZH/tree/main/<目录>` 查看文件列表。
+工作流文件中引用的所有相对路径（如 `regulatory-legal/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/` 后作为 URL 读取。如果该地址无法访问（网络原因），改用 Gitee 镜像前缀 `https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/`。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 或 Gitee 页面 `https://gitee.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 查看文件列表。
 
 ## 检索与引用规则
 

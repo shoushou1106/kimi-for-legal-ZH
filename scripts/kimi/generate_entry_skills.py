@@ -151,7 +151,7 @@ def main() -> None:
             display=meta["display"], domain=domain, table=table)
         desc = (f"中国法{meta['display']}法律工作入口。{meta['triggers']}。"
                 f"当用户提出{meta['display']}相关任务时使用本技能，"
-                f"它将路由到 claude-for-legal-ZH（KIMI 版）仓库中对应的专业工作流文件。")
+                f"它将路由到 kimi-for-legal-ZH 仓库中对应的专业工作流文件。")
         out_dir = OUT / meta["skill"]
         out_dir.mkdir(parents=True, exist_ok=True)
         (out_dir / "SKILL.md").write_text(

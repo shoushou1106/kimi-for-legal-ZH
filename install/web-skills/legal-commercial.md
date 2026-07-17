@@ -13,8 +13,8 @@
 ## 开工前的画像门禁（每次必做）
 
 1. 从 KIMI 记忆中读取你的画像：共享公司画像（company-profile）和本领域画像（commercial-legal）。
-2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
-3. 共享安全规则（发送目的地检查、来源溯源标签、律师审查门槛）见 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/profile-template.md` 的「共享安全机制」段，所有输出适用。
+2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆，**每条记忆以「kimi-for-legal-ZH 法律画像」开头标注来源，并注明仅在法律工作任务中适用**（KIMI 的记忆在所有会话中始终生效，标注是防止法律画像渗入无关对话）。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
+3. 共享安全规则（发送目的地检查、来源溯源标签、律师审查门槛）见 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/profile-template.md` 的「共享安全机制」段，所有输出适用。
 
 ## 工作流路由
 
@@ -22,22 +22,22 @@
 
 | 用户意图 | 读取 URL |
 |---|---|
-| 追溯合同从基础协议到所有修订的变更轨迹——可以是所有变更的时间线摘要， 也可以是特定条款的追踪 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/skills/amendment-history/SKILL.md |
-| **首次使用：冷启动访谈（配置画像）** | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/skills/cold-start-interview/SKILL.md |
-| 商事合同业务领域配置的引导式定制——修改一项配置而无需重新运行完整的冷启动访谈 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/skills/customize/SKILL.md |
-| 根据审查指引中的上报矩阵将合同问题路由至合适的审批人，并起草上报说明 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/skills/escalation-flagger/SKILL.md |
-| 管理事项工作区——新建、列出、切换、关闭或脱离（业务领域级） | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/skills/matter-workspace/SKILL.md |
-| 展示具有即将到来的取消截止日期的合同，在通知窗口关闭前发出预警， 基于维护的续约登记册运行 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/skills/renewal-tracker/SKILL.md |
-| 根据审查指引审查供应商协议、保密协议或SaaS订阅 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/skills/review/SKILL.md |
-| 审查并批准（或拒绝）来自审查指引监控代理的待处理更新建议，并将批准的变更 应用到业务领域配置中 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/skills/review-proposals/SKILL.md |
-| 将合同审查转化为业务利益方实际会阅读的摘要 | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/skills/stakeholder-summary/SKILL.md |
-| 对接收方保密协议进行快速三色分类（绿/黄/红），使团队成员仅将律师时间投入 真正需要审查的协议（参考） | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/skills/nda-review/SKILL.md |
-| SaaS订阅协议审查，重点关注订阅交易中最关键的条款——自动续约机制、 价格调整、数据可迁移性、…（参考） | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/skills/saas-msa-review/SKILL.md |
-| 根据团队审查指引审查接收方供应商协议（参考） | https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/commercial-legal/skills/vendor-agreement-review/SKILL.md |
+| 追溯合同从基础协议到所有修订的变更轨迹——可以是所有变更的时间线摘要， 也可以是特定条款的追踪 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/skills/amendment-history/SKILL.md |
+| **首次使用：冷启动访谈（配置画像）** | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/skills/cold-start-interview/SKILL.md |
+| 商事合同业务领域配置的引导式定制——修改一项配置而无需重新运行完整的冷启动访谈 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/skills/customize/SKILL.md |
+| 根据审查指引中的上报矩阵将合同问题路由至合适的审批人，并起草上报说明 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/skills/escalation-flagger/SKILL.md |
+| 管理事项工作区——新建、列出、切换、关闭或脱离（业务领域级） | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/skills/matter-workspace/SKILL.md |
+| 展示具有即将到来的取消截止日期的合同，在通知窗口关闭前发出预警， 基于维护的续约登记册运行 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/skills/renewal-tracker/SKILL.md |
+| 根据审查指引审查供应商协议、保密协议或SaaS订阅 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/skills/review/SKILL.md |
+| 审查并批准（或拒绝）来自审查指引监控代理的待处理更新建议，并将批准的变更 应用到业务领域配置中 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/skills/review-proposals/SKILL.md |
+| 将合同审查转化为业务利益方实际会阅读的摘要 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/skills/stakeholder-summary/SKILL.md |
+| 对接收方保密协议进行快速三色分类（绿/黄/红），使团队成员仅将律师时间投入 真正需要审查的协议（参考） | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/skills/nda-review/SKILL.md |
+| SaaS订阅协议审查，重点关注订阅交易中最关键的条款——自动续约机制、 价格调整、数据可迁移性、…（参考） | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/skills/saas-msa-review/SKILL.md |
+| 根据团队审查指引审查接收方供应商协议（参考） | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/skills/vendor-agreement-review/SKILL.md |
 
 ## 相对路径解析规则
 
-工作流文件中引用的所有相对路径（如 `commercial-legal/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `https://raw.githubusercontent.com/shoushou1106/claude-for-legal-ZH/main/` 后作为 URL 读取。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/claude-for-legal-ZH/tree/main/<目录>` 查看文件列表。
+工作流文件中引用的所有相对路径（如 `commercial-legal/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/` 后作为 URL 读取。如果该地址无法访问（网络原因），改用 Gitee 镜像前缀 `https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/`。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 或 Gitee 页面 `https://gitee.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 查看文件列表。
 
 ## 检索与引用规则
 
