@@ -4,7 +4,6 @@ description: >
   管理事项工作区——新建、列出、切换、关闭或脱离（实践级）。使一个客户或委托的上下文
   与其他所有客户或委托分开，适用于多客户执业者。当用户想打开新事项、切换事项、列出事项、
   关闭/归档事项或仅在实践级工作时使用。
-argument-hint: "<new | list | switch | close | none> [代号]"
 ---
 
 # /matter-workspace
@@ -13,21 +12,21 @@ argument-hint: "<new | list | switch | close | none> [代号]"
 
 ## 子命令
 
-- `/privacy-legal:matter-workspace new <代号>` — 创建新事项工作区，运行简短录入，写入 `matter.md`
-- `/privacy-legal:matter-workspace list` — 列出事项并显示状态和活动标记
-- `/privacy-legal:matter-workspace switch <代号>` — 设置活动事项
-- `/privacy-legal:matter-workspace close <代号>` — 归档事项（移至 `~/.claude/plugins/config/claude-for-legal-zh/privacy-legal/matters/_archived/`，绝不删除）
-- `/privacy-legal:matter-workspace none` — 脱离任何活动事项，仅以实践级工作
+- `「matter-workspace」工作流（加载 privacy-legal/skills/matter-workspace/SKILL.md） new <代号>` — 创建新事项工作区，运行简短录入，写入 `matter.md`
+- `「matter-workspace」工作流（加载 privacy-legal/skills/matter-workspace/SKILL.md） list` — 列出事项并显示状态和活动标记
+- `「matter-workspace」工作流（加载 privacy-legal/skills/matter-workspace/SKILL.md） switch <代号>` — 设置活动事项
+- `「matter-workspace」工作流（加载 privacy-legal/skills/matter-workspace/SKILL.md） close <代号>` — 归档事项（移至 `legal-profile/privacy-legal/matters/_archived/`，绝不删除）
+- `「matter-workspace」工作流（加载 privacy-legal/skills/matter-workspace/SKILL.md） none` — 脱离任何活动事项，仅以实践级工作
 
 ## 指令
 
-1. 读取 `~/.claude/plugins/config/claude-for-legal-zh/privacy-legal/CLAUDE.md` — 确认 `## 事项工作区` 节已填充。如果 `已启用` 为 `✗`，告诉用户："事项工作区关闭——你被配置为法务实践，单一客户，因此插件自动使用实践级上下文。如果你实际跨多个客户工作，重新运行 `/privacy-legal:cold-start-interview --redo` 并选择非单一客户设置。否则，你完全不需要 `/matter-workspace`。"不要报错——关闭状态是法务用户的预期状态。
+1. 读取 `legal-profile/privacy-legal.md` — 确认 `## 事项工作区` 节已填充。如果 `已启用` 为 `✗`，告诉用户："事项工作区关闭——你被配置为法务实践，单一客户，因此插件自动使用实践级上下文。如果你实际跨多个客户工作，重新运行 `「cold-start-interview」工作流（加载 privacy-legal/skills/cold-start-interview/SKILL.md） --redo` 并选择非单一客户设置。否则，你完全不需要 `/matter-workspace`。"不要报错——关闭状态是法务用户的预期状态。
 2. 使用以下子命令逻辑。
 3. 根据 `$ARGUMENTS` 的第一个 token 分发：
-   - `new` → 运行录入访谈，写入 `~/.claude/plugins/config/claude-for-legal-zh/privacy-legal/matters/<代号>/matter.md`，种子化 `history.md` 和 `notes.md`。
-   - `list` → 枚举 `~/.claude/plugins/config/claude-for-legal-zh/privacy-legal/matters/*/matter.md`，打印表格，标记活动事项。
+   - `new` → 运行录入访谈，写入 `legal-profile/privacy-legal/matters/<代号>/matter.md`，种子化 `history.md` 和 `notes.md`。
+   - `list` → 枚举 `legal-profile/privacy-legal/matters/*/matter.md`，打印表格，标记活动事项。
    - `switch` → 更新实践级 CLAUDE.md 中的 `活动事项：` 行。
-   - `close` → 移动 `~/.claude/plugins/config/claude-for-legal-zh/privacy-legal/matters/<代号>/` 至 `~/.claude/plugins/config/claude-for-legal-zh/privacy-legal/matters/_archived/<代号>/`，在 `history.md` 中记录关闭日期。
+   - `close` → 移动 `legal-profile/privacy-legal/matters/<代号>/` 至 `legal-profile/privacy-legal/matters/_archived/<代号>/`，在 `history.md` 中记录关闭日期。
    - `none` → 将 `活动事项：` 设为 `无 — 仅实践级上下文`。
 4. 展示变更内容并在写入前请用户确认。
 
@@ -43,14 +42,14 @@ argument-hint: "<new | list | switch | close | none> [代号]"
 
 跨客户执业者（非单一客户——独立执业、小所、大所）跨多个委托工作。一个委托的上下文不得泄露到另一个中。本技能是实现这一点的薄文件管理层。
 
-**默认状态是关闭。** 法务用户永远看不到这个——他们仅以实践级运行。事项工作区在冷启动时对非单一客户用户启用，或通过编辑实践级 CLAUDE.md 中的 `## 事项工作区` 启用。如果 `已启用` 为 `✗`，本技能不运行；上述工作流解释了关闭状态，并建议确实需要事项隔离的用户运行 `/privacy-legal:cold-start-interview --redo`。
+**默认状态是关闭。** 法务用户永远看不到这个——他们仅以实践级运行。事项工作区在冷启动时对非单一客户用户启用，或通过编辑实践级 CLAUDE.md 中的 `## 事项工作区` 启用。如果 `已启用` 为 `✗`，本技能不运行；上述工作流解释了关闭状态，并建议确实需要事项隔离的用户运行 `「cold-start-interview」工作流（加载 privacy-legal/skills/cold-start-interview/SKILL.md） --redo`。
 
 ## 存储布局
 
 所有事项数据存放于：
 
 ```
-~/.claude/plugins/config/claude-for-legal-zh/privacy-legal/
+legal-profile/privacy-legal/
 ├── CLAUDE.md                       # 实践级实践档案
 └── matters/
     ├── <代号>/
@@ -84,7 +83,7 @@ argument-hint: "<new | list | switch | close | none> [代号]"
 3. 使用以下模板写入 `matters/<代号>/matter.md`。
 4. 种子化 `matters/<代号>/history.md` 为单条"已开启"记录。
 5. 创建空 `matters/<代号>/notes.md`。
-6. **不**自动切换至新事项。询问："是否要现在切换到 `<代号>`？（`/privacy-legal:matter-workspace switch <代号>`）"
+6. **不**自动切换至新事项。询问："是否要现在切换到 `<代号>`？（`「matter-workspace」工作流（加载 privacy-legal/skills/matter-workspace/SKILL.md） switch <代号>`）"
 
 ### `list`
 
@@ -97,7 +96,7 @@ argument-hint: "<new | list | switch | close | none> [代号]"
 
 ### `switch <代号>`
 
-1. 确认 `matters/<代号>/matter.md` 存在。如果不存在，提供 `/privacy-legal:matter-workspace new <代号>`。
+1. 确认 `matters/<代号>/matter.md` 存在。如果不存在，提供 `「matter-workspace」工作流（加载 privacy-legal/skills/matter-workspace/SKILL.md） new <代号>`。
 2. 编辑实践级 CLAUDE.md 中的 `活动事项：` 行为 `活动事项：<代号>`。
 3. 向用户展示 matter.md 摘要，以便用户确认在正确的事项上。
 

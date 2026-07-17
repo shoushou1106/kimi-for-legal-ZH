@@ -5,7 +5,6 @@ description: >
   基于维护的续约登记册运行。当用户询问"什么即将续约""哪些续约即将到期"
   "我们是否错过了取消窗口""将此添加到续约追踪器"时使用，或按计划运行。
   接收来自 saas-msa-review 的交接数据。
-argument-hint: "[--days N 变更窗口 | --missed 查看已过期的窗口]"
 ---
 
 # /renewal-tracker
@@ -14,7 +13,7 @@ argument-hint: "[--days N 变更窗口 | --missed 查看已过期的窗口]"
 
 ## 指令
 
-1. **读取 `~/.claude/plugins/config/claude-for-legal-zh/commercial-legal/renewal-register.yaml`**（配置目录——插件更新后仍保留）。
+1. **读取 `legal-profile/commercial-legal/renewal-register.yaml`**（配置目录——插件更新后仍保留）。
 
 2. **默认模式：** 模式2——未来90天内即将到来的事项，按紧急程度分组。
 
@@ -29,9 +28,9 @@ argument-hint: "[--days N 变更窗口 | --missed 查看已过期的窗口]"
 ## 示例
 
 ```
-/commercial-legal:renewal-tracker
-/commercial-legal:renewal-tracker --days 180
-/commercial-legal:renewal-tracker --missed
+「renewal-tracker」工作流（加载 commercial-legal/skills/renewal-tracker/SKILL.md）
+「renewal-tracker」工作流（加载 commercial-legal/skills/renewal-tracker/SKILL.md） --days 180
+「renewal-tracker」工作流（加载 commercial-legal/skills/renewal-tracker/SKILL.md） --missed
 ```
 
 ---
@@ -42,7 +41,7 @@ argument-hint: "[--days N 变更窗口 | --missed 查看已过期的窗口]"
 
 ## 登记册
 
-位于 `~/.claude/plugins/config/claude-for-legal-zh/commercial-legal/renewal-register.yaml`。
+位于 `legal-profile/commercial-legal/renewal-register.yaml`。
 
 ```yaml
 - counterparty: "Acme SaaS Inc."
@@ -113,7 +112,7 @@ argument-hint: "[--days N 变更窗口 | --missed 查看已过期的窗口]"
 
 ### 模式3：扫描合同管理系统/电子签章工具填充登记册
 
-如果MCP已连接且登记册为空或过期：查询合同管理系统，扫描电子签章工具。
+如果插件已连接且登记册为空或过期：查询合同管理系统，扫描电子签章工具。
 
 ### 模式4：错过的窗口（坏消息报告）
 

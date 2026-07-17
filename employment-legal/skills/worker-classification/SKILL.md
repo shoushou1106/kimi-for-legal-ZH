@@ -5,7 +5,6 @@ description: >
   区分劳动关系、劳务关系、承揽关系，并标识用工模式与事实之间的认定偏差。
   仅适用于尚未开始的前瞻性分析。当用户提出"我们想用一个人做承包商"、
   "这是劳务关系还是劳动关系"、"如何认定这个人的用工关系"或描述拟议用工安排时使用。
-argument-hint: "[描述拟议的用工安排，或直接开始，我将提问]"
 ---
 
 # /worker-classification
@@ -15,26 +14,26 @@ argument-hint: "[描述拟议的用工安排，或直接开始，我将提问]"
 
 ## 指令
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md` → 管辖范围、升级表。
+1. 加载 `legal-profile/employment-legal.md` → 管辖范围、升级表。
 2. 运行以下完整工作流。
 3. 如果律师提前提供详细信息，提取已有的内容，仅就缺口提问。不重复询问已提供的信息。
 
 ## 示例
 
 ```
-/employment-legal:worker-classification
+「worker-classification」工作流（加载 employment-legal/skills/worker-classification/SKILL.md）
 我们想请一位数据分析师，6个月，在北京办公室工作，使用我们的工具，
 嵌入在我们的分析团队里。
 ```
 
 ```
-/employment-legal:worker-classification
+「worker-classification」工作流（加载 employment-legal/skills/worker-classification/SKILL.md）
 我们的招聘顾问劳务协议是否可行？她只为我们工作，自己安排时间，
 用自己的笔记本电脑，按每成功推荐一人收取项目费。
 ```
 
 ```
-/employment-legal:worker-classification
+「worker-classification」工作流（加载 employment-legal/skills/worker-classification/SKILL.md）
 （技能将询问详情）
 ```
 
@@ -42,7 +41,7 @@ argument-hint: "[描述拟议的用工安排，或直接开始，我将提问]"
 
 ## 案件上下文
 
-**案件上下文。** 检查实务级 CLAUDE.md 中的 `## Matter workspaces`。如果 `Enabled` 为 `✗`（法务用户默认值），跳过本段——技能使用实务级上下文，案件机制不可见。如果已启用且无活跃案件，询问："这是哪个案件的？运行 `/employment-legal:matter-workspace switch <slug>` 或说 `practice-level`。" 加载活跃案件的 `matter.md` 获取案件特定上下文和覆盖项。将输出写入案件文件夹。除非 `Cross-matter context` 为 `on`，否则不得读取其他案件的文件。
+**案件上下文。** 检查实务级 CLAUDE.md 中的 `## Matter workspaces`。如果 `Enabled` 为 `✗`（法务用户默认值），跳过本段——技能使用实务级上下文，案件机制不可见。如果已启用且无活跃案件，询问："这是哪个案件的？运行 `「matter-workspace」工作流（加载 employment-legal/skills/matter-workspace/SKILL.md） switch <slug>` 或说 `practice-level`。" 加载活跃案件的 `matter.md` 获取案件特定上下文和覆盖项。将输出写入案件文件夹。除非 `Cross-matter context` 为 `on`，否则不得读取其他案件的文件。
 
 ---
 
@@ -92,11 +91,11 @@ argument-hint: "[描述拟议的用工安排，或直接开始，我将提问]"
 
 ## 加载上下文
 
-读取 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md` → 管辖范围、任何既有的认定历史或先前争议记录、升级表，以及团队记录的任何内部用工政策。
+读取 `legal-profile/employment-legal.md` → 管辖范围、任何既有的认定历史或先前争议记录、升级表，以及团队记录的任何内部用工政策。
 
 ## 输出标题
 
-从 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md` → `## Outputs` 预置工作成果标题（根据用户角色不同——见 `## Who's using this`）。
+从 `legal-profile/employment-legal.md` → `## Outputs` 预置工作成果标题（根据用户角色不同——见 `## Who's using this`）。
 
 ## 工作流
 
@@ -153,11 +152,11 @@ argument-hint: "[描述拟议的用工安排，或直接开始，我将提问]"
 > **区分劳动关系与劳务关系**：劳务关系适用《民法典》合同编，不受《劳动合同法》调整。`[法条原文]`
 > **区分劳动关系与承揽关系**：承揽关系适用《民法典》第770条以下（承揽合同），定作人不承担劳动法下用人单位义务。`[法条原文]`
 
-如果 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md` 记录了公司内部认定政策，先适用该政策，并标识与研究标准之间的任何冲突。
+如果 `legal-profile/employment-legal.md` 记录了公司内部认定政策，先适用该政策，并标识与研究标准之间的任何冲突。
 
 > **不自作补充。** 如果对配置的法律研究工具的查询返回零结果或极少结果，报告已找到的内容并停止。不要不询问就从网络搜索或模型知识填补空白。说："搜索从[工具]返回了[N]条结果。[管辖地/问题/标准]的覆盖范围似乎很薄。选项：(1)扩大搜索查询，(2)尝试其他研究工具，(3)搜索网络——结果将标注`[联网检索——需复核]`，依赖前应核实，(4)标注为未经核实并停止。您希望选哪个？"由律师决定是否接受较低可信度的来源。
 >
-> **来源标注。** 为每个引用——每个认定标准、法规条文、规范性文件或案例——标注来源：`[yuandian检索]`用于通过MCP检索的引用；`[联网检索——需复核]`用于网络搜索引用；`[模型知识——需验证]`用于模型知识回忆的引用；`[用户提供]`用于律师提供的引用。标注`需验证`的引用具有较高的编造风险，应首先核验。不得删除或压缩标注。
+> **来源标注。** 为每个引用——每个认定标准、法规条文、规范性文件或案例——标注来源：`[yuandian检索]`用于通过插件检索的引用；`[联网检索——需复核]`用于网络搜索引用；`[模型知识——需验证]`用于模型知识回忆的引用；`[用户提供]`用于律师提供的引用。标注`需验证`的引用具有较高的编造风险，应首先核验。不得删除或压缩标注。
 
 ### 步骤3——将认定标准适用于事实
 
@@ -230,7 +229,7 @@ argument-hint: "[描述拟议的用工安排，或直接开始，我将提问]"
 
 ### 步骤5——输出
 
-> **研究连接器预检。** 在输出分析前，检查本次会话是否可连接法律研究工具——yuandian MCP 或任何其他配置的研究工具。将结果收集到审查备注中；如果步骤2中无连接器返回结果，记录在**来源：**行中。逐条来源标签保持内联。不在输出上方单独显示横幅。
+> **检索插件预检。** 在输出分析前，检查本次会话是否可连接法律研究工具——元典检索 或任何其他配置的研究工具。将结果收集到审查备注中；如果步骤2中无连接器返回结果，记录在**来源：**行中。逐条来源标签保持内联。不在输出上方单独显示横幅。
 >
 > **管辖地假设。** 本分析适用信息收集中确定的管辖地。劳动关系认定规则在各省可能存在实践差异，且认定逻辑因问题类型（社会保险、劳动报酬、工伤保险）可能不同。如果工作将在尚未分析的地域进行，或后续增加了新的认定问题，本分析可能不适用。
 
@@ -284,7 +283,7 @@ argument-hint: "[描述拟议的用工安排，或直接开始，我将提问]"
 
 ### 下一步
 
-[如劳动关系成立：认定确认为劳动关系——运行 `/employment-legal:hiring-review` 审查录用通知书、竞业限制条款和管辖地特定要求。]
+[如劳动关系成立：认定确认为劳动关系——运行 `「hiring-review」工作流（加载 employment-legal/skills/hiring-review/SKILL.md）` 审查录用通知书、竞业限制条款和管辖地特定要求。]
 [如劳务关系成立：认定为劳务关系——在用工开始前确保书面协议反映支持劳务关系的要素。]
 [如存在差距：在使用劳务关系结构前解决以下问题：[列出]]
 [如派遣/外包为更优选择：考虑以[派遣/外包]重构——在此事实模式下为何更优。]
@@ -293,7 +292,7 @@ argument-hint: "[描述拟议的用工安排，或直接开始，我将提问]"
 
 ## 后续行动门槛（认定用工关系）
 
-**在做出"可以按劳务关系/劳动关系/派遣/外包进行"的最终建议前：** 读取 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md` 中的 `## Who's using this`。如果角色是**非律师**：
+**在做出"可以按劳务关系/劳动关系/派遣/外包进行"的最终建议前：** 读取 `legal-profile/employment-legal.md` 中的 `## Who's using this`。如果角色是**非律师**：
 
 > 认定用工关系具有法律后果——错误认定可能使企业面临补缴社会保险费、支付加班费和未休年休假工资、承担工伤保险责任以及行政处罚的风险。您是否已与律师审查过此认定？如已审查，继续。如未审查，以下是带去给律师的简要材料：
 >

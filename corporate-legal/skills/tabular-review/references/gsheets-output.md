@@ -6,7 +6,7 @@ For teams on Google Workspace. Same structure as the Excel output, different mec
 
 Three paths, in order of preference:
 
-1. **Google Sheets MCP** (if a `gdrive` or `gsheets` MCP with write/create capability is connected). Create the spreadsheet, write the sheets, set formatting via the API.
+1. **Google Sheets 插件** (if a `gdrive` or `gsheets` 插件 with write/create capability is connected). Create the spreadsheet, write the sheets, set formatting via the API.
 2. **Google Sheets API via ADC** (if the user has `gcloud auth application-default login --enable-gdrive-access` set up and Python `google-api-python-client` available). Use `sheets.spreadsheets().create()` and `batchUpdate` for formatting.
 3. **Fallback: CSV + manual import.** Write the CSVs, tell the user to import to Sheets. Also write a `format-instructions.md` so they can apply the color coding and data validation manually.
 
@@ -56,7 +56,8 @@ Same as the Excel spec: no confidence percentages, no truncated quotes, no merge
 
 ## Formula injection defense
 
-Before writing any cell in Excel, Sheets, or CSV output, neutralize formula injection. Counterparty-sourced text (contract quotes, party names, registered agent data, CLM exports) is attacker-controlled. A cell starting with `=`, `+`, `-`, `@`, `	`, ``, or `
+Before writing any cell in Excel, Sheets, or CSV output, neutralize formula injection. Counterparty-sourced text (contract quotes, party names, registered agent data, CLM exports) is attacker-controlled. A cell starting with `=`, `+`, `-`, `@`, `	`, `
+`, or `
 ` will be interpreted as a formula or break the row structure.
 
 - **Prefix with a single quote:** `'=SUM(A1:A10)` → `=SUM(A1:A10)` (displayed as text, not executed)

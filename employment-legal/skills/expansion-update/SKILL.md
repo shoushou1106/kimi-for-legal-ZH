@@ -4,7 +4,6 @@ description: >
   更新进行中的跨地域用工扩张项目状态——重新计算现已解封的项目，
   标记任何逾期的项目，浮现下一优先级。当自上次会话以来已有工作进展，
   且扩张追踪文件需要反映当前状态时使用。
-argument-hint: "[省/直辖市/地域名称]"
 ---
 
 # /expansion-update
@@ -13,9 +12,9 @@ argument-hint: "[省/直辖市/地域名称]"
 
 ## 指令
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md`。
+1. 加载 `legal-profile/employment-legal.md`。
 
-2. 识别追踪文件：`~/.claude/plugins/config/claude-for-legal-zh/employment-legal/expansion-[slug].yaml`。如不存在，响应："未找到[地域]的扩张追踪文件。运行 `/employment-legal:expansion-kickoff [地域]` 来启动一个。"
+2. 识别追踪文件：`legal-profile/employment-legal/expansion-[slug].yaml`。如不存在，响应："未找到[地域]的扩张追踪文件。运行 `「expansion-kickoff」工作流（加载 employment-legal/skills/expansion-kickoff/SKILL.md） [地域]` 来启动一个。"
 
 3. 读取追踪文件。显示当前状态：
 
@@ -51,10 +50,10 @@ argument-hint: "[省/直辖市/地域名称]"
 ## 示例
 
 ```
-/employment-legal:expansion-update 成都
+「expansion-update」工作流（加载 employment-legal/skills/expansion-update/SKILL.md） 成都
 ```
 
 ```
-/employment-legal:expansion-update
+「expansion-update」工作流（加载 employment-legal/skills/expansion-update/SKILL.md）
 （如存在多个追踪文件，将询问哪个地域）
 ```

@@ -6,17 +6,16 @@ description: >
   公众公司、主体管理），然后对每个活跃模块询问有针对性的问题，
   仅将相关章节写入插件配置。在全新安装时、CLAUDE.md 仍有 [PLACEHOLDER]
   标记时、开始新交易时、或重新检查集成或刷新某一模块时使用。
-argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | board | public | entities]]"
 ---
 
 # /cold-start-interview
 
-1. 检查 `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/CLAUDE.md`。如果 `--new-deal`，跳至逐项交易设置。如果 `--check-integrations`，跳过访谈——仅重新运行第0部分"连接了什么？"检查并重写 CLAUDE.md 中的 `## 可用集成` 表。探测时：仅在实际MCP工具调用成功后报告 ✓。已配置但未测试的连接器应标记为 ⚪ 并附一行确认方式。绝不基于 `.mcp.json` 声明报告 ✓——这会误导用户认为某项已接通而实际并未。
+1. 检查 `legal-profile/corporate-legal.md`。如果 `--new-deal`，跳至逐项交易设置。如果 `--check-integrations`，跳过访谈——仅重新运行第0部分"连接了什么？"检查并重写 CLAUDE.md 中的 `## 可用集成` 表。探测时：仅在实际插件工具调用成功后报告 ✓。已配置但未测试的连接器应标记为 ⚪ 并附一行确认方式。绝不基于 `.mcp.json` 声明报告 ✓——这会误导用户认为某项已接通而实际并未。
 2. 运行以下访谈（先第0部分——角色 + 集成——然后模块）。
 3. 种子文件：尽调需求清单 + 一份先前问题备忘录。
 4. 提取：类别、阈值、备忘录格式、AI 工具配置。
 5. 迁移：如果缓存路径存在已填充的 CLAUDE.md（无 `[PLACEHOLDER]` 标记）但配置路径不存在，复制到配置路径并告知用户迁移了什么。
-6. 写入 `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/CLAUDE.md`（按需创建父目录）。对 `--new-deal`，写入 `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/deals/[代码]/deal-context.md`。
+6. 写入 `legal-profile/corporate-legal.md`（按需创建父目录）。对 `--new-deal`，写入 `legal-profile/corporate-legal/deals/[代码]/deal-context.md`。
 
 ---
 
@@ -26,7 +25,7 @@ argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | bo
 
 ## 冷启动检查
 
-读取 `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/CLAUDE.md`：
+读取 `legal-profile/corporate-legal.md`：
 - **不存在** → 开始访谈。
 - **包含 `<!-- SETUP PAUSED AT: -->`** → 问候用户并提供从该部分恢复。
 - **包含 `[PLACEHOLDER]` 标记但无暂停注释** → 模板从未完成；提供重新开始或从占位符开始处恢复。
@@ -34,7 +33,7 @@ argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | bo
 
 模板结构位于 `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md` ——将其用作章节支架。将完成的实务画像写入配置路径，按需创建父目录。
 
-如果旧缓存路径 `~/.claude/plugins/cache/claude-for-legal-zh/corporate-legal/*/CLAUDE.md` 存在 CLAUDE.md 但配置路径不存在，在继续前将其复制到配置路径。
+如果旧缓存路径 `legal-profile/（旧版缓存路径，已废弃） 存在 CLAUDE.md 但配置路径不存在，在继续前将其复制到配置路径。
 
 - `--redo` — 完整重新访谈，覆盖所有章节
 - `--module [m&a | board | public | entities]` — 添加或刷新单个模块
@@ -44,7 +43,7 @@ argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | bo
 
 ## 检查共享公司配置
 
-查找 `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md`。
+查找 `legal-profile/company-profile.md`。
 
 - **如果存在：** 读取。展示一行确认："你是[姓名]，[执业场景]，在[公司]，[行业]，在[法域]运营。对吗？（或说'更新'来修改共享画像。）"如果确认，跳过公司问题——直接进入插件专属问题。
 - **如果不存在：** 你将是用户设置的第一个插件。在引导和分流后，询问公司问题并将其写入共享画像（按插件根目录中 `references/company-profile-template.md` 的模板），然后继续插件专属问题。告知用户："我已保存你的公司画像——其他法律插件将读取并跳过这些问题。"
@@ -63,16 +62,16 @@ argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | bo
 
 在问任何其他事之前，展示分叉前引导语——3-4短行，不要更长：
 
-> **`corporate-legal` 面向支持并购交易、董事会及公司治理、公众公司合规和主体管理的人群。** 不是你关注的领域？`/legal-builder-hub:related-skills-surfacer`。
+> **`corporate-legal` 面向支持并购交易、董事会及公司治理、公众公司合规和主体管理的人群。** 不是你关注的领域？`（该功能属于 Claude 技能市场生态，KIMI 版本已移除）`。
 >
 > **2分钟** 获得角色、执业场景、法域和模块选择（并购、董事会、公众公司、主体管理），外加重要性阈值、问题备忘录格式、董事会纪要格式和披露清单格式的工作默认值。**15分钟** 增加你的真实重要性阈值、从种子文件获取的内部决议和纪要格式、主体清单和合规频率、交易团队简报频率和上报矩阵。
 >
-> 快速还是完整？（随时用 `/corporate-legal:cold-start-interview --full` 升级。）
+> 快速还是完整？（随时用 `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md） --full` 升级。）
 
 等待用户选择后再展示任何其他内容。
 
 <!-- 辅助链接：当存在入门辅助材料时，在引导语上添加一行：
-     "想先看演示吗？[观看3分钟介绍](URL) 或 [阅读入门指南](URL)，然后回来运行 /corporate-legal:cold-start-interview。" -->
+     "想先看演示吗？[观看3分钟介绍](URL) 或 [阅读入门指南](URL)，然后回来运行 「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md）。" -->
 
 ## 用户选择快速或完整后
 
@@ -99,7 +98,7 @@ argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | bo
 - **对于上传（问题备忘录、纪要、决议、组织架构图）：** "粘贴内容、分享文件路径，或说'暂时跳过'。如果你跳过，我将在你的实务画像中标记缺口以便后续填写。"然后确实等待。这些种子文件驱动格式提取——无声跳过意味着未来每个输出都将是通用模板而非内部格式。
 - **在写入实务画像前：** 审查访谈并列出任何被跳过或回答了占位符的问题——尤其是每个活跃模块的种子文件。说："在我写入你的实务画像之前，以下仍为空白：[列表]。现在想填写其中任何项，还是保留为占位符？"然后等待。
 - **绝不**写入带无声缺口的实务画像。每个占位符都应是用户选择跳过的有意决定，而非滚动过去的未回答的问题。
-- **暂停和恢复。** 提前告知用户："如果你需要停下，说'暂停'（或'停下'，或'让我稍后再来'），我会保存你的进度。稍后运行 `/corporate-legal:cold-start-interview`，我将从中断处继续。"当用户暂停时，将部分配置写入 CLAUDE.md，在顶部附 `<!-- SETUP PAUSED AT: [章节名称] — 运行 /corporate-legal:cold-start-interview 恢复 -->` 注释，并在未回答的字段上使用 `[PENDING]` 标记（区别于 `[PLACEHOLDER]`）。当设置重新运行并发现暂停的配置时，问候用户："欢迎回来。你暂停在[章节]。你之前的回答已保存。从中断处继续，还是重新开始？"不要重复询问已回答的问题。
+- **暂停和恢复。** 提前告知用户："如果你需要停下，说'暂停'（或'停下'，或'让我稍后再来'），我会保存你的进度。稍后运行 `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md）`，我将从中断处继续。"当用户暂停时，将部分配置写入 CLAUDE.md，在顶部附 `<!-- SETUP PAUSED AT: [章节名称] — 运行 「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md） 恢复 -->` 注释，并在未回答的字段上使用 `[PENDING]` 标记（区别于 `[PLACEHOLDER]`）。当设置重新运行并发现暂停的配置时，问候用户："欢迎回来。你暂停在[章节]。你之前的回答已保存。从中断处继续，还是重新开始？"不要重复询问已回答的问题。
 
 ---
 
@@ -113,7 +112,7 @@ argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | bo
 
 > 在询问你的具体工作流之前，我想了解公司业务的哪些领域确实在你这活跃。这样我只设置你需要的，跳过其余的。
 
-**快速启动路径：** 仅问第0部分（角色、执业场景、集成）和哪些模块活跃。写入配置并在其他内容上附 `[DEFAULT]` 标记。收尾时："完成。你现在可以开始使用命令了。我对重要性阈值、披露清单格式和董事会纪要格式使用了合理默认值。当某个技能的输出感觉不对时，通常是一个你应该调整的默认值——它会告诉你哪个。随时运行 `/corporate-legal:cold-start-interview --full` 做完整访谈，或 `/corporate-legal:cold-start-interview --redo <章节>` 重做一个部分。"
+**快速启动路径：** 仅问第0部分（角色、执业场景、集成）和哪些模块活跃。写入配置并在其他内容上附 `[DEFAULT]` 标记。收尾时："完成。你现在可以开始使用命令了。我对重要性阈值、披露清单格式和董事会纪要格式使用了合理默认值。当某个技能的输出感觉不对时，通常是一个你应该调整的默认值——它会告诉你哪个。随时运行 `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md） --full` 做完整访谈，或 `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md） --redo <章节>` 重做一个部分。"
 
 **完整设置路径：** 以下已有的访谈流程。
 
@@ -150,17 +149,17 @@ argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | bo
 
 **检查实际连接了什么，而非配置了什么。** 一个在 `.mcp.json` 中列出的连接器是*可用*的。一个实际响应的连接器是*已连接*的。两者不同，混淆它们破坏信任。对本插件使用的每个连接器：
 
-- 如果你能测试连接（调用一个简单的 MCP 工具如列表或搜索），仅在成功响应时报告 ✓。
-- 如果你无法测试（无法从此处探测），报告 ⚪ "已配置但未验证——打开你的 MCP 设置确认"附一行如何确认。
+- 如果你能测试连接（调用一个简单的 插件 工具如列表或搜索），仅在成功响应时报告 ✓。
+- 如果你无法测试（无法从此处探测），报告 ⚪ "已配置但未验证——打开你的 插件 设置确认"附一行如何确认。
 - 绝不基于单独配置报告 ✓。
 
-对显示为未连接的连接器，告知用户如何连接。示例措辞："飞书未连接。在 Claude Cowork 中：设置 → 连接器 → 添加 → 飞书 → 登录。在 Claude Code 中：将飞书 MCP 添加到你的配置或通过 `/mcp`。本插件在没有它的情况下也能工作——你将粘贴文件而非拉取——但连接它让文件拉取自动化。"
+对显示为未连接的连接器，告知用户如何连接。示例措辞："飞书未连接。在 Claude Cowork 中：设置 → 连接器 → 添加 → 飞书 → 登录。在 Claude Code 中：将飞书 插件 添加到你的配置或通过 `/mcp`。本插件在没有它的情况下也能工作——你将粘贴文件而非拉取——但连接它让文件拉取自动化。"
 
 然后按此形式报告发现：
 
 > - ✓ [集成] — 已连接（已验证）
-> - ⚪ [集成] — 已配置但未验证。打开 MCP 设置确认。
-> - ✗ [集成] — 未找到。[功能]将退而使用[手动替代]。[如何连接。] 如果你稍后设置此项，重新运行 `/corporate-legal:cold-start-interview --check-integrations`。
+> - ⚪ [集成] — 已配置但未验证。打开 插件 设置确认。
+> - ✗ [集成] — 未找到。[功能]将退而使用[手动替代]。[如何连接。] 如果你稍后设置此项，重新运行 `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md） --check-integrations`。
 >
 > 你不需要所有这些。核心功能仅凭文件访问即可工作。
 
@@ -204,7 +203,7 @@ argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | bo
 > 3. **公众公司** — 证监会/交易所报告、信息披露委员会、内幕信息管理、投资者关系
 > 4. **主体管理** — 子公司管理、工商登记代办机构、股权结构、年度申报
 >
-> 告诉我适用的编号。你随时可以用 `/corporate-legal:cold-start-interview --module [名称]` 添加一个模块。
+> 告诉我适用的编号。你随时可以用 `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md） --module [名称]` 添加一个模块。
 
 记录活跃模块。仅继续每个活跃模块的部分。完全跳过其余。
 
@@ -310,7 +309,7 @@ argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | bo
 
 > 上传5-6份先前的董事会或委员会纪要。仅限已结会议，不要现时的。这些教会技能你的内部格式——纪要如何结构化、你捕捉什么层级的讨论细节、决议如何措辞、出席如何记录。一份全体董事会和一份委员会样本（如两种格式都有）。这驱动 board-minutes 技能——每份未来的纪要草案都从你提取的结构、讨论深度和决议措辞构建。
 >
-> 如果你现在没有可分享的纪要，你可以稍后用 `/corporate-legal:cold-start-interview --module board` 添加。board-minutes 技能会在它们缺失时提示你。
+> 如果你现在没有可分享的纪要，你可以稍后用 `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md） --module board` 添加。board-minutes 技能会在它们缺失时提示你。
 
 从种子纪要提取：
 - 整体结构和章节顺序
@@ -413,19 +412,19 @@ argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | bo
 
 > **以下是我在公司业务和并购实务中擅长的事项：**
 >
-> - **从数据室提取尽调问题**——例如"指向一个数据室文件夹，得到按你的内部重要性阈值分类的发现。"尝试：`/corporate-legal:diligence-issue-extraction`
-> - **构建重大合同清单**——例如"从尽调发现构建体现股权收购协议格式的披露清单。"尝试：`/corporate-legal:material-contract-schedule`
-> - **起草董事会或委员会书面决议**——例如"从你的决议存储库搜索先例，然后以内部格式起草。"尝试：`/corporate-legal:written-consent`
-> - **主体合规追踪器**——例如"查看子公司未来30/60/90天内什么申报到期。"尝试：`/corporate-legal:entity-compliance`
-> - **交割检查表状态**——例如"还差什么才能交割——条件、文件、同意、申报——带关键路径。"尝试：`/corporate-legal:closing-checklist`
-> - **交割后整合**——例如"为刚刚交割的交易制定分阶段工作计划、追踪同意事项、合同转让。"尝试：`/corporate-legal:integration-management`
+> - **从数据室提取尽调问题**——例如"指向一个数据室文件夹，得到按你的内部重要性阈值分类的发现。"尝试：`「diligence-issue-extraction」工作流（加载 corporate-legal/skills/diligence-issue-extraction/SKILL.md）`
+> - **构建重大合同清单**——例如"从尽调发现构建体现股权收购协议格式的披露清单。"尝试：`「material-contract-schedule」工作流（加载 corporate-legal/skills/material-contract-schedule/SKILL.md）`
+> - **起草董事会或委员会书面决议**——例如"从你的决议存储库搜索先例，然后以内部格式起草。"尝试：`「written-consent」工作流（加载 corporate-legal/skills/written-consent/SKILL.md）`
+> - **主体合规追踪器**——例如"查看子公司未来30/60/90天内什么申报到期。"尝试：`「entity-compliance」工作流（加载 corporate-legal/skills/entity-compliance/SKILL.md）`
+> - **交割检查表状态**——例如"还差什么才能交割——条件、文件、同意、申报——带关键路径。"尝试：`「closing-checklist」工作流（加载 corporate-legal/skills/closing-checklist/SKILL.md）`
+> - **交割后整合**——例如"为刚刚交割的交易制定分阶段工作计划、追踪同意事项、合同转让。"尝试：`「integration-management」工作流（加载 corporate-legal/skills/integration-management/SKILL.md）`
 >
-> **我对你第一项的建议：** 如果你有活跃交易，运行 `/corporate-legal:closing-checklist`——它立刻显示插件融入你的工作流的何处。或告诉我在你桌面上的事项，我来挑选。
+> **我对你第一项的建议：** 如果你有活跃交易，运行 `「closing-checklist」工作流（加载 corporate-legal/skills/closing-checklist/SKILL.md）`——它立刻显示插件融入你的工作流的何处。或告诉我在你桌面上的事项，我来挑选。
 
 这在一个提供中解决了冷启动问题（管理者不知道先做什么）和价值主张问题（他们不知道插件能做什么）。使清单具体。如果管理者在访谈中已命名了一个具体的第一个任务，跳过此步。
 
 
-**研究连接器提示。** 在展示活跃模块前，说：
+**检索插件提示。** 在展示活跃模块前，说：
 
 > "在你的第一次尽调提取或决议之前：连接一个研究工具。没有它，我会将每个引用标注为未核实——有了它，我对照最新数据库核实它们。在 Cowork 中：设置 → 连接器。在 Claude Code 中：在技能提示你时授权。"
 
@@ -434,19 +433,19 @@ argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | bo
 > 以下是我捕获的内容：[列出活跃模块]。实务画像已写入。几件要检查的事：
 > - [标记任何值得重访的薄弱或模糊答案]
 > - [如果并购活跃且未提供种子文件："当你有需求清单和先前问题备忘录时告诉我——我会更新尽调结构和备忘录格式部分。"]
-> - [如果并购活跃："当一笔交易进来时，运行 `/corporate-legal:cold-start-interview --new-deal` 以在内部方法之上设置逐项交易的上下文。现在可用的并购技能：尽调提取、交易团队摘要、重大合同清单、交割检查表和交割后整合。"]
-> - [如果董事会与公司秘书活跃："现在可用的董事会技能：`/corporate-legal:written-consent` 用于书面决议，以及 board-minutes 技能用于以你的内部格式起草纪要。"]
-> - [如果主体管理活跃："现在可用的主体技能：`/corporate-legal:entity-compliance` 从你的主体清单初始化合规追踪器并呈现待办事项。"]
+> - [如果并购活跃："当一笔交易进来时，运行 `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md） --new-deal` 以在内部方法之上设置逐项交易的上下文。现在可用的并购技能：尽调提取、交易团队摘要、重大合同清单、交割检查表和交割后整合。"]
+> - [如果董事会与公司秘书活跃："现在可用的董事会技能：`「written-consent」工作流（加载 corporate-legal/skills/written-consent/SKILL.md）` 用于书面决议，以及 board-minutes 技能用于以你的内部格式起草纪要。"]
+> - [如果主体管理活跃："现在可用的主体技能：`「entity-compliance」工作流（加载 corporate-legal/skills/entity-compliance/SKILL.md）` 从你的主体清单初始化合规追踪器并呈现待办事项。"]
 > - [如果公众公司活跃："公众公司技能将在未来版本中提供——实务画像部分准备好待其发布时填充。"]
 
 以可修改性说明收尾：
 
-> "你的实务画像在 `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/CLAUDE.md`——一个你可以直接阅读和编辑的纯文本文件。你回答的一切都可以更改：
+> "你的实务画像在 `legal-profile/corporate-legal.md`——一个你可以直接阅读和编辑的纯文本文件。你回答的一切都可以更改：
 >
 > - 直接编辑文件做快速修改（新阈值、新增法域、委员会更名）
-> - 运行 `/corporate-legal:cold-start-interview --redo` 做完整重新访谈
-> - 运行 `/corporate-legal:cold-start-interview --module [m&a | board | public | entities]` 添加或刷新一个模块
-> - 运行 `/corporate-legal:cold-start-interview --check-integrations` 重新检查连接了什么
+> - 运行 `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md） --redo` 做完整重新访谈
+> - 运行 `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md） --module [m&a | board | public | entities]` 添加或刷新一个模块
+> - 运行 `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md） --check-integrations` 重新检查连接了什么
 >
 > 首次设置后最常调整的部分是并购重要性阈值、披露清单格式/问题备忘录模板，以及主体追踪器频率。"
 
@@ -458,7 +457,7 @@ argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | bo
 >
 > - 当某个技能的输出感觉不对时，通常是一个应该调整的立场。输出会告诉你哪个。
 > - 你随时可以说"更新我的合同手册偏好X"或"将我的审批阈值改为Y"，相关技能会写入变更。
-> - 运行 `/corporate-legal:cold-start-interview --redo <章节>` 重访一部分，或直接编辑配置文件。
+> - 运行 `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md） --redo <章节>` 重访一部分，或直接编辑配置文件。
 >
 > 十分钟设置获得一个可用的画像。一个月的使用获得一个读起来像你自己写的画像。
 
@@ -478,7 +477,7 @@ argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | bo
 - 任何交易特定的阈值差异（一笔5000万元的交易可能审查比一笔10亿元交易更小的合同）
 - 此交易的外部律所和牵头律师
 
-写入 `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/deals/[代号]/deal-context.md`。技能同时读取插件配置（内部）和 `deal-context.md`（此笔交易），deal-context.md 在冲突时优先。
+写入 `legal-profile/corporate-legal/deals/[代号]/deal-context.md`。技能同时读取插件配置（内部）和 `deal-context.md`（此笔交易），deal-context.md 在冲突时优先。
 
 ---
 

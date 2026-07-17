@@ -5,7 +5,6 @@ description: >
   创建、列举、切换、关闭和解除活跃案件，使一个客户委托的上下文
   绝不泄露到另一个。当多客户执业者说"新案件"、"切换案件"、
   "列出我的案件"、"关闭此案件"或需要管理哪个案件活跃时使用。
-argument-hint: "<new | list | switch | close | none> [slug]"
 ---
 
 # /matter-workspace
@@ -14,21 +13,21 @@ argument-hint: "<new | list | switch | close | none> [slug]"
 
 ## 子命令
 
-- `/employment-legal:matter-workspace new <slug>` —— 创建新案件工作空间，运行简短立案登记，写入 `matter.md`
-- `/employment-legal:matter-workspace list` —— 列举案件及其状态和活跃标记
-- `/employment-legal:matter-workspace switch <slug>` —— 设置活跃案件
-- `/employment-legal:matter-workspace close <slug>` —— 归档案件（移至 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/matters/_archived/`，永不删除）
-- `/employment-legal:matter-workspace none` —— 解除任何活跃案件，仅在实务级工作
+- `「matter-workspace」工作流（加载 employment-legal/skills/matter-workspace/SKILL.md） new <slug>` —— 创建新案件工作空间，运行简短立案登记，写入 `matter.md`
+- `「matter-workspace」工作流（加载 employment-legal/skills/matter-workspace/SKILL.md） list` —— 列举案件及其状态和活跃标记
+- `「matter-workspace」工作流（加载 employment-legal/skills/matter-workspace/SKILL.md） switch <slug>` —— 设置活跃案件
+- `「matter-workspace」工作流（加载 employment-legal/skills/matter-workspace/SKILL.md） close <slug>` —— 归档案件（移至 `legal-profile/employment-legal/matters/_archived/`，永不删除）
+- `「matter-workspace」工作流（加载 employment-legal/skills/matter-workspace/SKILL.md） none` —— 解除任何活跃案件，仅在实务级工作
 
 ## 指令
 
-1. 读取 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md`——确认 `## Matter workspaces` 部分已填充。如果 `Enabled` 为 `✗`，告诉用户："案件工作空间已关闭——你配置为法务单一客户模式，插件自动从实务级上下文运行。如果你实际跨多个客户工作，重新运行 `/employment-legal:cold-start-interview --redo` 并选择私人执业设置。否则你根本不需要 `/matter-workspace`。"不要报错——禁用状态是法务用户的预期状态。
+1. 读取 `legal-profile/employment-legal.md`——确认 `## Matter workspaces` 部分已填充。如果 `Enabled` 为 `✗`，告诉用户："案件工作空间已关闭——你配置为法务单一客户模式，插件自动从实务级上下文运行。如果你实际跨多个客户工作，重新运行 `「cold-start-interview」工作流（加载 employment-legal/skills/cold-start-interview/SKILL.md） --redo` 并选择私人执业设置。否则你根本不需要 `/matter-workspace`。"不要报错——禁用状态是法务用户的预期状态。
 2. 使用以下子命令逻辑。
 3. 根据首个匹配的指令分发：
-   - `new` → 运行立案访谈，写入 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/matters/<slug>/matter.md`，生成 `history.md` 和 `notes.md`。
-   - `list` → 枚举 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/matters/*/matter.md`，打印表格，标记活跃案件。
+   - `new` → 运行立案访谈，写入 `legal-profile/employment-legal/matters/<slug>/matter.md`，生成 `history.md` 和 `notes.md`。
+   - `list` → 枚举 `legal-profile/employment-legal/matters/*/matter.md`，打印表格，标记活跃案件。
    - `switch` → 更新实务级 CLAUDE.md 中的 `Active matter:` 行。
-   - `close` → 将 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/matters/<slug>/` 移至 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/matters/_archived/<slug>/`，在 `history.md` 中记录关闭日期。
+   - `close` → 将 `legal-profile/employment-legal/matters/<slug>/` 移至 `legal-profile/employment-legal/matters/_archived/<slug>/`，在 `history.md` 中记录关闭日期。
    - `none` → 将 `Active matter:` 设置为 `none — 仅实务级上下文`。
 4. 向用户显示变更内容并在写入前确认。
 
@@ -44,14 +43,14 @@ argument-hint: "<new | list | switch | close | none> [slug]"
 
 多客户执业者（私人执业——独立执业、小型律所、大型律所）跨多个案件工作。一个案件的上下文不得泄露到另一个。本技能是确保这一点的薄文件管理层。
 
-**默认状态为关闭。** 法务用户从不看到此——他们仅在实务级运行。案件工作空间在 cold-start 时为私人执业用户开启，或通过编辑实务级 CLAUDE.md 中的 `## Matter workspaces` 开启。如果 `Enabled` 为 `✗`，本技能不运行；相反它解释禁用状态，并为实际需要案件隔离的用户建议 `/employment-legal:cold-start-interview --redo`。
+**默认状态为关闭。** 法务用户从不看到此——他们仅在实务级运行。案件工作空间在 cold-start 时为私人执业用户开启，或通过编辑实务级 CLAUDE.md 中的 `## Matter workspaces` 开启。如果 `Enabled` 为 `✗`，本技能不运行；相反它解释禁用状态，并为实际需要案件隔离的用户建议 `「cold-start-interview」工作流（加载 employment-legal/skills/cold-start-interview/SKILL.md） --redo`。
 
 ## 存储布局
 
 所有案件数据位于：
 
 ```
-~/.claude/plugins/config/claude-for-legal-zh/employment-legal/
+legal-profile/employment-legal/
 ├── CLAUDE.md                       # 实务级实践画像
 └── matters/
     ├── <slug>/
@@ -85,7 +84,7 @@ slug 使用小写加连字符。示例：`acme-劳动合同争议-2026`、`zenit
 3. 使用以下模板写入 `matters/<slug>/matter.md`。
 4. 生成 `matters/<slug>/history.md` 并写入单条"已立案"条目。
 5. 创建空的 `matters/<slug>/notes.md`。
-6. **不要**自动切换到新案件。询问："要现在切换到 `<slug>` 吗？（`/employment-legal:matter-workspace switch <slug>`）"
+6. **不要**自动切换到新案件。询问："要现在切换到 `<slug>` 吗？（`「matter-workspace」工作流（加载 employment-legal/skills/matter-workspace/SKILL.md） switch <slug>`）"
 
 ### `list`
 
@@ -98,7 +97,7 @@ slug 使用小写加连字符。示例：`acme-劳动合同争议-2026`、`zenit
 
 ### `switch <slug>`
 
-1. 确认 `matters/<slug>/matter.md` 存在。如不存在，提供 `/employment-legal:matter-workspace new <slug>`。
+1. 确认 `matters/<slug>/matter.md` 存在。如不存在，提供 `「matter-workspace」工作流（加载 employment-legal/skills/matter-workspace/SKILL.md） new <slug>`。
 2. 编辑实务级 CLAUDE.md 中的 `Active matter:` 行为 `Active matter: <slug>`。
 3. 向用户显示 matter.md 摘要以便确认他们在正确的案件上。
 

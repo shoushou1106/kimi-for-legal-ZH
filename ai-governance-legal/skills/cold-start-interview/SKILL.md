@@ -4,19 +4,18 @@ description: >
   首次运行访谈以建立AI治理实践配置：适用法规、
   AI系统清单、红线、审批工作流和输出偏好。
   在插件首次安装时自动运行。使用 --redo 可重新运行。
-argument-hint: "[--redo]"
 ---
 
 # /cold-start-interview
 
-1. 检查 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/CLAUDE.md` 是否已存在。如果存在且用户未传递 `--redo` → "AI治理实践配置已存在于 [路径]。使用 `--redo` 重新运行。"
+1. 检查 `legal-profile/ai-governance-legal.md` 是否已存在。如果存在且用户未传递 `--redo` → "AI治理实践配置已存在于 [路径]。使用 `--redo` 重新运行。"
 2. 运行以下访谈。一次进行一个部分。
 3. 选项后附 `(✓)` 标注推荐默认值。
 4. 当所有部分完成后，写入 `CLAUDE.md`。
 
 ```
-/ai-governance-legal:cold-start-interview
-/ai-governance-legal:cold-start-interview --redo
+「cold-start-interview」工作流（加载 ai-governance-legal/skills/cold-start-interview/SKILL.md）
+「cold-start-interview」工作流（加载 ai-governance-legal/skills/cold-start-interview/SKILL.md） --redo
 ```
 
 ---
@@ -243,7 +242,7 @@ E. 有非正式的AI使用指南，但尚未形成正式政策文件
 **21. 技能输出应保存到哪里？**
 
 路径：`[绝对路径]`
-示例：`~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/outputs/`
+示例：`legal-profile/ai-governance-legal/outputs/`
 
 **22. 工作成果头（在每份内部交付物顶部插入）：**
 
@@ -279,7 +278,7 @@ E. 有非正式的AI使用指南，但尚未形成正式政策文件
 
 **25. 你是否已运行隐私法律实践的冷启动访谈？**
 
-A. 是，隐私实践已配置（路径：`~/.claude/plugins/config/claude-for-legal-zh/privacy-legal/CLAUDE.md`）
+A. 是，隐私实践已配置（路径：`legal-profile/privacy-legal.md`）
 B. 否，仅配置AI治理 (→ AI技能将提示数据保护相关问题，建议同时配置隐私插件以获得完整数据保护合规支持)
 
 **26. 个人信息保护负责人（《个人信息保护法》第52条 `[法条原文]`）是否已任命？**
@@ -299,14 +298,14 @@ D. 不确定
 
 ## 写入配置
 
-访谈完成后，将所有回答编译为 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/CLAUDE.md`，结构如下：
+访谈完成后，将所有回答编译为 `legal-profile/ai-governance-legal.md`，结构如下：
 
 ```markdown
 [工作成果头 — 根据问题22]
 
 # AI治理法律实践 — 实践配置
 
-> 本文件由 /ai-governance-legal:cold-start-interview 生成于 [日期]。
+> 本文件由 「cold-start-interview」工作流（加载 ai-governance-legal/skills/cold-start-interview/SKILL.md） 生成于 [日期]。
 > 重新运行 `--redo` 以更新。
 
 ---
@@ -438,15 +437,15 @@ D. 不确定
 ## 完成后
 
 告知用户：
-> "AI治理实践配置已写入 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/CLAUDE.md`。
+> "AI治理实践配置已写入 `legal-profile/ai-governance-legal.md`。
 >
 > **下一步建议：**
-> 1. 运行 `/ai-governance-legal:ai-inventory --full` 建立完整的AI系统清单
-> 2. 对每个已部署系统运行 `/ai-governance-legal:aia-generation` 进行评估
-> 3. 运行 `/ai-governance-legal:reg-gap-analysis` 检查法规合规差距
-> 4. 如果还没有AI使用政策，运行 `/ai-governance-legal:policy-starter` 起草
+> 1. 运行 `「ai-inventory」工作流（加载 ai-governance-legal/skills/ai-inventory/SKILL.md） --full` 建立完整的AI系统清单
+> 2. 对每个已部署系统运行 `「aia-generation」工作流（加载 ai-governance-legal/skills/aia-generation/SKILL.md）` 进行评估
+> 3. 运行 `「reg-gap-analysis」工作流（加载 ai-governance-legal/skills/reg-gap-analysis/SKILL.md）` 检查法规合规差距
+> 4. 如果还没有AI使用政策，运行 `「policy-starter」工作流（加载 ai-governance-legal/skills/policy-starter/SKILL.md）` 起草
 >
-> 随时用 `/ai-governance-legal:customize` 调整配置。用 `/ai-governance-legal:cold-start-interview --redo` 从头重新运行。"
+> 随时用 `「customize」工作流（加载 ai-governance-legal/skills/customize/SKILL.md）` 调整配置。用 `「cold-start-interview」工作流（加载 ai-governance-legal/skills/cold-start-interview/SKILL.md） --redo` 从头重新运行。"
 
 ---
 

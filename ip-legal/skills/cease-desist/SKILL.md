@@ -4,19 +4,18 @@ description: >
   起草侵权警告函（发送模式）或对收到的警告函进行分诊（接收模式）。当依你的
   执法姿态对侵权人主张权利并发送校准后的警告函，或对收到的警告函进行分诊生成
   结构化选项备忘录附建议时使用。
-argument-hint: "<--send | --receive> [上下文、对方当事人或收函路径]"
 ---
 
 # /cease-desist
 
 两种模式。选一：
 
-- `/ip-legal:cease-desist --send` — 起草警告函，校准至你的执法姿态。发送前运行响亮的关口。
-- `/ip-legal:cease-desist --receive` — 对收到的警告函做分诊。产出选项备忘录附建议。
+- `「cease-desist」工作流（加载 ip-legal/skills/cease-desist/SKILL.md） --send` — 起草警告函，校准至你的执法姿态。发送前运行响亮的关口。
+- `「cease-desist」工作流（加载 ip-legal/skills/cease-desist/SKILL.md） --receive` — 对收到的警告函做分诊。产出选项备忘录附建议。
 
 ## 指令
 
-1. **读取实践档案。** 加载 `~/.claude/plugins/config/claude-for-legal-zh/ip-legal/CLAUDE.md`。如含占位符，停止并提示运行 `/ip-legal:cold-start-interview`。
+1. **读取实践档案。** 加载 `legal-profile/ip-legal.md`。如含占位符，停止并提示运行 `「cold-start-interview」工作流（加载 ip-legal/skills/cold-start-interview/SKILL.md）`。
 2. **检查事项工作区。**
 3. **根据参数分发：** `--send` 运行发送模式。`--receive` 运行接收模式。无参数时询问一次。
 4. **尊重关口。** 发送模式中，响亮关口在草稿落盘前运行。不要跳过。
@@ -26,9 +25,9 @@ argument-hint: "<--send | --receive> [上下文、对方当事人或收函路径
 ## 示例
 
 ```
-/ip-legal:cease-desist --send
-/ip-legal:cease-desist --receive ~/Downloads/收函-acme.pdf
-/ip-legal:cease-desist
+「cease-desist」工作流（加载 ip-legal/skills/cease-desist/SKILL.md） --send
+「cease-desist」工作流（加载 ip-legal/skills/cease-desist/SKILL.md） --receive ~/Downloads/收函-acme.pdf
+「cease-desist」工作流（加载 ip-legal/skills/cease-desist/SKILL.md）
 ```
 
 ---

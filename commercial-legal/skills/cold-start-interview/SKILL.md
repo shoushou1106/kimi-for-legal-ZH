@@ -4,12 +4,11 @@ description: >
   运行冷启动访谈以了解你的商事合同实务并写入团队业务领域配置。在首次使用插件时、
   配置文件缺失或仍为模板占位符时、或当用户说"设置插件""配置商事合同"
   "引导我""我们开始吧"时使用。这是全新安装时应运行的唯一技能。
-argument-hint: "[--redo 在已配置插件上重新运行] [--check-integrations 仅重新检测集成] [--side sales|purchasing 仅重新运行某一方的审查指引部分]"
 ---
 
 # /cold-start-interview
 
-运行冷启动访谈。首次运行写入 `~/.claude/plugins/config/claude-for-legal-zh/commercial-legal/CLAUDE.md`；后续使用 `--redo` 运行则重新访谈并在覆盖前展示差异。
+运行冷启动访谈。首次运行写入 `legal-profile/commercial-legal.md`；后续使用 `--redo` 运行则重新访谈并在覆盖前展示差异。
 
 ## 指令
 
@@ -30,10 +29,10 @@ argument-hint: "[--redo 在已配置插件上重新运行] [--check-integrations
 ## 示例
 
 ```
-/commercial-legal:cold-start-interview
-/commercial-legal:cold-start-interview --redo
-/commercial-legal:cold-start-interview --check-integrations
-/commercial-legal:cold-start-interview --side purchasing
+「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md）
+「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md） --redo
+「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md） --check-integrations
+「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md） --side purchasing
 ```
 
 ---
@@ -54,7 +53,7 @@ argument-hint: "[--redo 在已配置插件上重新运行] [--check-integrations
 
 ## 检查共享公司配置
 
-查找 `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md`。如果存在：读取并确认。如果不存在：先询问公司问题并写入共享配置。
+查找 `legal-profile/company-profile.md`。如果存在：读取并确认。如果不存在：先询问公司问题并写入共享配置。
 
 ## 安装范围检查
 
@@ -64,11 +63,11 @@ argument-hint: "[--redo 在已配置插件上重新运行] [--check-integrations
 
 在问任何事之前，展示分叉前引导语：
 
-> **`commercial-legal` 面向审查、谈判和管理商事合同（供应商协议、SaaS主协议、保密协议、续约）的人群。** 不是你关注的领域？`/legal-builder-hub:related-skills-surfacer`。
+> **`commercial-legal` 面向审查、谈判和管理商事合同（供应商协议、SaaS主协议、保密协议、续约）的人群。** 不是你关注的领域？`（该功能属于 Claude 技能市场生态，KIMI 版本已移除）`。
 >
 > **2分钟** 获得角色、执业场景、管辖和审查指引方向（销售或采购），以及审查指引立场、上报阈值、责任上限、赔偿方向和行文风格的工作默认值。**15分钟** 增加你的真实审查指引立场（责任限制、赔偿、数据处理协议、期限、管辖法律）按你的方向校准、你的deal-breaker、带金额阈值和自动上报的完整上报矩阵、行文风格和续约提醒目的地，以及从你签署的协议中提取的立场。
 >
-> 快速还是完整？（随时用 `/commercial-legal:cold-start-interview --full` 升级。）
+> 快速还是完整？（随时用 `「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md） --full` 升级。）
 
 等待用户选择。
 
@@ -97,7 +96,7 @@ argument-hint: "[--redo 在已配置插件上重新运行] [--check-integrations
 
 #### 连接了什么？
 
-检测实际连接状态（非仅配置）。测试MCP连接。报告：✓已连接 / ⚪已配置未验证 / ✗未找到。
+检测实际连接状态（非仅配置）。检查检索插件是否可用。报告：✓已连接 / ⚪已配置未验证 / ✗未找到。
 
 #### 执业场景
 
@@ -216,7 +215,7 @@ argument-hint: "[--redo 在已配置插件上重新运行] [--check-integrations
 
 展示插件功能、提示连接研究工具、建议起始技能、提供试运行、注明可修改性。
 
-> 完成。你的业务领域配置位于 `~/.claude/plugins/config/claude-for-legal-zh/commercial-legal/CLAUDE.md`。
+> 完成。你的业务领域配置位于 `legal-profile/commercial-legal.md`。
 
 ## 语气
 

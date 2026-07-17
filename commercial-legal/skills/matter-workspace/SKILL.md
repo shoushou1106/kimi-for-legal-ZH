@@ -4,7 +4,6 @@ description: >
   管理事项工作区——新建、列出、切换、关闭或脱离（业务领域级）。当多客户执业者
   需要创建事项、切换当前事项、列出事项、归档事项或脱离至业务领域级上下文时使用，
   或当其他技能需要知道当前在哪个事项中工作时使用。
-argument-hint: "<new | list | switch | close | none> [简称]"
 ---
 
 # /matter-workspace
@@ -13,11 +12,11 @@ argument-hint: "<new | list | switch | close | none> [简称]"
 
 ## 子命令
 
-- `/commercial-legal:matter-workspace new <slug>` — 创建新事项工作区，运行简短收案访谈，写入 `matter.md`
-- `/commercial-legal:matter-workspace list` — 列出事项及其状态
-- `/commercial-legal:matter-workspace switch <slug>` — 设置当前事项
-- `/commercial-legal:matter-workspace close <slug>` — 归档事项（移至 `_archived/`，绝不删除）
-- `/commercial-legal:matter-workspace none` — 脱离任何当前事项，纯业务领域级工作
+- `「matter-workspace」工作流（加载 commercial-legal/skills/matter-workspace/SKILL.md） new <slug>` — 创建新事项工作区，运行简短收案访谈，写入 `matter.md`
+- `「matter-workspace」工作流（加载 commercial-legal/skills/matter-workspace/SKILL.md） list` — 列出事项及其状态
+- `「matter-workspace」工作流（加载 commercial-legal/skills/matter-workspace/SKILL.md） switch <slug>` — 设置当前事项
+- `「matter-workspace」工作流（加载 commercial-legal/skills/matter-workspace/SKILL.md） close <slug>` — 归档事项（移至 `_archived/`，绝不删除）
+- `「matter-workspace」工作流（加载 commercial-legal/skills/matter-workspace/SKILL.md） none` — 脱离任何当前事项，纯业务领域级工作
 
 ## 指令
 
@@ -43,7 +42,7 @@ argument-hint: "<new | list | switch | close | none> [简称]"
 所有事项数据位于：
 
 ```
-~/.claude/plugins/config/claude-for-legal-zh/commercial-legal/
+legal-profile/commercial-legal/
 ├── CLAUDE.md                       # 业务领域级审查指引
 └── matters/
     ├── <slug>/

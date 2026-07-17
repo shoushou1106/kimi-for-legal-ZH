@@ -4,26 +4,25 @@ description: >
   对快速的飞书/钉钉问题给出"这有问题吗？"答复——对照您的校准进行模式匹配。
   当用户说"这有问题吗""快速问一下""我们能做X吗""这个需要法务审查吗""帮我看看"
   或粘贴一个需要即时判断（没问题/需要审查/暂停）的产品经理问题时使用。
-argument-hint: "[问题]"
 ---
 
 # /is-this-a-problem
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` → 风险校准。
+1. 加载 `legal-profile/product-legal.md` → 风险校准。
 2. 执行以下分流工作流。
 3. 模式匹配。检查常见陷阱。
 4. 一分钟内回答：✅ 没问题 / ⚠️ 需要审查 / 🛑 暂停。一句话说明理由。
 5. 如为 ⚠️ 或 🛑：指明下一步。
 
 ```
-/product-legal:is-this-a-problem "我们能在定价页用客户的logo吗？"
+「is-this-a-problem」工作流（加载 product-legal/skills/is-this-a-problem/SKILL.md） "我们能在定价页用客户的logo吗？"
 ```
 
 ---
 
 ## 事项上下文
 
-**事项上下文。** 检查实务级 CLAUDE.md 中的 `## 事项工作空间`。如果 `Enabled` 为 `✗`（企业法务用户的默认值），跳过本段其余内容——技能使用实务级上下文，事项机制不可见。如果已启用且无活跃事项，询问："这是哪个事项？运行 `/product-legal:matter-workspace switch <事项简称>` 或说 `实务级`。"加载活跃事项的 `matter.md` 获取事项特定上下文和覆盖规则。输出写入事项文件夹 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/matters/<事项简称>/`。除非 `跨事项上下文` 为 `开`，否则绝不读取其他事项的文件。
+**事项上下文。** 检查实务级 CLAUDE.md 中的 `## 事项工作空间`。如果 `Enabled` 为 `✗`（企业法务用户的默认值），跳过本段其余内容——技能使用实务级上下文，事项机制不可见。如果已启用且无活跃事项，询问："这是哪个事项？运行 `「matter-workspace」工作流（加载 product-legal/skills/matter-workspace/SKILL.md） switch <事项简称>` 或说 `实务级`。"加载活跃事项的 `matter.md` 获取事项特定上下文和覆盖规则。输出写入事项文件夹 `legal-profile/product-legal/matters/<事项简称>/`。除非 `跨事项上下文` 为 `开`，否则绝不读取其他事项的文件。
 
 ---
 
@@ -39,7 +38,7 @@ argument-hint: "[问题]"
 
 ## 加载校准
 
-读取 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` → `## 风险校准`。本技能的核心目的就是对照该表进行模式匹配。
+读取 `legal-profile/product-legal.md` → `## 风险校准`。本技能的核心目的就是对照该表进行模式匹配。
 
 ## 分流
 
@@ -72,11 +71,11 @@ argument-hint: "[问题]"
 | "我们能拿这些数据训练模型吗？" | 原始采集目的的使用权可能不涵盖模型训练——标记并检索采集时向用户作出的告知/同意 | "采集时我们告诉用户什么了？用户在哪些法域？" |
 | "这只是一个内部工具" | 内部工具仍处理个人信息——标记为可能涉及个人信息保护制度，转研究 | "它处理谁的数据？员工、客户还是第三方？" |
 | "我们已经做过类似的了" | "类似"一词承载了很多内容——差异所在通常就是问题所在 | "怎么类似？实际有什么不同？" |
-| "我们能使用[AI供应商/大模型]吗？" | 供应商AI条款可能允许对输入进行训练；用例可能需要算法备案——标记并转 `/ai-governance-legal:use-case-triage` | "有AI附录吗？什么数据输入了模型？" |
-| "我们能给这个功能加上AI吗？" | 可能是登记册中未包含的新用例；可能触发算法备案要求——标记并转 `/ai-governance-legal:use-case-triage` | "AI做什么——辅助型还是自动化型？它作用于谁？" |
+| "我们能使用[AI供应商/大模型]吗？" | 供应商AI条款可能允许对输入进行训练；用例可能需要算法备案——标记并转 `「use-case-triage」工作流（加载 ai-governance-legal/skills/use-case-triage/SKILL.md）` | "有AI附录吗？什么数据输入了模型？" |
+| "我们能给这个功能加上AI吗？" | 可能是登记册中未包含的新用例；可能触发算法备案要求——标记并转 `「use-case-triage」工作流（加载 ai-governance-legal/skills/use-case-triage/SKILL.md）` | "AI做什么——辅助型还是自动化型？它作用于谁？" |
 | "模型自动决定就行" | 无人工介入的自动化决策在某些法域受监管——标记并检索受影响用户所在法域的适用规则 | "谁受影响？流程中有人工吗？受影响用户在哪里？" |
 | "这是AI生成的内容" | 输出IP和披露义务因法域和供应商条款而异——标记并转研究 | "内容类型是什么？供应商服务条款是否涉及输出所有权？受众是谁？" |
-| "我们只是用自己的数据微调" | 训练数据权利、输出IP和供应商义务都变了——标记并转 `/ai-governance-legal:vendor-ai-review` | "训练数据里有什么？有没有客户或员工的数据？" |
+| "我们只是用自己的数据微调" | 训练数据权利、输出IP和供应商义务都变了——标记并转 `「vendor-ai-review」工作流（加载 ai-governance-legal/skills/vendor-ai-review/SKILL.md）` | "训练数据里有什么？有没有客户或员工的数据？" |
 
 如果可能存在陷阱，在回答前先问那一个问题。一个问题，不是整个检查表。当答案提示确实存在问题，标记并转研究——不要仅凭问题本身模式匹配到法律结论。
 
@@ -84,7 +83,7 @@ argument-hint: "[问题]"
 
 **针对飞书/钉钉（常见情况）：**
 
-飞书/钉钉分流回复属于内部法律建议。如果回复将被粘贴到广泛与非法律人员共享的工单、文档或频道中，冠以 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` `## 输出规范` 中的工作成果页眉（因用户角色而异——参见 `## 使用者`）：
+飞书/钉钉分流回复属于内部法律建议。如果回复将被粘贴到广泛与非法律人员共享的工单、文档或频道中，冠以 `legal-profile/product-legal.md` `## 输出规范` 中的工作成果页眉（因用户角色而异——参见 `## 使用者`）：
 
 ```
 [工作成果页眉 — 按插件配置 ## 输出规范]
@@ -116,7 +115,7 @@ argument-hint: "[问题]"
 ```
 
 ```
-⚠️ 需要AI治理分流——在此工作流中加入大模型意味着我们需要对照登记册检查用例，确认上线前已完成算法备案。需要一天。需要我现在运行`/ai-governance-legal:use-case-triage`吗？
+⚠️ 需要AI治理分流——在此工作流中加入大模型意味着我们需要对照登记册检查用例，确认上线前已完成算法备案。需要一天。需要我现在运行`「use-case-triage」工作流（加载 ai-governance-legal/skills/use-case-triage/SKILL.md）`吗？
 ```
 
 ## 何时不使用本技能

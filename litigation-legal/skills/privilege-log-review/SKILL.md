@@ -5,12 +5,11 @@ description: >
   合法性/关联性判断并标记需要律师审查的疑难项目。
   当用户说"审查证据清单"、"证据三性审查"、
   "检查这些证据的可采性"或有证据清单需要在质证前审核时使用。
-argument-hint: "[证据清单文件，或证据材料集]"
 ---
 
 # /privilege-log-review
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` → 审查规程。
+1. 加载 `legal-profile/litigation-legal.md` → 审查规程。
 2. 遵循以下工作流和参考材料。
 3. 对每个条目：明显可采 / 明显不可采 / 需要律师审查。标记理由。
 4. 输出：附带标记的已审查证据清单。律师在质证前审查所有标记。
@@ -44,7 +43,7 @@ argument-hint: "[证据清单文件，或证据材料集]"
 
 ## 加载上下文
 
-`~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` → 审查规程。
+`legal-profile/litigation-legal.md` → 审查规程。
 
 ## 判断
 

@@ -5,26 +5,25 @@ description: >
   可配置标记 / 较轻触），以及手册/规则上传。写入 CLAUDE.md 使所有其他技能
   和每个运行 /ramp 的学生都从相同的诊所背景读取。在新安装、CLAUDE.md 有
   占位符、使用 --redo 重新设置或使用 --check-integrations 重新检查集成时使用。
-argument-hint: "[--redo] [--check-integrations]"
 ---
 
 # /cold-start-interview
 
-1. 检查 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md`。如已填充且无 `--redo`，在覆盖前确认。
+1. 检查 `legal-profile/legal-clinic.md`。如已填充且无 `--redo`，在覆盖前确认。
 2. 运行以下指导老师访谈，从 Part 0 开始（指导老师身份检查 → 伦理前置条件 → 集成可用性）。如果用户不是指导老师，停止并重定向。
 3. 种子文件：诊所手册、提交指南、本地法院规则、接待表格、一份已脱敏的示例文件。
 4. 关键决定：指导风格（正式队列 / 标记 / 较轻触）。
-5. 迁移：如果在 `~/.claude/plugins/cache/claude-for-legal-zh/legal-clinic/*/CLAUDE.md` 存在已填充的 CLAUDE.md（无 `[PLACEHOLDER]` 标记）但不在配置路径，将其复制到配置路径并告知用户迁移了什么。
-6. 写入 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md`，包括 `## 谁在使用这个插件` 和 `## 可用集成`。展示指导风格选择和实践领域模板供确认。
-7. 提供 `/legal-clinic:ramp` 预览。
+5. 迁移：如果在 `legal-profile/（旧版缓存路径，已废弃） 存在已填充的 CLAUDE.md（无 `[PLACEHOLDER]` 标记）但不在配置路径，将其复制到配置路径并告知用户迁移了什么。
+6. 写入 `legal-profile/legal-clinic.md`，包括 `## 谁在使用这个插件` 和 `## 可用集成`。展示指导风格选择和实践领域模板供确认。
+7. 提供 `「ramp」工作流（加载 legal-clinic/skills/ramp/SKILL.md）` 预览。
 
 ```
-/legal-clinic:cold-start-interview
+「cold-start-interview」工作流（加载 legal-clinic/skills/cold-start-interview/SKILL.md）
 ```
 
-**`--check-integrations`：** 仅重新运行 Part 0 集成可用性检查。更新 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md` 中的 `## 可用集成`，不触及身份、伦理前置条件、指导风格或实践领域模板。在添加或移除 MCP 连接器后使用。
+**`--check-integrations`：** 仅重新运行 Part 0 集成可用性检查。更新 `legal-profile/legal-clinic.md` 中的 `## 可用集成`，不触及身份、伦理前置条件、指导风格或实践领域模板。在添加或移除 插件后使用。
 
-探测时：仅在实际 MCP 工具调用成功时报告 ✓。已配置但未测试的连接器应标记为 ⚪ 并附一行确认方法。绝不基于 `.mcp.json` 声明单独报告 ✓——这会误导用户以为某些东西已接入而实际未接入。
+探测时：仅在实际 插件 工具调用成功时报告 ✓。已配置但未测试的连接器应标记为 ⚪ 并附一行确认方法。绝不基于 `.mcp.json` 声明单独报告 ✓——这会误导用户以为某些东西已接入而实际未接入。
 
 ---
 
@@ -42,7 +41,7 @@ argument-hint: "[--redo] [--check-integrations]"
 
 ## 冷启动检查
 
-读取 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md`：
+读取 `legal-profile/legal-clinic.md`：
 - **不存在** → 开始访谈。
 - **包含 `<!-- SETUP PAUSED AT: -->`** → 欢迎用户并提供从该节恢复。
 - **包含 `[PLACEHOLDER]` 标记但无暂停注释** → 模板从未完成；提供从头开始或从占位符起始处恢复。
@@ -50,7 +49,7 @@ argument-hint: "[--redo] [--check-integrations]"
 
 ## 检查共享机构画像
 
-查找 `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md`。
+查找 `legal-profile/company-profile.md`。
 
 - **如存在：** 读取它。展示一行确认："你是[姓名]，[执业设置]，在[机构]，[行业]，在[管辖地]执业。对吗？（或说'更新'来更改共享画像）"如确认，跳过机构相关问题——直接进入插件特定问题。
 - **如不存在：** 你将是用户设置的第一个插件。在导览和分叉后，询问机构相关问题并写入共享画像（按插件根目录下 `references/company-profile-template.md` 的模板），然后继续插件特定问题。告诉用户："我已保存你的机构画像——其他法律插件将读取它并跳过这些问题。"
@@ -69,7 +68,7 @@ argument-hint: "[--redo] [--check-integrations]"
 
 先展示此导言（3-4 短行，不多）：
 
-> **`legal-clinic` 面向设置法学院诊所和导入学生的指导律师。** 不是你的领域？`/legal-builder-hub:related-skills-surfacer`。
+> **`legal-clinic` 面向设置法学院诊所和导入学生的指导律师。** 不是你的领域？`（该功能属于 Claude 技能市场生态，KIMI 版本已移除）`。
 >
 > **2分钟** 获得实践领域、管辖地和指导模式基础——外加 client-letter 格式、IRAC 框架和截止日期节奏的工作默认值。**15分钟** 增加你的伦理前置条件记录、指导标记触发条件、来自你提交文件的按实践领域文件模板、输入 `/ramp` 的手册内容、输入 `/draft` 的本地法院规则、以及学期日期。
 >
@@ -90,7 +89,7 @@ argument-hint: "[--redo] [--check-integrations]"
 
 指导律师在导言中选择了快速或完整。分支：
 
-**快速启动路径：** 仅询问基础（实践领域、管辖地、指导风格）。在其他一切上写入 `[DEFAULT]` 标记。以如下结束："完成。你现在可以开始使用命令了。我已为 client-letter 格式、IRAC 框架和截止日期节奏使用了合理默认值。当某技能输出感觉不对时，那通常是一个你应调节的默认值——它会告诉你哪个。随时运行 `/legal-clinic:cold-start-interview --full` 做完整访谈，或 `/legal-clinic:cold-start-interview --redo <节>` 重做一部分。"
+**快速启动路径：** 仅询问基础（实践领域、管辖地、指导风格）。在其他一切上写入 `[DEFAULT]` 标记。以如下结束："完成。你现在可以开始使用命令了。我已为 client-letter 格式、IRAC 框架和截止日期节奏使用了合理默认值。当某技能输出感觉不对时，那通常是一个你应调节的默认值——它会告诉你哪个。随时运行 `「cold-start-interview」工作流（加载 legal-clinic/skills/cold-start-interview/SKILL.md） --full` 做完整访谈，或 `「cold-start-interview」工作流（加载 legal-clinic/skills/cold-start-interview/SKILL.md） --redo <节>` 重做一部分。"
 
 **完整设置路径：** 以下现有访谈流程。
 
@@ -105,7 +104,7 @@ argument-hint: "[--redo] [--check-integrations]"
 - **写入实践画像前：** 回顾访谈。列出每个被跳过或用占位符回答的问题——仍待处理的伦理前置条件、无模板的实践领域、未设定的指导标记触发条件、承诺但未上传的手册。说："在我写入你的实践画像前，以下是仍待处理的内容：[列表]。现在要补充吗，还是留作占位符？"然后等待。
 - **绝不**写入带有静默缺口的实践画像。每个占位符应是指导律师做出的有意跳过选择——而非滚过去的问题。
 - **批量大小——计算子问题。** "一轮不超过2-3个问题"意味着2-3个*可回答的提示*，计算子问题。一个有5个子问题的问题是5个问题。检验：用户能不用滚动就回答吗？如果问题不能在一个屏幕中放下，就太多了。尽可能使用结构化快速点击问题——它们不需要滚动或输入。
-- **暂停与恢复。** 提前告诉指导律师："如果你需要停下，说'暂停'（或'停止'或'让我回来再继续'），我将保存你的进度。之后再次运行 `/legal-clinic:cold-start-interview` 我会从你离开的地方继续。"当律师暂停时，将部分配置写入 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md`，在顶部附 `<!-- SETUP PAUSED AT: [节名称] — 运行 /legal-clinic:cold-start-interview 继续 -->` 注释，未回答字段使用 `[PENDING]` 标记（区别于 `[PLACEHOLDER]`）。当设置重新运行并发现暂停的配置时，问候律师："欢迎回来。你暂停在[节]。你早先的回答已保存。从离开的地方继续，还是重新开始？"不重问已回答的问题。
+- **暂停与恢复。** 提前告诉指导律师："如果你需要停下，说'暂停'（或'停止'或'让我回来再继续'），我将保存你的进度。之后再次运行 `「cold-start-interview」工作流（加载 legal-clinic/skills/cold-start-interview/SKILL.md）` 我会从你离开的地方继续。"当律师暂停时，将部分配置写入 `legal-profile/legal-clinic.md`，在顶部附 `<!-- SETUP PAUSED AT: [节名称] — 运行 「cold-start-interview」工作流（加载 legal-clinic/skills/cold-start-interview/SKILL.md） 继续 -->` 注释，未回答字段使用 `[PENDING]` 标记（区别于 `[PLACEHOLDER]`）。当设置重新运行并发现暂停的配置时，问候律师："欢迎回来。你暂停在[节]。你早先的回答已保存。从离开的地方继续，还是重新开始？"不重问已回答的问题。
 
 **在设置中核实用户陈述的法律事实。** 当用户以具体的规则引注、法条编号、案例名称、日期、截止日期、阈值、管辖地或注册号回答访谈问题时——且是你可以做合理性检查的——在写入配置前进行检查。如果用户所述与你的理解或他们已粘贴的内容冲突，浮现出来："你说阈值是X；我的理解是Y——能否确认哪个写入画像？`[前提已标记 — 需核实]`"一个写入 CLAUDE.md 的错误事实会传播到每个未来输出中；在此处捕捉它是产品中最高杠杆的时刻之一。
 
@@ -118,7 +117,7 @@ argument-hint: "[--redo] [--check-integrations]"
 > 你是本诊所的指导律师吗？你需要是持证律师并根据你所在法域的学生实践规则指导学生，本设置才有效。（这输入 Part 0 的身份门控——设置只能由指导律师运行，该回答将指导律师姓名和执业信息写入每个技能引用的画像。）
 >
 > 1. **是的，我是指导律师。** 继续。
-> 2. **不，我是学生/工作人员/行政人员。** 停止。本设置写入诊所的管理背景——指导模式、当事人数据规则、伦理前置条件——必须由将对工作负责的指导律师完成。请他们运行 `/legal-clinic:cold-start-interview`。学生每学期运行 `/legal-clinic:ramp` 进行导入。
+> 2. **不，我是学生/工作人员/行政人员。** 停止。本设置写入诊所的管理背景——指导模式、当事人数据规则、伦理前置条件——必须由将对工作负责的指导律师完成。请他们运行 `「cold-start-interview」工作流（加载 legal-clinic/skills/cold-start-interview/SKILL.md）`。学生每学期运行 `「ramp」工作流（加载 legal-clinic/skills/ramp/SKILL.md）` 进行导入。
 
 如果答案是2，停止访谈并浮现上述内容。不要继续。
 
@@ -146,8 +145,8 @@ argument-hint: "[--redo] [--check-integrations]"
 
 **检查实际已连接的，而非已配置的。** `.mcp.json` 中列出的连接器是*可用*的。实际响应的连接器是*已连接*的。这两者不同，混淆它们会破坏信任。对本插件使用的每个连接器：
 
-- 如果你能测试连接（调用简单的 MCP 工具如列表或搜索），仅在实际成功响应时报告 ✓。
-- 如果你不能测试（无法从此处探测），报告 ⚪ "已配置但未验证——打开你的 MCP 设置确认"附一行确认指引。
+- 如果你能测试连接（调用简单的 插件 工具如列表或搜索），仅在实际成功响应时报告 ✓。
+- 如果你不能测试（无法从此处探测），报告 ⚪ "已配置但未验证——打开你的 插件 设置确认"附一行确认指引。
 - 绝不基于仅配置报告 ✓。
 
 对显示为未连接的连接器，告诉用户如何连接。
@@ -155,12 +154,12 @@ argument-hint: "[--redo] [--check-integrations]"
 然后以此形式报告发现：
 
 > - ✓ [集成] — 已连接（已测试）
-> - ⚪ [集成] — 已配置但未验证。打开你的 MCP 设置确认。
+> - ⚪ [集成] — 已配置但未验证。打开你的 插件 设置确认。
 > - ✗ [集成] — 未找到。[功能]将降级到[手动替代]。[如何连接。]
 
 你不全部需要这些。核心功能——接待、起草、当事人信函、检索起手、截止日期、学期交接、指导老师审查——仅靠本地文件访问即可工作。
 
-将 Part 0 回答写入插件配置 `## 谁在使用这个插件` 和 `## 可用集成` 下。如果旧缓存路径 `~/.claude/plugins/cache/claude-for-legal-zh/legal-clinic/*/CLAUDE.md` 存在已填充的 CLAUDE.md 但不在当前路径，先将其复制过来。
+将 Part 0 回答写入插件配置 `## 谁在使用这个插件` 和 `## 可用集成` 下。如果旧缓存路径 `legal-profile/（旧版缓存路径，已废弃） 存在已填充的 CLAUDE.md 但不在当前路径，先将其复制过来。
 
 ### 开场
 
@@ -217,15 +216,15 @@ argument-hint: "[--redo] [--check-integrations]"
 > - **Assist：** 技能产出工作成果；学生审查、编辑并通过观察学习。最快，生产力最高，教学性最低。适合高案件量诊所。
 > - **Teach：** 技能不产出工作成果——学生起草，技能提出追问式问题并给予反馈，仅在两次尝试后才展示示范。最慢，教学性最高。适合学习为首要目标的诊所。
 >
-> 你可以稍后通过 `/legal-clinic:build-guide` 按文件类型设置。现在，选择一个默认值。
+> 你可以稍后通过 `「build-guide」工作流（加载 legal-clinic/skills/build-guide/SKILL.md）` 按文件类型设置。现在，选择一个默认值。
 
 将回答写入实践画像为 `pedagogy_default: assist | guide | teach`（如指导老师不选，默认 `guide`）。
 
 **实践领域指南。** 记录教学默认值后，提供：
 
-> 你想撰写一份实践领域指南来定制技能在你的诊所如何工作吗——接待问题、按文件类型的教学覆盖、审查门控？我可以通过 `/legal-clinic:build-guide` 帮你在5-10分钟内构建一份。你也可以稍后做。现在，技能使用合理默认值：你刚选的教学默认值，以及所有面向当事人的内容标记供你审查。
+> 你想撰写一份实践领域指南来定制技能在你的诊所如何工作吗——接待问题、按文件类型的教学覆盖、审查门控？我可以通过 `「build-guide」工作流（加载 legal-clinic/skills/build-guide/SKILL.md）` 帮你在5-10分钟内构建一份。你也可以稍后做。现在，技能使用合理默认值：你刚选的教学默认值，以及所有面向当事人的内容标记供你审查。
 
-在设置状态中记录回答——如果指导老师想构建指南，在访谈结束后浮现为下一步（在"写入后"部分的第3步下）。不要在此访谈中内嵌运行 `/legal-clinic:build-guide` 而中断；先完成画像，再提供移交。
+在设置状态中记录回答——如果指导老师想构建指南，在访谈结束后浮现为下一步（在"写入后"部分的第3步下）。不要在此访谈中内嵌运行 `「build-guide」工作流（加载 legal-clinic/skills/build-guide/SKILL.md）` 而中断；先完成画像，再提供移交。
 
 ### 第4部分：种子文件（3-4分钟）
 
@@ -277,7 +276,7 @@ argument-hint: "[--redo] [--check-integrations]"
 - **学期** — 学生何时更替（使 `/ramp` 知道何时需要，使 `/semester-handoff` 知道何时触发）
 - **手册路径** — 已收录的手册存放位置，供 `/ramp` 读取
 
-**数据有限（LIMITED DATA）标记：** 如果整个访谈中分享的材料少于10份，在 CLAUDE.md 顶部（写入日期下）添加 `> LIMITED DATA` 注释，说明："本实践画像由[N]份材料写成。下游技能将运行但输出更薄——`/ramp` 涵盖命令但不涵盖诊所特定程序，`/draft` 使用省级默认而非本地格式，`/client-letter` 使用通用模板。在收集更多示例后重新运行 `/legal-clinic:cold-start-interview --redo` 以提高精准度。"
+**数据有限（LIMITED DATA）标记：** 如果整个访谈中分享的材料少于10份，在 CLAUDE.md 顶部（写入日期下）添加 `> LIMITED DATA` 注释，说明："本实践画像由[N]份材料写成。下游技能将运行但输出更薄——`/ramp` 涵盖命令但不涵盖诊所特定程序，`/draft` 使用省级默认而非本地格式，`/client-letter` 使用通用模板。在收集更多示例后重新运行 `「cold-start-interview」工作流（加载 legal-clinic/skills/cold-start-interview/SKILL.md） --redo` 以提高精准度。"
 
 ## 内建保障框架
 
@@ -305,12 +304,12 @@ argument-hint: "[--redo] [--check-integrations]"
 
 > **这是我在法学院诊所实践中擅长的：**
 >
-> - **新案件的学生接待** — 如"引导学生完成实践领域特定的接待，含红旗信号识别和冲突检查。" 尝试：`/legal-clinic:client-intake`
-> - **以初中阅读水平起草当事人信函** — 如"以通俗语言生成预约确认或状态更新；学生编辑，你批准。" 尝试：`/legal-clinic:client-letter`
-> - **构建 IRAC 备忘录框架** — 如"为学生提供案件备忘录的结构和检索缺口清单——教学默认值为 guide。" 尝试：`/legal-clinic:memo`
-> - **跨活跃案件追踪截止日期** — 如"查看未来 14/7/3/1 天到期的内容，按你的节奏预警。" 尝试：`/legal-clinic:deadlines`
-> - **新群体导入** — 如"将本学期学生导入诊所的程序、工具和案件处理规范。" 尝试：`/legal-clinic:ramp`
-> - **学期交接** — 如"为下个群体构建按案件的移交备忘录。" 尝试：`/legal-clinic:semester-handoff`
+> - **新案件的学生接待** — 如"引导学生完成实践领域特定的接待，含红旗信号识别和冲突检查。" 尝试：`「client-intake」工作流（加载 legal-clinic/skills/client-intake/SKILL.md）`
+> - **以初中阅读水平起草当事人信函** — 如"以通俗语言生成预约确认或状态更新；学生编辑，你批准。" 尝试：`「client-letter」工作流（加载 legal-clinic/skills/client-letter/SKILL.md）`
+> - **构建 IRAC 备忘录框架** — 如"为学生提供案件备忘录的结构和检索缺口清单——教学默认值为 guide。" 尝试：`「memo」工作流（加载 legal-clinic/skills/memo/SKILL.md）`
+> - **跨活跃案件追踪截止日期** — 如"查看未来 14/7/3/1 天到期的内容，按你的节奏预警。" 尝试：`「deadlines」工作流（加载 legal-clinic/skills/deadlines/SKILL.md）`
+> - **新群体导入** — 如"将本学期学生导入诊所的程序、工具和案件处理规范。" 尝试：`「ramp」工作流（加载 legal-clinic/skills/ramp/SKILL.md）`
+> - **学期交接** — 如"为下个群体构建按案件的移交备忘录。" 尝试：`「semester-handoff」工作流（加载 legal-clinic/skills/semester-handoff/SKILL.md）`
 >
 > **我对你的第一个建议：** 自己先运行 `/ramp`，这样你能看到你的学生学期初会看到什么。或者告诉我你手头的事，我来选。
 
@@ -330,11 +329,11 @@ argument-hint: "[--redo] [--check-integrations]"
 
 7. **以"你可以稍后更改任何内容"结束：**
 
-> 完成。你诊所的配置位于 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md`——一份你可以直接阅读和编辑的纯文本文件。你的任何回答都可以更改：
+> 完成。你诊所的配置位于 `legal-profile/legal-clinic.md`——一份你可以直接阅读和编辑的纯文本文件。你的任何回答都可以更改：
 >
 > - 直接编辑文件以快速更改
-> - 运行 `/legal-clinic:cold-start-interview --redo` 进行全面重新访谈
-> - 运行 `/legal-clinic:cold-start-interview --check-integrations` 重新检查连接状态
+> - 运行 `「cold-start-interview」工作流（加载 legal-clinic/skills/cold-start-interview/SKILL.md） --redo` 进行全面重新访谈
+> - 运行 `「cold-start-interview」工作流（加载 legal-clinic/skills/cold-start-interview/SKILL.md） --check-integrations` 重新检查连接状态
 >
 > 诊所后期最常调整的事项：实践领域（当诊所接收新领域时）、指导风格（正式审查队列 vs. 可配置标记 vs. 较轻触——许多诊所从一种方式开始，第一学期后调整）、以及管辖地/本地规则（当事项落在非典型法院时）。你的配置将随着学生使用插件而改进——当 `/ramp` 遗漏某些内容或 `/draft` 使用了错误的文书标题格式时，修复通常在这里。
 

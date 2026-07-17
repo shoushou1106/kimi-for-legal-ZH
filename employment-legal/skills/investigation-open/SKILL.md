@@ -4,7 +4,6 @@ description: >
   开启新的内部调查事项——运行立案登记，生成证据来源清单，
   并创建持续调查日志。当收到投诉或指控，且律师需要建立一个
   受保密保护的调查工作空间时使用。
-argument-hint: "[指控的简要描述]"
 ---
 
 # /investigation-open
@@ -13,7 +12,7 @@ argument-hint: "[指控的简要描述]"
 
 ## 指令
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md`。
+1. 加载 `legal-profile/employment-legal.md`。
 2. 运行立案模式：
    - 记录投诉/举报来源、时间、内容
    - 确定调查范围和需要核实的事实要点
@@ -42,12 +41,12 @@ argument-hint: "[指控的简要描述]"
 ## 示例
 
 ```
-/employment-legal:investigation-open
+「investigation-open」工作流（加载 employment-legal/skills/investigation-open/SKILL.md）
 收到对北京办公室某部门负责人的性骚扰投诉。
 ```
 
 ```
-/employment-legal:investigation-open
+「investigation-open」工作流（加载 employment-legal/skills/investigation-open/SKILL.md）
 （技能将询问详情）
 ```
 

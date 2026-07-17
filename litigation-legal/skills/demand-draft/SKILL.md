@@ -4,19 +4,18 @@ description: >
   从已完成的委托登记起草律师函——通过保密/自认风险/和解谈判姿态检查清单门禁，
   输出 .docx，附发送后检查清单，并提供创建案件的选项。当用户说
   "起草律师函"、"写[类型]函"或已完成委托登记准备转为可发送草案时使用。
-argument-hint: "[slug] [--skip-gate] [--version=N]"
 ---
 
 # /demand-draft
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/demand-letters/[slug]/intake.md`。
-2. 加载 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` → 律师函实践、内部风格。
+1. 加载 `legal-profile/litigation-legal/demand-letters/[slug]/intake.md`。
+2. 加载 `legal-profile/litigation-legal.md` → 律师函实践、内部风格。
 3. 遵循以下工作流。
 4. 运行起草前门禁：保密过滤、自认风险、权利保留、和解谈判姿态、弃权扫描、语气、事实准确性。
 5. 模板选择：如有种子文件则使用；否则使用对应函件类型的软模板。
 6. 在对话中起草供审查。迭代至用户批准。
-7. 写入 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/demand-letters/[slug]/draft-v[N].docx`。
-8. 写入 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/demand-letters/[slug]/checklist.md`（发送后检查清单）。
+7. 写入 `legal-profile/litigation-legal/demand-letters/[slug]/draft-v[N].docx`。
+8. 写入 `legal-profile/litigation-legal/demand-letters/[slug]/checklist.md`（发送后检查清单）。
 
 ---
 

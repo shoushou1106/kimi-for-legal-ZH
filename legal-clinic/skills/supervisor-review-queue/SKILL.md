@@ -4,26 +4,25 @@ description: >
   指导老师审查队列——学生输出在此等待指导老师批准后才能发给当事人或法院。
   仅在冷启动设置时选择"正式审查队列"指导风格时活跃；否则休眠。
   当指导老师想查看等待审查的内容、批准、编辑后批准或退回某项时使用。
-argument-hint: "[--approve ID | --return ID '备注' | --edit ID]"
 ---
 
 # /supervisor-review-queue
 
-1. 检查 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md` → 指导风格。如果不是"正式审查队列"：说明诊所设置为[标记/较轻触]，不存在正式队列，以及如何切换。
+1. 检查 `legal-profile/legal-clinic.md` → 指导风格。如果不是"正式审查队列"：说明诊所设置为[标记/较轻触]，不存在正式队列，以及如何切换。
 2. 使用以下工作流。
 3. 默认：按紧急程度、按学生显示等待审查的内容。
 4. 操作：批准 / 编辑后批准 / 附备注退回。全部记录。
 
 ```
-/legal-clinic:supervisor-review-queue
+「supervisor-review-queue」工作流（加载 legal-clinic/skills/supervisor-review-queue/SKILL.md）
 ```
 
 ```
-/legal-clinic:supervisor-review-queue --approve Q-003
+「supervisor-review-queue」工作流（加载 legal-clinic/skills/supervisor-review-queue/SKILL.md） --approve Q-003
 ```
 
 ```
-/legal-clinic:supervisor-review-queue --return Q-004 "检查送达要求——本地规则已变更"
+「supervisor-review-queue」工作流（加载 legal-clinic/skills/supervisor-review-queue/SKILL.md） --return Q-004 "检查送达要求——本地规则已变更"
 ```
 
 ---
@@ -34,13 +33,13 @@ argument-hint: "[--approve ID | --return ID '备注' | --edit ID]"
 
 部分诊所想要一个正式门控：学生起草，指导老师审查，输出发布。其他诊所认为这过于规定性——他们通过案件讨论会和一对一指导，而非通过队列。
 
-**本技能仅在 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md` → 指导风格为"正式审查队列"时活跃。** 否则它休眠——冷启动访谈询问指导老师选择哪种模式，这是三个选项之一。
+**本技能仅在 `legal-profile/legal-clinic.md` → 指导风格为"正式审查队列"时活跃。** 否则它休眠——冷启动访谈询问指导老师选择哪种模式，这是三个选项之一。
 
 是否使用正式审查工作流对于诊所采纳而言是一个真正的开放问题。它取决于学生经验水平、案件量和指导老师已有的指导方式。指导老师在设置时决定，并可在之后更改。
 
 ## 加载上下文
 
-`~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md` → 指导风格。如果不是"正式审查队列"：回应"诊所设置为[标记/较轻触]指导——没有正式队列。[指导老师]通过[诊所现有结构]审查。要切换到正式队列，编辑 CLAUDE.md → 指导风格。"
+`legal-profile/legal-clinic.md` → 指导风格。如果不是"正式审查队列"：回应"诊所设置为[标记/较轻触]指导——没有正式队列。[指导老师]通过[诊所现有结构]审查。要切换到正式队列，编辑 CLAUDE.md → 指导风格。"
 
 如果正式队列已启用 → 读取标记触发条件并继续。
 

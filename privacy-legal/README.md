@@ -17,24 +17,24 @@
 
 插件访谈你以了解：你是个人信息处理者还是受托处理者、哪些法规实际适用、你在个人信息处理协议中愿意和不愿意同意的条款。然后读取三份种子文件——你的隐私政策（个人信息处理规则）、你的个人信息处理协议模板、一份你认可的影响评估——并学习你的真实立场和内部风格。
 
-你的配置存储在 `~/.claude/plugins/config/claude-for-legal-zh/privacy-legal/CLAUDE.md`，可跨插件更新保留。
+你的配置存储在 `legal-profile/privacy-legal.md`，可跨插件更新保留。
 
 ```
-/privacy-legal:cold-start-interview
+「cold-start-interview」工作流（加载 privacy-legal/skills/cold-start-interview/SKILL.md）
 ```
 
 ## 命令
 
 | 命令 | 功能 |
 |---|---|
-| `/privacy-legal:cold-start-interview` | 冷启动访谈 |
-| `/privacy-legal:use-case-triage [activity]` | 此活动是否需要影响评估？快速分类 + 条件 |
-| `/privacy-legal:dpa-review [file]` | 依据你的操作手册审查个人信息处理协议（自动检测方向） |
-| `/privacy-legal:dsar-response` | 引导处理个人信息主体权利请求并起草响应 |
-| `/privacy-legal:pia-generation [feature]` | 按你的内部风格生成个人信息保护影响评估 |
-| `/privacy-legal:reg-gap-analysis [regulation]` | 对比新法规与当前政策/实践的差异 |
-| `/privacy-legal:policy-monitor` | 每周扫描隐私政策偏差，或针对拟议新实践直接查询 |
-| `/privacy-legal:matter-workspace` | 管理事项工作区（仅多客户私人执业）— 新建、列表、切换、关闭、无 |
+| `「cold-start-interview」工作流（加载 privacy-legal/skills/cold-start-interview/SKILL.md）` | 冷启动访谈 |
+| `「use-case-triage」工作流（加载 privacy-legal/skills/use-case-triage/SKILL.md） [activity]` | 此活动是否需要影响评估？快速分类 + 条件 |
+| `「dpa-review」工作流（加载 privacy-legal/skills/dpa-review/SKILL.md） [file]` | 依据你的操作手册审查个人信息处理协议（自动检测方向） |
+| `「dsar-response」工作流（加载 privacy-legal/skills/dsar-response/SKILL.md）` | 引导处理个人信息主体权利请求并起草响应 |
+| `「pia-generation」工作流（加载 privacy-legal/skills/pia-generation/SKILL.md） [feature]` | 按你的内部风格生成个人信息保护影响评估 |
+| `「reg-gap-analysis」工作流（加载 privacy-legal/skills/reg-gap-analysis/SKILL.md） [regulation]` | 对比新法规与当前政策/实践的差异 |
+| `「policy-monitor」工作流（加载 privacy-legal/skills/policy-monitor/SKILL.md）` | 每周扫描隐私政策偏差，或针对拟议新实践直接查询 |
+| `「matter-workspace」工作流（加载 privacy-legal/skills/matter-workspace/SKILL.md）` | 管理事项工作区（仅多客户私人执业）— 新建、列表、切换、关闭、无 |
 
 ## 技能
 
@@ -54,7 +54,7 @@
 ### 1. 设置
 
 ```
-/privacy-legal:cold-start-interview
+「cold-start-interview」工作流（加载 privacy-legal/skills/cold-start-interview/SKILL.md）
 ```
 
 准备好：你的公开隐私政策 URL、你的标准个人信息处理协议、一份参考影响评估。
@@ -62,7 +62,7 @@
 ### 2. 分类新功能或处理活动
 
 ```
-/privacy-legal:use-case-triage "市场部希望使用行为数据进行广告个性化"
+「use-case-triage」工作流（加载 privacy-legal/skills/use-case-triage/SKILL.md） "市场部希望使用行为数据进行广告个性化"
 ```
 
 输出：继续 / 需要影响评估 / 必须进行影响评估 / 停止 —— 附条件表、合法性基础问题和在同一对话中启动影响评估的提议。
@@ -70,7 +70,7 @@
 ### 3. 审查客户个人信息处理协议
 
 ```
-/privacy-legal:dpa-review customer-dpa.pdf
+「dpa-review」工作流（加载 privacy-legal/skills/dpa-review/SKILL.md） customer-dpa.pdf
 ```
 
 输出：自动检测方向、逐条与操作手册对比、建议修订、政策一致性检查。
@@ -78,7 +78,7 @@
 ### 4. 处理个人信息主体权利请求
 
 ```
-/privacy-legal:dsar-response
+「dsar-response」工作流（加载 privacy-legal/skills/dsar-response/SKILL.md）
 ```
 
 引导你完成：分类 -> 验证 -> 定位 -> 豁免 -> 起草。使用配置 CLAUDE.md 中的系统清单。
@@ -86,14 +86,14 @@
 ### 5. 为新功能生成影响评估
 
 ```
-/privacy-legal:pia-generation "位置分享功能"
+「pia-generation」工作流（加载 privacy-legal/skills/pia-generation/SKILL.md） "位置分享功能"
 ```
 
 接收问题 -> 按内部格式生成影响评估 -> 政策差异 -> 条件清单。
 
 ## 如何持续学习
 
-你的实务画像位于 `~/.claude/plugins/config/claude-for-legal-zh/privacy-legal/CLAUDE.md` 不是静态的——随着你使用插件不断改进。技能会告知你输出何时使用了应调整的默认值。`policy-monitor` 技能监测政策与实践之间的偏差并提议更新。你可以重新运行设置、直接编辑文件或告知技能记录新立场。
+你的实务画像位于 `legal-profile/privacy-legal.md` 不是静态的——随着你使用插件不断改进。技能会告知你输出何时使用了应调整的默认值。`policy-monitor` 技能监测政策与实践之间的偏差并提议更新。你可以重新运行设置、直接编辑文件或告知技能记录新立场。
 
 ## 文件结构
 

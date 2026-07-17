@@ -59,11 +59,11 @@ scripts/install-claude-code.sh
 
 5. **运行初始化设置。** 快速入门 2 分钟，完整设置 10-15 分钟。
    ```
-   /commercial-legal:cold-start-interview
+   「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md）
    ```
 
 6. **连接法律检索工具。** 没有连接检索工具时，引用的法规和案例将被标注为"未验证"。
-   本插件已预配置 yuandian（元典）MCP 连接器用于案例检索和法规检索。首次需要时系统会提示授权。
+   本插件已预配置 元典法律数据库 连接器用于案例检索和法规检索。首次需要时系统会提示授权。
    也可以手动配置其他中国法律检索工具（北大法宝、威科先行等）。
 
 ## 安装范围：选择用户级（user scope），而非项目级（project scope）
@@ -80,28 +80,28 @@ scripts/install-claude-code.sh
 
 | 你的角色 | 安装 | 首次命令 |
 |---|---|---|
-| 数据合规/隐私律师/DPO | `privacy-legal` | `/privacy-legal:use-case-triage` |
-| 商事/合同律师/法务 | `commercial-legal` | `/commercial-legal:review` |
-| 公司/并购律师 | `corporate-legal` | `/corporate-legal:diligence-issue-extraction` |
-| 劳动法律师/HR 法务 | `employment-legal` | `/employment-legal:wage-hour-qa` |
-| 产品/业务法务 | `product-legal` | `/product-legal:is-this-a-problem` |
-| 知识产权律师/专利代理师 | `ip-legal` | `/ip-legal:clearance` |
-| 诉讼/仲裁律师（法务或律所） | `litigation-legal` | `/litigation-legal:matter-intake` |
-| 合规/监管法务 | `regulatory-legal` | `/regulatory-legal:reg-feed-watcher` |
-| AI 治理负责人 | `ai-governance-legal` | `/ai-governance-legal:use-case-triage` |
-| 法学院法律诊所指导老师 | `legal-clinic` | `/legal-clinic:cold-start-interview` |
-| 法学院学生/法考生 | `law-student` | `/law-student:cold-start-interview` |
-| 法律运营/寻找新技能 | `legal-builder-hub` | `/legal-builder-hub:registry-browser` |
+| 数据合规/隐私律师/DPO | `privacy-legal` | `「use-case-triage」工作流（加载 privacy-legal/skills/use-case-triage/SKILL.md）` |
+| 商事/合同律师/法务 | `commercial-legal` | `「review」工作流（加载 commercial-legal/skills/review/SKILL.md）` |
+| 公司/并购律师 | `corporate-legal` | `「diligence-issue-extraction」工作流（加载 corporate-legal/skills/diligence-issue-extraction/SKILL.md）` |
+| 劳动法律师/HR 法务 | `employment-legal` | `「wage-hour-qa」工作流（加载 employment-legal/skills/wage-hour-qa/SKILL.md）` |
+| 产品/业务法务 | `product-legal` | `「is-this-a-problem」工作流（加载 product-legal/skills/is-this-a-problem/SKILL.md）` |
+| 知识产权律师/专利代理师 | `ip-legal` | `「clearance」工作流（加载 ip-legal/skills/clearance/SKILL.md）` |
+| 诉讼/仲裁律师（法务或律所） | `litigation-legal` | `「matter-intake」工作流（加载 litigation-legal/skills/matter-intake/SKILL.md）` |
+| 合规/监管法务 | `regulatory-legal` | `「reg-feed-watcher」工作流（加载 regulatory-legal/skills/reg-feed-watcher/SKILL.md）` |
+| AI 治理负责人 | `ai-governance-legal` | `「use-case-triage」工作流（加载 ai-governance-legal/skills/use-case-triage/SKILL.md）` |
+| 法学院法律诊所指导老师 | `legal-clinic` | `「cold-start-interview」工作流（加载 legal-clinic/skills/cold-start-interview/SKILL.md）` |
+| 法学院学生/法考生 | `law-student` | `「cold-start-interview」工作流（加载 law-student/skills/cold-start-interview/SKILL.md）` |
+| 法律运营/寻找新技能 | `legal-builder-hub` | `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` |
 
 ## 你安装的是什么
 
-每个插件通过初始化面试了解你的实务方式，写入实践画像文件（`~/.claude/plugins/config/claude-for-legal-zh/<插件名>/CLAUDE.md`），每个技能都从中读取。画像属于你——直接编辑、重新运行设置、或让技能更新它。
+每个插件通过初始化面试了解你的实务方式，写入实践画像文件（`legal-profile/<插件名>/CLAUDE.md`），每个技能都从中读取。画像属于你——直接编辑、重新运行设置、或让技能更新它。
 
 **所有输出均为律师审查草稿。** 插件会标记其不确定的内容，按来源标注引用，并对不可逆操作设置门槛。律师审查、核实并承担责任。插件让审查更快，但不能替代审查。
 
 ## 盒子里有什么
 
-12 个业务领域插件，5 个托管 Agent 蓝图，yuandian MCP 连接器。完整参考见 [README.md](README.md)。
+12 个业务领域插件，5 个托管 Agent 蓝图，元典检索 连接器。完整参考见 [README.md](README.md)。
 
 ## 遇到问题？
 
@@ -109,4 +109,4 @@ scripts/install-claude-code.sh
 - **提示"请先运行设置"** → 在任何其他命令之前先运行 `/<插件名>:cold-start-interview`。
 - **引用标注为 `[需验证]`** → 连接检索工具（第 6 步）。没有连接时，每条引用都来自模型训练数据而非最新数据库。
 - **"无法读取文件"** → 通常是插件安装为项目级而文件在项目文件夹之外。见上"安装范围"——重装为用户级或将文件移到项目文件夹。
-- **插件不做某件事** → 运行 `/legal-builder-hub:related-skills-surfacer` 找更匹配的技能，或查看插件 README 中的"本插件不做什么"。
+- **插件不做某件事** → 运行 `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` 找更匹配的技能，或查看插件 README 中的"本插件不做什么"。

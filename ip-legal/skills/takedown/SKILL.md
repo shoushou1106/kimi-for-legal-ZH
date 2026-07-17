@@ -4,16 +4,15 @@ description: >
   起草"通知-删除"通知（依信息网络传播权保护条例）、对收到的通知进行分诊或起草反通知。
   当通过著作权通知主张权利并经历合理使用和伪证双重关口，当收到的通知需要分诊为合规/
   反通知/协商/忽略选项，或当起草反通知并经历联邦管辖同意关口时使用。
-argument-hint: "<--send | --respond | --counter> [上下文或收件路径]"
 ---
 
 # /takedown
 
 三种模式。选一：
 
-- `/ip-legal:takedown --send` — 起草通知-删除通知（信息网络传播权保护条例第14条 `[法条原文]`）。合理使用关口+响亮的权利声明关口。
-- `/ip-legal:takedown --respond` — 对收到的通知做分诊。选项：合规 / 反通知 / 协商 / 忽略。
-- `/ip-legal:takedown --counter` — 起草反通知（信息网络传播权保护条例第16条 `[法条原文]`）。对司法管辖同意和真实声明的响亮关口。
+- `「takedown」工作流（加载 ip-legal/skills/takedown/SKILL.md） --send` — 起草通知-删除通知（信息网络传播权保护条例第14条 `[法条原文]`）。合理使用关口+响亮的权利声明关口。
+- `「takedown」工作流（加载 ip-legal/skills/takedown/SKILL.md） --respond` — 对收到的通知做分诊。选项：合规 / 反通知 / 协商 / 忽略。
+- `「takedown」工作流（加载 ip-legal/skills/takedown/SKILL.md） --counter` — 起草反通知（信息网络传播权保护条例第16条 `[法条原文]`）。对司法管辖同意和真实声明的响亮关口。
 
 ## 指令
 
@@ -27,9 +26,9 @@ argument-hint: "<--send | --respond | --counter> [上下文或收件路径]"
 ## 示例
 
 ```
-/ip-legal:takedown --send
-/ip-legal:takedown --respond ~/Downloads/平台通知.pdf
-/ip-legal:takedown --counter
+「takedown」工作流（加载 ip-legal/skills/takedown/SKILL.md） --send
+「takedown」工作流（加载 ip-legal/skills/takedown/SKILL.md） --respond ~/Downloads/平台通知.pdf
+「takedown」工作流（加载 ip-legal/skills/takedown/SKILL.md） --counter
 ```
 
 ---

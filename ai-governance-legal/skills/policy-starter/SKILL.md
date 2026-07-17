@@ -4,20 +4,19 @@ description: >
   根据监管注册表和公司已有的实践位置，起草AI使用政策。
   适用于团队从未有过AI使用政策、需要快速生成初稿供法律审阅、
   或现有政策需要根据新法规全面重写时。
-argument-hint: "[面向的受众 — 内部员工 / 外部客户 / 两者皆需]"
 ---
 
 # /policy-starter
 
-1. 读取 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/CLAUDE.md` → 监管注册表（适用法规）、AI系统清单（已在使用的AI）、公司的实践位置（风险偏好、透明度承诺）。
+1. 读取 `legal-profile/ai-governance-legal.md` → 监管注册表（适用法规）、AI系统清单（已在使用的AI）、公司的实践位置（风险偏好、透明度承诺）。
 2. 运行以下工作流。
 3. 确定受众 → 选择模板 → 填充公司的具体内容 → 输出草案。
 4. 附一份"仍需决定"清单——政策初稿解决不了的问题，需要由人来拍板。
 
 ```
-/ai-governance-legal:policy-starter "内部员工AI使用政策"
-/ai-governance-legal:policy-starter "面向用户"
-/ai-governance-legal:policy-starter
+「policy-starter」工作流（加载 ai-governance-legal/skills/policy-starter/SKILL.md） "内部员工AI使用政策"
+「policy-starter」工作流（加载 ai-governance-legal/skills/policy-starter/SKILL.md） "面向用户"
+「policy-starter」工作流（加载 ai-governance-legal/skills/policy-starter/SKILL.md）
 [省略参数以获取受众选择提示]
 ```
 
@@ -31,7 +30,7 @@ argument-hint: "[面向的受众 — 内部员工 / 外部客户 / 两者皆需]
 
 ## 加载当前状态
 
-读取 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/CLAUDE.md`：
+读取 `legal-profile/ai-governance-legal.md`：
 - `## 监管注册表` — 适用的法规，决定了政策的合规底线
 - `## AI系统清单` — 已经在使用或计划使用的AI——政策不能比实际做得多或做得少
 - `## 红线` — 绝对不做的——政策应反映这些红线

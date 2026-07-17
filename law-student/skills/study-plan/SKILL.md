@@ -4,13 +4,12 @@ description: >
   构建或更新长期法考备考（或期末备考）学习计划——分阶段、按薄弱科目的权重分配、
   每日练习安排，根据 study-plan.yaml 中的练习历史自适应调整。
   当用户说"制定学习计划""规划我的法考备考""安排我的复习""我该怎么复习[X]"时使用。
-argument-hint: "[--build | --update | --status | --cram]"
 ---
 
 # /study-plan
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/law-student/CLAUDE.md` → 考试类型（客观题/主观题）、考试日期、薄弱科目、每日目标学习时数、培训课程。
-2. 加载 `~/.claude/plugins/config/claude-for-legal-zh/law-student/study-plan.yaml`（如存在）。
+1. 加载 `legal-profile/law-student.md` → 考试类型（客观题/主观题）、考试日期、薄弱科目、每日目标学习时数、培训课程。
+2. 加载 `legal-profile/law-student/study-plan.yaml`（如存在）。
 3. 应用以下框架。
 4. 按标志路由：
    - `--build`（无计划时的默认）：走输入关卡（考试、科目、时数/周、休息日、方法）。构建阶段结构 + 前两周的每日安排。写入 `study-plan.yaml`。
@@ -38,14 +37,14 @@ argument-hint: "[--build | --update | --status | --cram]"
 
 ## 加载上下文
 
-`~/.claude/plugins/config/claude-for-legal-zh/law-student/CLAUDE.md`：
+`legal-profile/law-student.md`：
 - 考试类型（客观题/主观题）、考试日期
 - 当前课程（用于非法考用途）
 - 薄弱科目（客观题、主观题）
 - 培训课程
 - 每日目标学习时数
 
-`~/.claude/plugins/config/claude-for-legal-zh/law-student/study-plan.yaml`（如存在）——扩展，不覆盖。
+`legal-profile/law-student/study-plan.yaml`（如存在）——扩展，不覆盖。
 
 ## 工作流
 
@@ -87,7 +86,7 @@ argument-hint: "[--build | --update | --status | --cram]"
 
 ### 第2.5步：补充 vs 替代（培训课程用户）
 
-如果 `~/.claude/plugins/config/claude-for-legal-zh/law-student/CLAUDE.md` → `培训课程` 是**瑞达**、**厚大**、**众合**或其他结构化培训课程（即不是 `自学` 或 `不适用`），学生已经有了一个培训机构的日程表。本技能的计划必须选择两种角色之一——它不能在培训课程旁边运行一个完整的平行课程而不让学生崩溃。
+如果 `legal-profile/law-student.md` → `培训课程` 是**瑞达**、**厚大**、**众合**或其他结构化培训课程（即不是 `自学` 或 `不适用`），学生已经有了一个培训机构的日程表。本技能的计划必须选择两种角色之一——它不能在培训课程旁边运行一个完整的平行课程而不让学生崩溃。
 
 问，一个问题，等待：
 
@@ -126,7 +125,7 @@ argument-hint: "[--build | --update | --status | --cram]"
 
 ### 第4步：写入
 
-写入 `~/.claude/plugins/config/claude-for-legal-zh/law-student/study-plan.yaml`：
+写入 `legal-profile/law-student/study-plan.yaml`：
 
 ```yaml
 plan_type: 法考  # 或 法学院期末 或 学期
@@ -219,7 +218,7 @@ session_history:
     weak_subtopics: [共同犯罪, 刑罚裁量]
 ```
 
-在下次 `/law-student:study-plan --update` 运行时（或当任何技能检测到计划过时时）：
+在下次 `「study-plan」工作流（加载 law-student/skills/study-plan/SKILL.md） --update` 运行时（或当任何技能检测到计划过时时）：
 - 得分持续低的科目在 `priority` 和 `weekly_hours` 中升级。
 - 一个科目内的薄弱子主题在下一次该科目的安排练习中被标记。
 - 如果学生落后了（安排的练习未出现在历史中），调整：要么压缩覆盖，要么注明缺口并询问。
@@ -234,10 +233,10 @@ session_history:
 
 ## 技能联动
 
-- `/law-student:session <科目> <n>` 将结果写入本计划的 `session_history`。
-- `/law-student:bar-prep-questions` 读取计划以知道今天安排了哪个科目。
-- `/law-student:flashcards` 可以 `--session <n>` 且结果录入计划。
-- `/law-student:socratic-drill` 和 `/law-student:irac-practice` 练习完成也追加。
+- `「session」工作流（加载 law-student/skills/session/SKILL.md） <科目> <n>` 将结果写入本计划的 `session_history`。
+- `「bar-prep-questions」工作流（加载 law-student/skills/bar-prep-questions/SKILL.md）` 读取计划以知道今天安排了哪个科目。
+- `「flashcards」工作流（加载 law-student/skills/flashcards/SKILL.md）` 可以 `--session <n>` 且结果录入计划。
+- `「socratic-drill」工作流（加载 law-student/skills/socratic-drill/SKILL.md）` 和 `「irac-practice」工作流（加载 law-student/skills/irac-practice/SKILL.md）` 练习完成也追加。
 
 ## 本技能不做什么
 

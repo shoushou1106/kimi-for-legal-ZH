@@ -1,12 +1,11 @@
 ---
 name: gap-surfacer
 description: >
-  参考资料：支持 /regulatory-legal:gaps 和 /regulatory-legal:comments
+  参考资料：支持 「gaps」工作流（加载 regulatory-legal/skills/gaps/SKILL.md） 和 「comments」工作流（加载 regulatory-legal/skills/comments/SKILL.md）
   的共享差距和意见征集跟踪框架。跟踪未关闭的政策差距及其整改状态，
   从 policy-diff 中获取差距，呈现开放和即将到期的事项，路由给负责人，
   并通过企业通讯工具通知差距负责人，每次发送前需确认。
   由 gaps 和 comments 技能在实质工作前加载。
-user-invocable: false
 ---
 
 # 差距呈现
@@ -31,7 +30,7 @@ user-invocable: false
 
 ## 跟踪文件
 
-位于 `~/.claude/plugins/config/claude-for-legal-zh/regulatory-legal/gap-tracker.yaml`：
+位于 `legal-profile/regulatory-legal/gap-tracker.yaml`：
 
 ```yaml
 gaps:

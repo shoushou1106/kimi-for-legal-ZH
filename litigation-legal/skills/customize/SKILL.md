@@ -5,23 +5,22 @@ description: >
   调整执业角色、立场（原告/被告/混合）、风险校准、执业背景、
   文书风格、上报表联系人、严重性词汇或案件工作空间路径。
   当用户说"修改我的[某项目]"、"更新我的画像"、"编辑我的配置"或"自定义"时使用。
-argument-hint: "[部分名称，或描述你想修改的内容]"
 ---
 
 # /customize
 
 ## 何时运行
 
-用户输入 `/litigation-legal:customize`。他们想修改诉讼画像中的某项内容——风险校准、文书风格规则、上报表联系人、执业背景备注——而不重新运行整个首次配置访谈，也不手动编辑 YAML。
+用户输入 `「customize」工作流（加载 litigation-legal/skills/customize/SKILL.md）`。他们想修改诉讼画像中的某项内容——风险校准、文书风格规则、上报表联系人、执业背景备注——而不重新运行整个首次配置访谈，也不手动编辑 YAML。
 
 ## 操作
 
 1. **读取配置。** 读取
-   `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md`
-   （及上一级目录的 `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md`）。
+   `legal-profile/litigation-legal.md`
+   （及上一级目录的 `legal-profile/company-profile.md`）。
    如插件配置不存在或仍含 `[PLACEHOLDER]` 值，说：
 
-   > 你尚未运行设置。请先运行 `/litigation-legal:cold-start-interview`
+   > 你尚未运行设置。请先运行 `「cold-start-interview」工作流（加载 litigation-legal/skills/cold-start-interview/SKILL.md）`
    > ——自定义是用于调整已有画像的。
 
 2. **展示可自定义的图谱。** 分组列出画像中的内容，附当前值的一句话摘要：
@@ -49,13 +48,13 @@ argument-hint: "[部分名称，或描述你想修改的内容]"
    - *为知识产权案件新增外聘律师：* "`/oc-status` 将在知识产权标记案件的每周扫查中包含此律所。"
 
 5. **对于共享画像的变更**（公司名称、行业、管辖地、执业场景）：写入
-   `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md` 并注明：
+   `legal-profile/company-profile.md` 并注明：
 
    > 此变更影响全部插件——任何读取你管辖地范围的插件现在看到的是[新值]。
 
 6. **收尾。**
 
-   > 完成。你下一次输出将反映此变更。还有别的吗？你可以随时运行 `/litigation-legal:customize`。
+   > 完成。你下一次输出将反映此变更。还有别的吗？你可以随时运行 `「customize」工作流（加载 litigation-legal/skills/customize/SKILL.md）`。
 
 ## 护栏
 

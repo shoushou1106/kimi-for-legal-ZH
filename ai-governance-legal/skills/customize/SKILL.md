@@ -6,26 +6,25 @@ description: >
   适用于"把我们的AI风险偏好调整为更保守"、
   "添加一条新的红线"、"更新算法备案到期提醒"、
   或任何细微调整场景。不覆盖已配置的所有内容——仅编辑指定字段。
-argument-hint: "[需要更改的内容描述]"
 ---
 
 # /customize
 
 > **实践配置定制**——调整配置设置，但不重新运行完整的冷启动访谈。不改变技能逻辑；仅改变实践层面的默认立场。
 
-覆盖 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/CLAUDE.md` 中的指定字段。其他一切保持不变。
+覆盖 `legal-profile/ai-governance-legal.md` 中的指定字段。其他一切保持不变。
 
 ```
-/ai-governance-legal:customize "将我们的AI风险偏好从'中性'调整为'保守'"
-/ai-governance-legal:customize "添加红线：不使用AI进行员工绩效自动排名"
-/ai-governance-legal:customize "将算法备案到期提醒设为提前60天"
+「customize」工作流（加载 ai-governance-legal/skills/customize/SKILL.md） "将我们的AI风险偏好从'中性'调整为'保守'"
+「customize」工作流（加载 ai-governance-legal/skills/customize/SKILL.md） "添加红线：不使用AI进行员工绩效自动排名"
+「customize」工作流（加载 ai-governance-legal/skills/customize/SKILL.md） "将算法备案到期提醒设为提前60天"
 ```
 
 ---
 
 ## 工作流
 
-1. 读取 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/CLAUDE.md` → 当前配置。
+1. 读取 `legal-profile/ai-governance-legal.md` → 当前配置。
 2. 解析变更描述。确定影响的字段。如果描述模糊，在编辑前提问澄清。
 3. 显示拟议变更的差异对比。
 4. 在用户确认后应用。仅编辑目标字段。
@@ -46,7 +45,7 @@ argument-hint: "[需要更改的内容描述]"
 ## 限制
 
 - 此技能不改写技能逻辑或工作流——仅调整实践级配置中的参数。
-- 结构性的重新配置（例如从法务内部用户转为私人执业）应通过 `/ai-governance-legal:cold-start-interview --redo` 进行。
+- 结构性的重新配置（例如从法务内部用户转为私人执业）应通过 `「cold-start-interview」工作流（加载 ai-governance-legal/skills/cold-start-interview/SKILL.md） --redo` 进行。
 
 ## 输出
 

@@ -2,16 +2,15 @@
 name: vendor-agreement-review
 description: >
   参考：根据团队审查指引审查接收方供应商协议。标注偏离项、评估风险、生成具体
-  修订语言并路由至合适的审批人。当 /commercial-legal:review 检测到供应商主协议、
+  修订语言并路由至合适的审批人。当 「review」工作流（加载 commercial-legal/skills/review/SKILL.md） 检测到供应商主协议、
   服务协议或类似协议时加载。
-user-invocable: false
 ---
 
 # 供应商协议审查
 
 ## 事项上下文
 
-**事项上下文。** 检查业务领域级 CLAUDE.md 中的 `## 事项工作区`。如果 `Enabled` 为 `✗`（法务用户的默认值），跳过本段其余内容——技能使用业务领域级上下文，事项机制不可见。如果已启用且没有活动事项，询问："这是哪个事项的？运行 `/commercial-legal:matter-workspace switch <slug>` 或说 `practice-level`。"加载活动事项的 `matter.md` 获取事项特定上下文和覆盖设置。将输出写入事项文件夹。除非 `跨事项上下文` 为 `on`，否则绝不读取其他事项的文件。
+**事项上下文。** 检查业务领域级 CLAUDE.md 中的 `## 事项工作区`。如果 `Enabled` 为 `✗`（法务用户的默认值），跳过本段其余内容——技能使用业务领域级上下文，事项机制不可见。如果已启用且没有活动事项，询问："这是哪个事项的？运行 `「matter-workspace」工作流（加载 commercial-legal/skills/matter-workspace/SKILL.md） switch <slug>` 或说 `practice-level`。"加载活动事项的 `matter.md` 获取事项特定上下文和覆盖设置。将输出写入事项文件夹。除非 `跨事项上下文` 为 `on`，否则绝不读取其他事项的文件。
 
 ---
 
@@ -25,15 +24,15 @@ user-invocable: false
 
 ## 前提条件：加载审查指引
 
-**在阅读合同之前，阅读 `~/.claude/plugins/config/claude-for-legal-zh/commercial-legal/CLAUDE.md`。** 如果文件缺失或仍有占位符，弹出以下提示：
+**在阅读合同之前，阅读 `legal-profile/commercial-legal.md`。** 如果文件缺失或仍有占位符，弹出以下提示：
 
-> 我注意到你尚未配置业务领域配置。运行 `/commercial-legal:cold-start-interview`（2分钟）配置你的业务领域。或说 **"临时模式"** 我将按通用默认值审查——中国法管辖、中等风险偏好、律师角色、无审查指引。每个输出标注 `[临时模式]`。
+> 我注意到你尚未配置业务领域配置。运行 `「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md）`（2分钟）配置你的业务领域。或说 **"临时模式"** 我将按通用默认值审查——中国法管辖、中等风险偏好、律师角色、无审查指引。每个输出标注 `[临时模式]`。
 
-**哪一方？** 在适用审查指引之前，确定公司在此合同中处于哪一方。通常很明显：如果对方是提供产品或服务的供应商，你是采购方。如果对方是购买你产品的客户，你是销售方。如果不明显，询问。如果匹配方向为 `[未配置]`，停止并告知用户先运行 `/commercial-legal:cold-start-interview --side <side>`。
+**哪一方？** 在适用审查指引之前，确定公司在此合同中处于哪一方。通常很明显：如果对方是提供产品或服务的供应商，你是采购方。如果对方是购买你产品的客户，你是销售方。如果不明显，询问。如果匹配方向为 `[未配置]`，停止并告知用户先运行 `「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md） --side <side>`。
 
 本技能通常用于采购方合同（供应商向你提供），但方向检查仍然适用。
 
-`~/.claude/plugins/config/claude-for-legal-zh/commercial-legal/CLAUDE.md` 中的审查指引是真实来源。它告诉你本团队的标准立场、曾经接受的让步、从不接受的内容、审批权限以及需要首先检查的deal-breaker。
+`legal-profile/commercial-legal.md` 中的审查指引是真实来源。它告诉你本团队的标准立场、曾经接受的让步、从不接受的内容、审批权限以及需要首先检查的deal-breaker。
 
 ## 工作流
 
@@ -213,11 +212,11 @@ user-invocable: false
 
 ## 集成：合同管理系统
 
-如果合同管理系统MCP已连接，审查完成后检查此对方当事人是否已有协议，获取匹配的工作流模板，提出创建附有审查备忘录且预路由审批人的记录。
+如果合同管理系统插件已连接，审查完成后检查此对方当事人是否已有协议，获取匹配的工作流模板，提出创建附有审查备忘录且预路由审批人的记录。
 
 ## 集成：电子签章
 
-如果电子签章（如e签宝、法大大）MCP已连接且协议已可签署，提出生成签署信封并按正确顺序路由签署人。**未经明确指示，不要发送任何签署。**
+如果电子签章（如e签宝、法大大）插件已连接且协议已可签署，提出生成签署信封并按正确顺序路由签署人。**未经明确指示，不要发送任何签署。**
 
 ## 输出格式
 

@@ -4,22 +4,21 @@ description: >
   引导式自定义你的法学学习画像——无需重新运行完整的新手导入访谈即可修改单项设置。
   调整当前课程、学习风格、大纲偏好、法考备考科目、种子材料或学习节奏。
   当用户说"修改我的[某项]""添加课程""更新我的画像""新学期""自定义"时使用。
-argument-hint: "[配置章节名称, 或描述你想修改的内容]"
 ---
 
 # /customize
 
 ## 何时运行
 
-用户输入了 `/law-student:customize`。他们想修改学习画像中的某项内容——课程、学习风格偏好、法考备考科目——无需重新运行整个新手导入访谈，也无需手动编辑 YAML。
+用户输入了 `「customize」工作流（加载 law-student/skills/customize/SKILL.md）`。他们想修改学习画像中的某项内容——课程、学习风格偏好、法考备考科目——无需重新运行整个新手导入访谈，也无需手动编辑 YAML。
 
 ## 做什么
 
 1. **读取配置。** 读取
-   `~/.claude/plugins/config/claude-for-legal-zh/law-student/CLAUDE.md`。
+   `legal-profile/law-student.md`。
    如果插件配置不存在或仍包含 `[PLACEHOLDER]` 值，说：
 
-   > 你还没运行设置。先运行 `/law-student:cold-start-interview`
+   > 你还没运行设置。先运行 `「cold-start-interview」工作流（加载 law-student/skills/cold-start-interview/SKILL.md）`
    > ——自定义是用于调整你已有的画像。
 
 2. **显示可自定义的配置地图。** 列出画像中的内容，分组，附当前值的一句话摘要：
@@ -46,7 +45,7 @@ argument-hint: "[配置章节名称, 或描述你想修改的内容]"
 
 5. **收尾。**
 
-   > 完成。你的下一次输出将反映这次修改。还要改别的吗？随时可以运行 `/law-student:customize`。
+   > 完成。你的下一次输出将反映这次修改。还要改别的吗？随时可以运行 `「customize」工作流（加载 law-student/skills/customize/SKILL.md）`。
 
 ## 护栏
 

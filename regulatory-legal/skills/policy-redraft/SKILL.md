@@ -1,14 +1,13 @@
 ---
 name: policy-redraft
-description: 产出关闭一个差距的政策修订建议稿（带标记版）。由 /regulatory-legal:gaps 或 /regulatory-legal:policy-diff 找到的差距触发。供内部审阅的初稿——不直接应用到已批准的政策文件中。适用于用户说"重写政策"、"起草政策修复"、"标记政策"或 gap-surfacer 传递差距供起草时。
-argument-hint: "[GAP-ID 或差距描述]"
+description: 产出关闭一个差距的政策修订建议稿（带标记版）。由 「gaps」工作流（加载 regulatory-legal/skills/gaps/SKILL.md） 或 「policy-diff」工作流（加载 regulatory-legal/skills/policy-diff/SKILL.md） 找到的差距触发。供内部审阅的初稿——不直接应用到已批准的政策文件中。适用于用户说"重写政策"、"起草政策修复"、"标记政策"或 gap-surfacer 传递差距供起草时。
 ---
 
 # /policy-redraft
 
-1. 读取 `~/.claude/plugins/config/claude-for-legal-zh/regulatory-legal/CLAUDE.md` → 政策库索引 + 实践配置。
+1. 读取 `legal-profile/regulatory-legal.md` → 政策库索引 + 实践配置。
 2. 使用以下工作流。
-3. 收集输入：差距（来自 `/regulatory-legal:gaps` 输出或直接描述）、当前已批准的政策文本、法规文本。
+3. 收集输入：差距（来自 `「gaps」工作流（加载 regulatory-legal/skills/gaps/SKILL.md）` 输出或直接描述）、当前已批准的政策文本、法规文本。
 4. 验证法规是有效的（按照政策差异分析的法规状态检查）。
 5. 产出受影响政策章节的带标记修订稿——最小化编辑，`[需核实]` 标签贯穿全文，内联注释解释每次变更的原因。
 6. 输出一份政策修订备忘录。写入新文件 `[政策名称]-proposed-redraft-[YYYY-MM-DD].md`——绝不写入源政策文件。
@@ -35,7 +34,7 @@ argument-hint: "[GAP-ID 或差距描述]"
 
 - 一个来自差距跟踪器的 `GAP-ID`
 - 用户在消息中描述的差距
-- 从 `/regulatory-legal:policy-diff` 粘贴的差异分析摘要
+- 从 `「policy-diff」工作流（加载 regulatory-legal/skills/policy-diff/SKILL.md）` 粘贴的差异分析摘要
 
 ### 1b. 当前政策文本
 
@@ -75,7 +74,7 @@ argument-hint: "[GAP-ID 或差距描述]"
 [工作成果头 — 按照插件配置 ## 输出]
 
 > **⚠️ 审阅者说明**
-> - **来源：** [法律研究连接器：元典MCP ✓已验证 | 未连接——引用来自模型知识，依赖前需核实]
+> - **来源：** [法律检索插件：元典检索 ✓已验证 | 未连接——引用来自模型知识，依赖前需核实]
 > - **已阅读：** [已审阅的政策章节；未阅读的内容]
 > - **标记为需你判断：** [N项内联标记为 `[审阅]` | 无]
 > - **时效性：** [法规状态——已核实 | 未核实]

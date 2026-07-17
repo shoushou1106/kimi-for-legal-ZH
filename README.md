@@ -33,15 +33,15 @@
 /plugin install corporate-legal@claude-for-legal-zh
 
 # 重启 Claude Code，然后为每个已安装插件运行初始化设置。
-# 设置过程将你的实践画像写入 ~/.claude/plugins/config/claude-for-legal-zh/<插件名>/CLAUDE.md
-/commercial-legal:cold-start-interview
-/privacy-legal:cold-start-interview
-/corporate-legal:cold-start-interview
+# 设置过程将你的实践画像写入 legal-profile/<插件名>/CLAUDE.md
+「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md）
+「cold-start-interview」工作流（加载 privacy-legal/skills/cold-start-interview/SKILL.md）
+「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md）
 ```
 
 **先运行冷启动面试。** 插件中的其他所有技能都从实践画像读取配置。跳过设置是技能输出泛化的最常见原因。每个插件的面试耗时 10–20 分钟，会要求你提供种子文件（已签署的主合同、审查指引、过往审查备忘录——取决于插件类型）。种子材料越多效果越好；也可选择**快速启动**模式，2 分钟即可开始工作，后续再精细调整。
 
-**先连接法律检索工具。** 连接检索工具后一切效果更好，未连接时引用标注为"未验证"。本套件已预配置 **yuandian（元典）MCP** 连接器用于案例检索和法规检索。详见 [MCP 连接器](#mcp-连接器)。
+**先连接法律检索工具。** 连接检索工具后一切效果更好，未连接时引用标注为"未验证"。本套件已预配置 **元典法律数据库** 连接器用于案例检索和法规检索。详见 [插件](#mcp-连接器)。
 
 > [!IMPORTANT]
 > **这些插件的所有输出均为律师审查草稿——不是法律意见，不是法律结论，不替代律师。** 插件在设计层面内置了相应的安全机制：每条引用标注来源，涉主观法律判断默认保守处理，管辖权假设明示标注，任何提交、发送或依赖前设有明确门槛。律师审查、核实并对所有对外产出承担专业责任。插件让审查更快，但不能替代审查。
@@ -63,7 +63,7 @@
 | **知识产权** | USPTO/DMCA/Lanham Act | 商标法/专利法/著作权法/信息网络传播权保护条例 |
 | **公司治理** | Delaware corporate law/SEC | 公司法/证券法/三会制度 |
 | **法学教育** | Bar exam/MBE/Socratic method | 法考（客观题+主观题）/中国法学教育方式 |
-| **案例检索** | Westlaw/CourtListener/Trellis | 元典 yuandian MCP/人民法院案例库/北大法宝 |
+| **案例检索** | Westlaw/CourtListener/Trellis | 元典法律数据库/人民法院案例库/北大法宝 |
 | **合同管理** | Ironclad/DocuSign/iManage | e签宝/法大大/飞书知识库 |
 | **监管追踪** | Federal Register/eCFR | 中国政府网/司法部法律法规数据库 |
 
@@ -82,7 +82,7 @@
 | **知识库路由** | 优先源（理解与适用/类案指南/最高院审判实务）→扩展源→效力警示源，按权威分级检索 |
 | **知识库路径可配置** | `[KB_ROOT]` 变量抽象，各人按自己的环境配置一次根目录，仓库不再绑定特定机器的绝对路径 |
 | **多端适配（社区贡献）** | 新增 17 个 Codex Desktop/CLI adapter skill，同一套法律知识和工作流可同时服务 Claude Code 与 Codex 用户 |
-| **知识库四步交叉引用协议** | 路由规则加载 → Wiki 概念检索 → 原始数据源检索（优先源→扩展源）→ 外部补充（MCP/联网搜索），每步强制不得跳过 |
+| **知识库四步交叉引用协议** | 路由规则加载 → Wiki 概念检索 → 原始数据源检索（优先源→扩展源）→ 外部补充（插件/联网搜索），每步强制不得跳过 |
 | **主体信用自动查询** | 首次出现非自然人主体时触发信用查询：实体锚定 → 基础画像+风险扫描（并行）→ 关键人员穿透，生成结构化信用报告 |
 | **Agentic Search 路由** | 三层 C1/C2/C3 路由：复杂多维问题自动跳过常规管线进入多源并行深度检索，常规管线不足时自动升级 |
 | **法律文书编辑纪律** | 基准稿锁定 → 五组内容分离 → 证据边界纪律 → 跨段落一致性校验 → 联动更新顺序 → 常见失误自检 |
@@ -150,7 +150,7 @@
 
 - **12 个业务领域插件**——覆盖律所、法务和学术法律工作，每个插件围绕冷启动面试构建，生成实践画像（`CLAUDE.md`），所有技能从中读取配置。
 - **托管 Agent 蓝图**——用于定时、持续监控型工作流（续签监控、案件进度监控、法规动态监控、尽调网格、产品上线雷达）。
-- **MCP 连接器**——覆盖通用生产力工具（飞书、Google Drive）和法律专属系统（元典 yuandian、北大法宝、威科先行、e签宝、聚法案例等）。
+- **插件**——覆盖通用生产力工具（飞书、Google Drive）和法律专属系统（元典 yuandian、北大法宝、威科先行、e签宝、聚法案例等）。
 - **命名 Agent**——端到端工作流 Agent（供应商合同审查、个人信息主体权利响应、劳动合同解除审查、要件分析表构建……），每个 Agent 有独立的职位式名称和单一启动命令。
 
 <p align="center">
@@ -163,98 +163,98 @@
 
 | Agent | 功能 | 插件 | 命令 |
 |---|---|---|---|
-| **供应商合同审查** | 依据审查指引审查供应商主协议，生成修订备忘录 | `commercial-legal` | `/commercial-legal:review` |
-| **保密协议分流** | 对 incoming 保密协议进行绿/黄/红三色分流，仅复杂协议进入律师审查 | `commercial-legal` | `/commercial-legal:review` |
-| **合同修订追踪** | 追踪合同从原始版本到历次修订的完整变更 | `commercial-legal` | `/commercial-legal:amendment-history` |
+| **供应商合同审查** | 依据审查指引审查供应商主协议，生成修订备忘录 | `commercial-legal` | `「review」工作流（加载 commercial-legal/skills/review/SKILL.md）` |
+| **保密协议分流** | 对 incoming 保密协议进行绿/黄/红三色分流，仅复杂协议进入律师审查 | `commercial-legal` | `「review」工作流（加载 commercial-legal/skills/review/SKILL.md）` |
+| **合同修订追踪** | 追踪合同从原始版本到历次修订的完整变更 | `commercial-legal` | `「amendment-history」工作流（加载 commercial-legal/skills/amendment-history/SKILL.md）` |
 | **合同续签监控** | 扫描合同台账中的解约和续签截止日期 | `commercial-legal` | scheduled agent |
 | **签署合同复盘** | 每周梳理已签署协议中的审查指引偏离项 | `commercial-legal` | scheduled agent |
 | **审查指引更新** | 监控偏离日志，在条款持续偏移时提出审查指引更新建议 | `commercial-legal` | scheduled agent |
-| **问题升级路由** | 将合同问题路由至适当审批人并起草请示 | `commercial-legal` | `/commercial-legal:escalation-flagger` |
-| **表格式尽调审查** | 对数据室文件逐份表格式审查，每格附带引用来源 | `corporate-legal` | `/corporate-legal:tabular-review` |
-| **尽调问题提取** | 按预设类别和重要性阈值提取数据室文件中的问题 | `corporate-legal` | `/corporate-legal:diligence-issue-extraction` |
-| **董事会/股东会决议起草** | 按内部格式起草决议，附带先例检索 | `corporate-legal` | `/corporate-legal:written-consent` |
-| **重大合同披露清单** | 依据尽调发现和收购协议阈值编制披露清单 | `corporate-legal` | `/corporate-legal:material-contract-schedule` |
-| **企业合规追踪** | 跨地域、跨主体类型的申报节点计算和合规体检 | `corporate-legal` | `/corporate-legal:entity-compliance` |
-| **交割清单管理** | 追踪阻碍交割的各项条件、同意、文件和申报 | `corporate-legal` | `/corporate-legal:closing-checklist` |
-| **并购整合管理** | 分阶段交割后整合计划，含同意追踪和周报 | `corporate-legal` | `/corporate-legal:integration-management` |
+| **问题升级路由** | 将合同问题路由至适当审批人并起草请示 | `commercial-legal` | `「escalation-flagger」工作流（加载 commercial-legal/skills/escalation-flagger/SKILL.md）` |
+| **表格式尽调审查** | 对数据室文件逐份表格式审查，每格附带引用来源 | `corporate-legal` | `「tabular-review」工作流（加载 corporate-legal/skills/tabular-review/SKILL.md）` |
+| **尽调问题提取** | 按预设类别和重要性阈值提取数据室文件中的问题 | `corporate-legal` | `「diligence-issue-extraction」工作流（加载 corporate-legal/skills/diligence-issue-extraction/SKILL.md）` |
+| **董事会/股东会决议起草** | 按内部格式起草决议，附带先例检索 | `corporate-legal` | `「written-consent」工作流（加载 corporate-legal/skills/written-consent/SKILL.md）` |
+| **重大合同披露清单** | 依据尽调发现和收购协议阈值编制披露清单 | `corporate-legal` | `「material-contract-schedule」工作流（加载 corporate-legal/skills/material-contract-schedule/SKILL.md）` |
+| **企业合规追踪** | 跨地域、跨主体类型的申报节点计算和合规体检 | `corporate-legal` | `「entity-compliance」工作流（加载 corporate-legal/skills/entity-compliance/SKILL.md）` |
+| **交割清单管理** | 追踪阻碍交割的各项条件、同意、文件和申报 | `corporate-legal` | `「closing-checklist」工作流（加载 corporate-legal/skills/closing-checklist/SKILL.md）` |
+| **并购整合管理** | 分阶段交割后整合计划，含同意追踪和周报 | `corporate-legal` | `「integration-management」工作流（加载 corporate-legal/skills/integration-management/SKILL.md）` |
 | **数据室监控** | 监控数据室新增文件，按计划推送交割清单状态 | `corporate-legal` | scheduled agent |
-| **劳动合同解除审查** | 对拟议解除进行法定事由审查和风险标记 | `employment-legal` | `/employment-legal:termination-review` |
-| **录用审查** | 审查录用通知及竞业限制/服务期条款 | `employment-legal` | `/employment-legal:hiring-review` |
-| **劳动关系认定** | 依据劳动和社会保障部〔2005〕12号三要素测试用工关系 | `employment-legal` | `/employment-legal:worker-classification` |
+| **劳动合同解除审查** | 对拟议解除进行法定事由审查和风险标记 | `employment-legal` | `「termination-review」工作流（加载 employment-legal/skills/termination-review/SKILL.md）` |
+| **录用审查** | 审查录用通知及竞业限制/服务期条款 | `employment-legal` | `「hiring-review」工作流（加载 employment-legal/skills/hiring-review/SKILL.md）` |
+| **劳动关系认定** | 依据劳动和社会保障部〔2005〕12号三要素测试用工关系 | `employment-legal` | `「worker-classification」工作流（加载 employment-legal/skills/worker-classification/SKILL.md）` |
 | **假期追踪** | 监控在休假期（年休假/产假/病假），含截止日期预警 | `employment-legal` | scheduled agent |
-| **内部调查** | 启动、追踪、补充和汇总内部调查事项 | `employment-legal` | `/employment-legal:investigation-open` |
-| **规章制度起草** | 起草劳动规章制度，含民主程序和公示要求 | `employment-legal` | `/employment-legal:policy-drafting` |
-| **跨省用工规划** | 启动新省份用工规划及外部律师委托简报 | `employment-legal` | `/employment-legal:expansion-kickoff` |
-| **劳动用工问答** | 面向"快速问答"渠道的劳动用工法律咨询 | `employment-legal` | `/employment-legal:wage-hour-qa` |
-| **个人信息主体权利响应** | 在法定期限内起草权利响应告知和实质回复 | `privacy-legal` | `/privacy-legal:dsar-response` |
-| **个人信息处理协议审查** | 依据审查指引审查个人信息处理协议（控制者或处理者视角） | `privacy-legal` | `/privacy-legal:dpa-review` |
-| **个人信息保护影响评估** | 按内部格式生成新功能或新活动的个人信息保护影响评估报告 | `privacy-legal` | `/privacy-legal:pia-generation` |
-| **个保场景分流** | 判断处理活动是否需要个保法第55条评估、或可直接推进 | `privacy-legal` | `/privacy-legal:use-case-triage` |
-| **隐私法规差距分析** | 将新规或修订与现行隐私政策和实践进行差异比对 | `privacy-legal` | `/privacy-legal:reg-gap-analysis` |
-| **隐私政策监控** | 扫描已存评估、协议审查和分流结果，检查政策与实践的偏差 | `privacy-legal` | `/privacy-legal:policy-monitor` |
-| **产品上线审查** | 依据风险校准审查产品上线 | `product-legal` | `/product-legal:launch-review` |
-| **营销宣传审查** | 标记需要补强、改写或删除的宣传文案（广告法/反不正当竞争法） | `product-legal` | `/product-legal:marketing-claims-review` |
-| **"这是问题吗？" 快速判断** | 快速回答产品/营销法律咨询——依据你的风险校准做模式匹配 | `product-legal` | `/product-legal:is-this-a-problem` |
+| **内部调查** | 启动、追踪、补充和汇总内部调查事项 | `employment-legal` | `「investigation-open」工作流（加载 employment-legal/skills/investigation-open/SKILL.md）` |
+| **规章制度起草** | 起草劳动规章制度，含民主程序和公示要求 | `employment-legal` | `「policy-drafting」工作流（加载 employment-legal/skills/policy-drafting/SKILL.md）` |
+| **跨省用工规划** | 启动新省份用工规划及外部律师委托简报 | `employment-legal` | `「expansion-kickoff」工作流（加载 employment-legal/skills/expansion-kickoff/SKILL.md）` |
+| **劳动用工问答** | 面向"快速问答"渠道的劳动用工法律咨询 | `employment-legal` | `「wage-hour-qa」工作流（加载 employment-legal/skills/wage-hour-qa/SKILL.md）` |
+| **个人信息主体权利响应** | 在法定期限内起草权利响应告知和实质回复 | `privacy-legal` | `「dsar-response」工作流（加载 privacy-legal/skills/dsar-response/SKILL.md）` |
+| **个人信息处理协议审查** | 依据审查指引审查个人信息处理协议（控制者或处理者视角） | `privacy-legal` | `「dpa-review」工作流（加载 privacy-legal/skills/dpa-review/SKILL.md）` |
+| **个人信息保护影响评估** | 按内部格式生成新功能或新活动的个人信息保护影响评估报告 | `privacy-legal` | `「pia-generation」工作流（加载 privacy-legal/skills/pia-generation/SKILL.md）` |
+| **个保场景分流** | 判断处理活动是否需要个保法第55条评估、或可直接推进 | `privacy-legal` | `「use-case-triage」工作流（加载 privacy-legal/skills/use-case-triage/SKILL.md）` |
+| **隐私法规差距分析** | 将新规或修订与现行隐私政策和实践进行差异比对 | `privacy-legal` | `「reg-gap-analysis」工作流（加载 privacy-legal/skills/reg-gap-analysis/SKILL.md）` |
+| **隐私政策监控** | 扫描已存评估、协议审查和分流结果，检查政策与实践的偏差 | `privacy-legal` | `「policy-monitor」工作流（加载 privacy-legal/skills/policy-monitor/SKILL.md）` |
+| **产品上线审查** | 依据风险校准审查产品上线 | `product-legal` | `「launch-review」工作流（加载 product-legal/skills/launch-review/SKILL.md）` |
+| **营销宣传审查** | 标记需要补强、改写或删除的宣传文案（广告法/反不正当竞争法） | `product-legal` | `「marketing-claims-review」工作流（加载 product-legal/skills/marketing-claims-review/SKILL.md）` |
+| **"这是问题吗？" 快速判断** | 快速回答产品/营销法律咨询——依据你的风险校准做模式匹配 | `product-legal` | `「is-this-a-problem」工作流（加载 product-legal/skills/is-this-a-problem/SKILL.md）` |
 | **产品上线雷达** | 监控上线追踪器中即将需要法务审查的产品 | `product-legal` | scheduled agent |
 | **法规动态监控** | 轮询法规信息源并撰写周一晨会监管简报 | `regulatory-legal` | scheduled agent |
-| **即时法规检查** | 即时检查法规动态，报告上次检查以来的更新 | `regulatory-legal` | `/regulatory-legal:reg-feed-watcher` |
-| **政策差异分析** | 将特定法规变化与已索引的政策库进行差异比对 | `regulatory-legal` | `/regulatory-legal:policy-diff` |
-| **合规差距追踪** | 开放差距追踪器——已标记尚未关闭的项目 | `regulatory-legal` | `/regulatory-legal:gaps` |
-| **政策重述** | 带修改标记的政策重述以关闭差距——供政策负责人审阅的建议稿 | `regulatory-legal` | `/regulatory-legal:policy-redraft` |
-| **征求意见稿追踪** | 审查开放的征求意见期、记录决策、追踪截止日期 | `regulatory-legal` | `/regulatory-legal:comments` |
-| **AI 场景分流** | 对照登记册对拟议 AI 应用场景进行分类 | `ai-governance-legal` | `/ai-governance-legal:use-case-triage` |
-| **AI 影响评估** | 对适用范围内的各监管制度开展算法安全评估/科技伦理审查 | `ai-governance-legal` | `/ai-governance-legal:aia-generation` |
-| **AI 供应商审查** | 审查 AI 供应商条款——训练数据使用、责任分配、模型变更、政策差距 | `ai-governance-legal` | `/ai-governance-legal:vendor-ai-review` |
-| **AI 法规差距分析** | 将新的 AI 法规与当前治理状态进行差异比对 | `ai-governance-legal` | `/ai-governance-legal:reg-gap-analysis` |
-| **AI 政策监控** | 扫描已存评估、分流结果和供应商审查，检查 AI 政策偏差 | `ai-governance-legal` | `/ai-governance-legal:policy-monitor` |
-| **商标可注册性检索** | 初步检索——相同/近似商标筛查和混淆可能性判断 | `ip-legal` | `/ip-legal:clearance` |
-| **侵权警告函** | 起草或分流警告函，依据你的维权策略校准 | `ip-legal` | `/ip-legal:cease-desist` |
-| **通知-删除** | 起草删除通知、分流收到通知或起草反通知（信息网络传播权保护条例） | `ip-legal` | `/ip-legal:takedown` |
-| **开源合规检查** | 依据你的部署模式对开源许可证进行分类 | `ip-legal` | `/ip-legal:oss-review` |
-| **FTO 初步分析** | 对潜在阻碍专利的结构化初步审视——分流而非法律意见 | `ip-legal` | `/ip-legal:fto-triage` |
-| **侵权初步判断** | 商标/著作权/专利/商业秘密跨权利初步分流 | `ip-legal` | `/ip-legal:infringement-triage` |
-| **知识产权条款审查** | 审查转让、归属、许可授权、保证和赔偿条款 | `ip-legal` | `/ip-legal:ip-clause-review` |
-| **知识产权组合管理** | 注册、续展、维护费、使用声明管理 | `ip-legal` | `/ip-legal:portfolio` |
+| **即时法规检查** | 即时检查法规动态，报告上次检查以来的更新 | `regulatory-legal` | `「reg-feed-watcher」工作流（加载 regulatory-legal/skills/reg-feed-watcher/SKILL.md）` |
+| **政策差异分析** | 将特定法规变化与已索引的政策库进行差异比对 | `regulatory-legal` | `「policy-diff」工作流（加载 regulatory-legal/skills/policy-diff/SKILL.md）` |
+| **合规差距追踪** | 开放差距追踪器——已标记尚未关闭的项目 | `regulatory-legal` | `「gaps」工作流（加载 regulatory-legal/skills/gaps/SKILL.md）` |
+| **政策重述** | 带修改标记的政策重述以关闭差距——供政策负责人审阅的建议稿 | `regulatory-legal` | `「policy-redraft」工作流（加载 regulatory-legal/skills/policy-redraft/SKILL.md）` |
+| **征求意见稿追踪** | 审查开放的征求意见期、记录决策、追踪截止日期 | `regulatory-legal` | `「comments」工作流（加载 regulatory-legal/skills/comments/SKILL.md）` |
+| **AI 场景分流** | 对照登记册对拟议 AI 应用场景进行分类 | `ai-governance-legal` | `「use-case-triage」工作流（加载 ai-governance-legal/skills/use-case-triage/SKILL.md）` |
+| **AI 影响评估** | 对适用范围内的各监管制度开展算法安全评估/科技伦理审查 | `ai-governance-legal` | `「aia-generation」工作流（加载 ai-governance-legal/skills/aia-generation/SKILL.md）` |
+| **AI 供应商审查** | 审查 AI 供应商条款——训练数据使用、责任分配、模型变更、政策差距 | `ai-governance-legal` | `「vendor-ai-review」工作流（加载 ai-governance-legal/skills/vendor-ai-review/SKILL.md）` |
+| **AI 法规差距分析** | 将新的 AI 法规与当前治理状态进行差异比对 | `ai-governance-legal` | `「reg-gap-analysis」工作流（加载 ai-governance-legal/skills/reg-gap-analysis/SKILL.md）` |
+| **AI 政策监控** | 扫描已存评估、分流结果和供应商审查，检查 AI 政策偏差 | `ai-governance-legal` | `「policy-monitor」工作流（加载 ai-governance-legal/skills/policy-monitor/SKILL.md）` |
+| **商标可注册性检索** | 初步检索——相同/近似商标筛查和混淆可能性判断 | `ip-legal` | `「clearance」工作流（加载 ip-legal/skills/clearance/SKILL.md）` |
+| **侵权警告函** | 起草或分流警告函，依据你的维权策略校准 | `ip-legal` | `「cease-desist」工作流（加载 ip-legal/skills/cease-desist/SKILL.md）` |
+| **通知-删除** | 起草删除通知、分流收到通知或起草反通知（信息网络传播权保护条例） | `ip-legal` | `「takedown」工作流（加载 ip-legal/skills/takedown/SKILL.md）` |
+| **开源合规检查** | 依据你的部署模式对开源许可证进行分类 | `ip-legal` | `「oss-review」工作流（加载 ip-legal/skills/oss-review/SKILL.md）` |
+| **FTO 初步分析** | 对潜在阻碍专利的结构化初步审视——分流而非法律意见 | `ip-legal` | `「fto-triage」工作流（加载 ip-legal/skills/fto-triage/SKILL.md）` |
+| **侵权初步判断** | 商标/著作权/专利/商业秘密跨权利初步分流 | `ip-legal` | `「infringement-triage」工作流（加载 ip-legal/skills/infringement-triage/SKILL.md）` |
+| **知识产权条款审查** | 审查转让、归属、许可授权、保证和赔偿条款 | `ip-legal` | `「ip-clause-review」工作流（加载 ip-legal/skills/ip-clause-review/SKILL.md）` |
+| **知识产权组合管理** | 注册、续展、维护费、使用声明管理 | `ip-legal` | `「portfolio」工作流（加载 ip-legal/skills/portfolio/SKILL.md）` |
 | **IP 续展监控** | 知识产权组合台账的定时截止日期报告 | `ip-legal` | scheduled agent |
-| **要件分析表** | 逐要件分析表——专利侵权或民事案由 | `litigation-legal` | `/litigation-legal:claim-chart` |
+| **要件分析表** | 逐要件分析表——专利侵权或民事案由 | `litigation-legal` | `「claim-chart」工作流（加载 litigation-legal/skills/claim-chart/SKILL.md）` |
 | **案件进度监控** | 监控法院案件进展和截止日期 | `litigation-legal` | scheduled agent |
-| **律师函起草** | 起草律师函，设置发送门槛 | `litigation-legal` | `/litigation-legal:demand-draft` |
-| **律师函准备** | 起草前背景收集——当事人、事实、依据、谈判筹码 | `litigation-legal` | `/litigation-legal:demand-intake` |
-| **收函分流** | 分流收到的律师函——选项、案件交叉检查、转交 | `litigation-legal` | `/litigation-legal:demand-received` |
-| **法院调查令/协查通知处理** | 分类、界定范围并规划合规方案 | `litigation-legal` | `/litigation-legal:subpoena-triage` |
-| **大事记构建** | 从已声明来源和上传材料构建或更新大事记 | `litigation-legal` | `/litigation-legal:chronology` |
-| **庭前准备** | 构建与案件理论挂钩的庭前准备提纲，含文书和质证要点 | `litigation-legal` | `/litigation-legal:deposition-prep` |
-| **法律文书起草** | 按律所/团队格式起草法律文书章节 | `litigation-legal` | `/litigation-legal:brief-section-drafter` |
-| **证据三性审查** | 第一轮证据三性审查——初步判断 + 标注律师需复核事项 | `litigation-legal` | `/litigation-legal:privilege-log-review` |
-| **证据保全** | 签发、更新、解除或报告证据保全 | `litigation-legal` | `/litigation-legal:legal-hold` |
-| **案件登记** | 新案件统一登记——写入案件文件、历史记录，追加日志 | `litigation-legal` | `/litigation-legal:matter-intake` |
-| **案件深度简报** | 单个案件深度简报——适用于主任或外部律师会议准备 | `litigation-legal` | `/litigation-legal:matter-briefing` |
-| **案件组合状态** | 风险分布、临近截止日期、停滞案件 | `litigation-legal` | `/litigation-legal:portfolio-status` |
-| **外部律师状态** | 为活跃案件组合生成每周状态催问草稿 | `litigation-legal` | `/litigation-legal:oc-status` |
-| **法律诊所接待** | 结构化客户接待，含跨领域问题识别和冲突标记 | `legal-clinic` | `/legal-clinic:client-intake` |
-| **案件备忘录框架** | IRAC 结构案件分析备忘录，标注研究缺口 | `legal-clinic` | `/legal-clinic:memo` |
-| **检索路线图** | 需检查的法条、案例领域、检索关键词——线索而非引用 | `legal-clinic` | `/legal-clinic:research-start` |
-| **法律诊所节点追踪** | 添加、报告、更新和关闭案件节点，含执业风险警告 | `legal-clinic` | `/legal-clinic:deadlines` |
-| **案件状态汇总** | 按受众分类的案件状态——客户版、指导老师版、法院版 | `legal-clinic` | `/legal-clinic:status` |
-| **客户信函起草** | 常规客户信函——预约确认、材料索取、进展更新 | `legal-clinic` | `/legal-clinic:client-letter` |
-| **学生学期导入** | 学期导入——诊所流程、工具导览、实践练习 | `legal-clinic` | `/legal-clinic:ramp` |
-| **学期移交** | 期末案件移交备忘录 | `legal-clinic` | `/legal-clinic:semester-handoff` |
-| **指导老师审查队列** | 教授审查队列（配置正式审查督导时） | `legal-clinic` | `/legal-clinic:supervisor-review-queue` |
-| **法考备考教练** | 针对薄弱科目提供客观题和主观题练习 | `law-student` | `/law-student:bar-prep-questions` |
-| **课堂问答训练** | 它问、你答、它追问——不直接给答案 | `law-student` | `/law-student:socratic-drill` |
-| **IRAC 写作批改** | 对 IRAC 作文的结构、问题识别、规则引用、分析逻辑评分 | `law-student` | `/law-student:irac-practice` |
-| **案例摘要** | 按你偏好的格式做案例摘要 | `law-student` | `/law-student:case-brief` |
-| **知识体系搭建** | 从课堂笔记和教材构建或扩展知识体系 | `law-student` | `/law-student:outline-builder` |
-| **课堂准备** | 预测教授提问并在课前进行针对性训练 | `law-student` | `/law-student:cold-call-prep` |
-| **考试预测** | 分析同一教授历年试题，预测可能重点 | `law-student` | `/law-student:exam-forecast` |
-| **法律写作反馈** | 对草稿的结构性反馈——从不代写 | `law-student` | `/law-student:legal-writing` |
-| **记忆卡片训练** | 生成或训练记忆卡片——Leitner 式分层记忆 | `law-student` | `/law-student:flashcards` |
-| **学习计划** | 长期学习计划，含排课和基于学习记录的适应性调整 | `law-student` | `/law-student:study-plan` |
-| **技能注册表浏览器** | 搜索已关注注册表中的社区法律技能 | `legal-builder-hub` | `/legal-builder-hub:registry-browser` |
-| **技能安装器** | 安装社区技能，含信任检查和安全审查 | `legal-builder-hub` | `/legal-builder-hub:skill-installer` |
-| **技能质量评估** | 依据法律技能设计框架评估技能 | `legal-builder-hub` | `/legal-builder-hub:skills-qa` |
-| **社区技能推荐** | 基于其他插件中的近期活动推荐社区技能 | `legal-builder-hub` | `/legal-builder-hub:related-skills-surfacer` |
-| **社区技能更新** | 检查已安装社区技能的更新 | `legal-builder-hub` | `/legal-builder-hub:auto-updater` |
+| **律师函起草** | 起草律师函，设置发送门槛 | `litigation-legal` | `「demand-draft」工作流（加载 litigation-legal/skills/demand-draft/SKILL.md）` |
+| **律师函准备** | 起草前背景收集——当事人、事实、依据、谈判筹码 | `litigation-legal` | `「demand-intake」工作流（加载 litigation-legal/skills/demand-intake/SKILL.md）` |
+| **收函分流** | 分流收到的律师函——选项、案件交叉检查、转交 | `litigation-legal` | `「demand-received」工作流（加载 litigation-legal/skills/demand-received/SKILL.md）` |
+| **法院调查令/协查通知处理** | 分类、界定范围并规划合规方案 | `litigation-legal` | `「subpoena-triage」工作流（加载 litigation-legal/skills/subpoena-triage/SKILL.md）` |
+| **大事记构建** | 从已声明来源和上传材料构建或更新大事记 | `litigation-legal` | `「chronology」工作流（加载 litigation-legal/skills/chronology/SKILL.md）` |
+| **庭前准备** | 构建与案件理论挂钩的庭前准备提纲，含文书和质证要点 | `litigation-legal` | `「deposition-prep」工作流（加载 litigation-legal/skills/deposition-prep/SKILL.md）` |
+| **法律文书起草** | 按律所/团队格式起草法律文书章节 | `litigation-legal` | `「brief-section-drafter」工作流（加载 litigation-legal/skills/brief-section-drafter/SKILL.md）` |
+| **证据三性审查** | 第一轮证据三性审查——初步判断 + 标注律师需复核事项 | `litigation-legal` | `「privilege-log-review」工作流（加载 litigation-legal/skills/privilege-log-review/SKILL.md）` |
+| **证据保全** | 签发、更新、解除或报告证据保全 | `litigation-legal` | `「legal-hold」工作流（加载 litigation-legal/skills/legal-hold/SKILL.md）` |
+| **案件登记** | 新案件统一登记——写入案件文件、历史记录，追加日志 | `litigation-legal` | `「matter-intake」工作流（加载 litigation-legal/skills/matter-intake/SKILL.md）` |
+| **案件深度简报** | 单个案件深度简报——适用于主任或外部律师会议准备 | `litigation-legal` | `「matter-briefing」工作流（加载 litigation-legal/skills/matter-briefing/SKILL.md）` |
+| **案件组合状态** | 风险分布、临近截止日期、停滞案件 | `litigation-legal` | `「portfolio-status」工作流（加载 litigation-legal/skills/portfolio-status/SKILL.md）` |
+| **外部律师状态** | 为活跃案件组合生成每周状态催问草稿 | `litigation-legal` | `「oc-status」工作流（加载 litigation-legal/skills/oc-status/SKILL.md）` |
+| **法律诊所接待** | 结构化客户接待，含跨领域问题识别和冲突标记 | `legal-clinic` | `「client-intake」工作流（加载 legal-clinic/skills/client-intake/SKILL.md）` |
+| **案件备忘录框架** | IRAC 结构案件分析备忘录，标注研究缺口 | `legal-clinic` | `「memo」工作流（加载 legal-clinic/skills/memo/SKILL.md）` |
+| **检索路线图** | 需检查的法条、案例领域、检索关键词——线索而非引用 | `legal-clinic` | `「research-start」工作流（加载 legal-clinic/skills/research-start/SKILL.md）` |
+| **法律诊所节点追踪** | 添加、报告、更新和关闭案件节点，含执业风险警告 | `legal-clinic` | `「deadlines」工作流（加载 legal-clinic/skills/deadlines/SKILL.md）` |
+| **案件状态汇总** | 按受众分类的案件状态——客户版、指导老师版、法院版 | `legal-clinic` | `「status」工作流（加载 legal-clinic/skills/status/SKILL.md）` |
+| **客户信函起草** | 常规客户信函——预约确认、材料索取、进展更新 | `legal-clinic` | `「client-letter」工作流（加载 legal-clinic/skills/client-letter/SKILL.md）` |
+| **学生学期导入** | 学期导入——诊所流程、工具导览、实践练习 | `legal-clinic` | `「ramp」工作流（加载 legal-clinic/skills/ramp/SKILL.md）` |
+| **学期移交** | 期末案件移交备忘录 | `legal-clinic` | `「semester-handoff」工作流（加载 legal-clinic/skills/semester-handoff/SKILL.md）` |
+| **指导老师审查队列** | 教授审查队列（配置正式审查督导时） | `legal-clinic` | `「supervisor-review-queue」工作流（加载 legal-clinic/skills/supervisor-review-queue/SKILL.md）` |
+| **法考备考教练** | 针对薄弱科目提供客观题和主观题练习 | `law-student` | `「bar-prep-questions」工作流（加载 law-student/skills/bar-prep-questions/SKILL.md）` |
+| **课堂问答训练** | 它问、你答、它追问——不直接给答案 | `law-student` | `「socratic-drill」工作流（加载 law-student/skills/socratic-drill/SKILL.md）` |
+| **IRAC 写作批改** | 对 IRAC 作文的结构、问题识别、规则引用、分析逻辑评分 | `law-student` | `「irac-practice」工作流（加载 law-student/skills/irac-practice/SKILL.md）` |
+| **案例摘要** | 按你偏好的格式做案例摘要 | `law-student` | `「case-brief」工作流（加载 law-student/skills/case-brief/SKILL.md）` |
+| **知识体系搭建** | 从课堂笔记和教材构建或扩展知识体系 | `law-student` | `「outline-builder」工作流（加载 law-student/skills/outline-builder/SKILL.md）` |
+| **课堂准备** | 预测教授提问并在课前进行针对性训练 | `law-student` | `「cold-call-prep」工作流（加载 law-student/skills/cold-call-prep/SKILL.md）` |
+| **考试预测** | 分析同一教授历年试题，预测可能重点 | `law-student` | `「exam-forecast」工作流（加载 law-student/skills/exam-forecast/SKILL.md）` |
+| **法律写作反馈** | 对草稿的结构性反馈——从不代写 | `law-student` | `「legal-writing」工作流（加载 law-student/skills/legal-writing/SKILL.md）` |
+| **记忆卡片训练** | 生成或训练记忆卡片——Leitner 式分层记忆 | `law-student` | `「flashcards」工作流（加载 law-student/skills/flashcards/SKILL.md）` |
+| **学习计划** | 长期学习计划，含排课和基于学习记录的适应性调整 | `law-student` | `「study-plan」工作流（加载 law-student/skills/study-plan/SKILL.md）` |
+| **技能注册表浏览器** | 搜索已关注注册表中的社区法律技能 | `legal-builder-hub` | `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` |
+| **技能安装器** | 安装社区技能，含信任检查和安全审查 | `legal-builder-hub` | `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` |
+| **技能质量评估** | 依据法律技能设计框架评估技能 | `legal-builder-hub` | `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` |
+| **社区技能推荐** | 基于其他插件中的近期活动推荐社区技能 | `legal-builder-hub` | `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` |
+| **社区技能更新** | 检查已安装社区技能的更新 | `legal-builder-hub` | `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` |
 | **注册表同步** | 定期检查已关注注册表中的新增和更新技能 | `legal-builder-hub` | scheduled agent |
 
 <p align="center">
@@ -312,10 +312,10 @@ scripts/                  # deploy-managed-agent.sh · validate.py · orchestrat
 | | 是什么 | 在哪 |
 |---|---|---|
 | **插件** | 自包含的业务领域套件——技能、Agent、钩子和实践画像模板。按需安装。 | `<插件名>/` |
-| **技能** | 领域专业知识、惯例和分步方法论，Claude 在相关时自动调用——也可以通过斜杠命令显式触发：`/commercial-legal:review`、`/privacy-legal:dsar-response`、`/litigation-legal:claim-chart`。 | `<插件名>/skills/<技能名>/SKILL.md` |
+| **技能** | 领域专业知识、惯例和分步方法论，Claude 在相关时自动调用——也可以通过斜杠命令显式触发：`「review」工作流（加载 commercial-legal/skills/review/SKILL.md）`、`「dsar-response」工作流（加载 privacy-legal/skills/dsar-response/SKILL.md）`、`「claim-chart」工作流（加载 litigation-legal/skills/claim-chart/SKILL.md）`。 | `<插件名>/skills/<技能名>/SKILL.md` |
 | **Agent** | 定时或事件驱动的工作流（续签监控、案件进度监控、法规变化监控）。在后台运行，推送到渠道或写入文件。 | `<插件名>/agents/` |
-| **实践画像** | 描述你的审查指引、升级规则和内部风格的纯文本 `CLAUDE.md`。所有技能从中读取。 | `~/.claude/plugins/config/claude-for-legal-zh/<插件名>/CLAUDE.md` |
-| **连接器** | 将 Claude 与你的数据系统连接的 [MCP 服务器](https://modelcontextprotocol.io/)——合同管理、文档管理、电子取证、检索平台、生产力工具。 | `.mcp.json`（每个插件） |
+| **实践画像** | 描述你的审查指引、升级规则和内部风格的纯文本 `CLAUDE.md`。所有技能从中读取。 | `legal-profile/<插件名>/CLAUDE.md` |
+| **连接器** | 将 Claude 与你的数据系统连接的 [KIMI 插件](https://modelcontextprotocol.io/)——合同管理、文档管理、电子取证、检索平台、生产力工具。 | `.mcp.json`（每个插件） |
 | **托管 Agent 蓝图** | `agent.yaml` + 一级子 Agent + steering 示例，用于无头部署。 | `managed-agent-cookbooks/<slug>/` |
 
 一切皆为 Markdown 和 JSON。无需构建步骤。
@@ -359,7 +359,7 @@ scripts/                  # deploy-managed-agent.sh · validate.py · orchestrat
 
 | 插件 | 功能 |
 |------|------|
-| **[legal-builder-hub](./legal-builder-hub)** | 社区技能发现和安装，含真实信任层——已关注注册表、质量评估框架（`/legal-builder-hub:skills-qa`）、SHA 锁定更新，以及技能落地前的强制信任检查。 |
+| **[legal-builder-hub](./legal-builder-hub)** | 社区技能发现和安装，含真实信任层——已关注注册表、质量评估框架（`（该功能属于 Claude 技能市场生态，KIMI 版本已移除）`）、SHA 锁定更新，以及技能落地前的强制信任检查。 |
 
 ### 外部/合作方构建
 
@@ -380,12 +380,12 @@ scripts/                  # deploy-managed-agent.sh · validate.py · orchestrat
 
 白名单默认严格。宽松模式是明确选择。非律师用户被路由到其律师联系人，而非"仍然安装"按钮。
 
-社区技能经过与官方插件相同的设计审查（`/legal-builder-hub:skills-qa`）。如果你为律师构建工具，在发布前对自己的技能运行质量评估。
+社区技能经过与官方插件相同的设计审查（`（该功能属于 Claude 技能市场生态，KIMI 版本已移除）`）。如果你为律师构建工具，在发布前对自己的技能运行质量评估。
 
-## MCP 连接器
+## 插件
 
 > [!IMPORTANT]
-> **先连接检索工具。** 每个插件已预配置法律检索连接器——yuandian（元典）MCP 用于案例检索和法规检索。首次需要时系统会提示授权。连接后，Claude 从权威来源获取信息并对引用进行验证。通过检索连接器获取的引用标注来源标签。仅来自模型知识的引用标记为 `[需验证]`，如果完全没有连接检索工具，交付物上方的审查备注会记录来源未经验证，提醒你核实。连接器让引用可信——在任何其他设置之前先配置它。
+> **先连接检索工具。** 每个插件已预配置法律检索连接器——元典法律数据库 用于案例检索和法规检索。首次需要时系统会提示授权。连接后，Claude 从权威来源获取信息并对引用进行验证。通过检索连接器获取的引用标注来源标签。仅来自模型知识的引用标记为 `[需验证]`，如果完全没有连接检索工具，交付物上方的审查备注会记录来源未经验证，提醒你核实。连接器让引用可信——在任何其他设置之前先配置它。
 
 以下连接器随插件提供：
 
@@ -404,14 +404,14 @@ scripts/                  # deploy-managed-agent.sh · validate.py · orchestrat
 
 > "客户订阅"标记的连接器需要客户自身的账户和 API 密钥。在各插件的 `.mcp.json` 中配置，或通过 Claude Code 的 `claude mcp` 进行设置。
 
-> **构建连接器？** 详见 [CONNECTORS.md](./CONNECTORS.md)，了解优秀法律 MCP 服务器的标准及提交方式。
+> **构建连接器？** 详见 [CONNECTORS.md](./CONNECTORS.md)，了解优秀法律 KIMI 插件的标准及提交方式。
 
 ## 成为你自己的
 
 这些是参考模板。当它们与你团队的工作方式对齐时会发挥更大作用——定制机制就是插件本身。
 
-- **运行冷启动面试。** 它**就是**定制机制。它会询问你的实务方式、读取你的种子文件、写入你的实践画像。所有其他技能从中读取。一次 `/commercial-legal:cold-start-interview`，附上五份已签署的主合同、你的审查指引和升级矩阵，审查技能将显著更精准。
-- **编辑实践画像。** 你的画像位于 `~/.claude/plugins/config/claude-for-legal-zh/<插件名>/CLAUDE.md`。直接编辑以修正小问题——错误的升级阈值、新的集成、政策更新。它在插件更新后保留。
+- **运行冷启动面试。** 它**就是**定制机制。它会询问你的实务方式、读取你的种子文件、写入你的实践画像。所有其他技能从中读取。一次 `「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md）`，附上五份已签署的主合同、你的审查指引和升级矩阵，审查技能将显著更精准。
+- **编辑实践画像。** 你的画像位于 `legal-profile/<插件名>/CLAUDE.md`。直接编辑以修正小问题——错误的升级阈值、新的集成、政策更新。它在插件更新后保留。
 - **重新运行设置。** 当实务发生重大变化时（新业务领域、新系统、新政策），再次运行 `/<插件名>:cold-start-interview`。
 - **更换连接器。** 将 `.mcp.json` 指向你的合同管理系统、文档管理系统、电子取证平台、上线追踪器、HR 系统。连接器未配置时技能优雅降级——不会静默空转。
 - **带入你的审查指引和模板。** 将你的术语、内部风格和品牌模板放入插件的 `CLAUDE.md` 和 `references/`。技能会自动拾取。
@@ -428,58 +428,58 @@ scripts/                  # deploy-managed-agent.sh · validate.py · orchestrat
 
 | 命令 | 技能 | 功能 |
 |------|------|------|
-| `/ai-governance-legal:cold-start-interview` | cold-start-interview | 冷启动——了解你的 AI 治理实践 |
-| `/ai-governance-legal:use-case-triage` | use-case-triage | 对 AI 应用场景分类——批准/附条件/禁止 |
-| `/ai-governance-legal:aia-generation` | aia-generation | 按内部格式运行 AI 影响评估（算法安全评估/科技伦理审查） |
-| `/ai-governance-legal:vendor-ai-review` | vendor-ai-review | 依据治理立场审查供应商 AI 条款 |
-| `/ai-governance-legal:reg-gap-analysis` | reg-gap-analysis | 将新 AI 法规与你的治理状态进行差异比对 |
-| `/ai-governance-legal:policy-monitor` | policy-monitor | 保持 AI 政策与实践同步 |
-| `/ai-governance-legal:policy-starter` | policy-starter | 基于已发布的示范政策起草律所/企业 AI 使用政策 |
-| `/ai-governance-legal:matter-workspace` | matter-workspace | 管理事项工作空间 |
+| `「cold-start-interview」工作流（加载 ai-governance-legal/skills/cold-start-interview/SKILL.md）` | cold-start-interview | 冷启动——了解你的 AI 治理实践 |
+| `「use-case-triage」工作流（加载 ai-governance-legal/skills/use-case-triage/SKILL.md）` | use-case-triage | 对 AI 应用场景分类——批准/附条件/禁止 |
+| `「aia-generation」工作流（加载 ai-governance-legal/skills/aia-generation/SKILL.md）` | aia-generation | 按内部格式运行 AI 影响评估（算法安全评估/科技伦理审查） |
+| `「vendor-ai-review」工作流（加载 ai-governance-legal/skills/vendor-ai-review/SKILL.md）` | vendor-ai-review | 依据治理立场审查供应商 AI 条款 |
+| `「reg-gap-analysis」工作流（加载 ai-governance-legal/skills/reg-gap-analysis/SKILL.md）` | reg-gap-analysis | 将新 AI 法规与你的治理状态进行差异比对 |
+| `「policy-monitor」工作流（加载 ai-governance-legal/skills/policy-monitor/SKILL.md）` | policy-monitor | 保持 AI 政策与实践同步 |
+| `「policy-starter」工作流（加载 ai-governance-legal/skills/policy-starter/SKILL.md）` | policy-starter | 基于已发布的示范政策起草律所/企业 AI 使用政策 |
+| `「matter-workspace」工作流（加载 ai-governance-legal/skills/matter-workspace/SKILL.md）` | matter-workspace | 管理事项工作空间 |
 
 ### legal-builder-hub
 
 | 命令 | 技能 | 功能 |
 |------|------|------|
-| `/legal-builder-hub:cold-start-interview` | cold-start-interview | 实践画像面试和入门包推荐 |
-| `/legal-builder-hub:registry-browser` | registry-browser | 搜索已关注注册表中的社区法律技能 |
-| `/legal-builder-hub:skill-installer` | skill-installer | 安装社区技能，含信任检查 |
-| `/legal-builder-hub:skills-qa` | skills-qa | 依据设计框架评估技能 |
-| `/legal-builder-hub:related-skills-surfacer` | related-skills-surfacer | 基于其他插件的活动推荐社区技能 |
-| `/legal-builder-hub:auto-updater` | auto-updater | 检查已安装社区技能的更新 |
-| `/legal-builder-hub:disable` | skill-manager | 禁用社区技能而不删除文件 |
-| `/legal-builder-hub:uninstall` | skill-manager | 卸载通过 hub 安装的社区技能 |
+| `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` | cold-start-interview | 实践画像面试和入门包推荐 |
+| `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` | registry-browser | 搜索已关注注册表中的社区法律技能 |
+| `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` | skill-installer | 安装社区技能，含信任检查 |
+| `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` | skills-qa | 依据设计框架评估技能 |
+| `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` | related-skills-surfacer | 基于其他插件的活动推荐社区技能 |
+| `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` | auto-updater | 检查已安装社区技能的更新 |
+| `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` | skill-manager | 禁用社区技能而不删除文件 |
+| `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` | skill-manager | 卸载通过 hub 安装的社区技能 |
 | scheduled | registry-sync (agent) | 定期检查已关注注册表的更新 |
 
 ### legal-clinic
 
 | 命令 | 技能 | 功能 |
 |------|------|------|
-| `/legal-clinic:cold-start-interview` | cold-start-interview | 指导老师设置——领域、管辖、指导风格 |
-| `/legal-clinic:build-guide` | build-guide | 指导老师业务领域指南——接待、教学模式、审查门槛 |
-| `/legal-clinic:ramp` | ramp | 学生学期导入，含实践练习 |
-| `/legal-clinic:client-intake` | client-intake | 结构化接待，含跨领域问题识别 |
-| `/legal-clinic:client-comms-log` | client-comms-log | 记录客户沟通——每个案件仅追加 |
-| `/legal-clinic:research-start` | research-start | 检索路线图——法条、案例、检索关键词 |
-| `/legal-clinic:memo` | memo | IRAC 结构分析备忘录，标注研究缺口 |
-| `/legal-clinic:draft` | draft | 常用法律诊所文件的初稿 |
-| `/legal-clinic:client-letter` | client-letter · plain-language-letters | 基于模板的常规客户信函 |
-| `/legal-clinic:status` | status | 按受众分类的案件状态——客户、教授、法院 |
-| `/legal-clinic:deadlines` | deadlines | 追踪案件节点，含执业风险警告 |
-| `/legal-clinic:supervisor-review-queue` | supervisor-review-queue | 教授审查队列（如配置正式审查督导） |
-| `/legal-clinic:semester-handoff` | semester-handoff | 期末案件移交备忘录 |
+| `「cold-start-interview」工作流（加载 legal-clinic/skills/cold-start-interview/SKILL.md）` | cold-start-interview | 指导老师设置——领域、管辖、指导风格 |
+| `「build-guide」工作流（加载 legal-clinic/skills/build-guide/SKILL.md）` | build-guide | 指导老师业务领域指南——接待、教学模式、审查门槛 |
+| `「ramp」工作流（加载 legal-clinic/skills/ramp/SKILL.md）` | ramp | 学生学期导入，含实践练习 |
+| `「client-intake」工作流（加载 legal-clinic/skills/client-intake/SKILL.md）` | client-intake | 结构化接待，含跨领域问题识别 |
+| `「client-comms-log」工作流（加载 legal-clinic/skills/client-comms-log/SKILL.md）` | client-comms-log | 记录客户沟通——每个案件仅追加 |
+| `「research-start」工作流（加载 legal-clinic/skills/research-start/SKILL.md）` | research-start | 检索路线图——法条、案例、检索关键词 |
+| `「memo」工作流（加载 legal-clinic/skills/memo/SKILL.md）` | memo | IRAC 结构分析备忘录，标注研究缺口 |
+| `「draft」工作流（加载 legal-clinic/skills/draft/SKILL.md）` | draft | 常用法律诊所文件的初稿 |
+| `「client-letter」工作流（加载 legal-clinic/skills/client-letter/SKILL.md）` | client-letter · plain-language-letters | 基于模板的常规客户信函 |
+| `「status」工作流（加载 legal-clinic/skills/status/SKILL.md）` | status | 按受众分类的案件状态——客户、教授、法院 |
+| `「deadlines」工作流（加载 legal-clinic/skills/deadlines/SKILL.md）` | deadlines | 追踪案件节点，含执业风险警告 |
+| `「supervisor-review-queue」工作流（加载 legal-clinic/skills/supervisor-review-queue/SKILL.md）` | supervisor-review-queue | 教授审查队列（如配置正式审查督导） |
+| `「semester-handoff」工作流（加载 legal-clinic/skills/semester-handoff/SKILL.md）` | semester-handoff | 期末案件移交备忘录 |
 
 ### commercial-legal
 
 | 命令 | 技能 | 功能 |
 |------|------|------|
-| `/commercial-legal:cold-start-interview` | cold-start-interview | 冷启动——了解你的商事合同实践 |
-| `/commercial-legal:review` | vendor-agreement-review · nda-review · saas-msa-review | 审查供应商协议、保密协议或 SaaS 订阅合同 |
-| `/commercial-legal:amendment-history` | amendment-history | 追踪合同从原始版本到历次修订的变更 |
-| `/commercial-legal:renewal-tracker` | renewal-tracker | 显示 90 天内解约截止日期的合同 |
-| `/commercial-legal:escalation-flagger` | escalation-flagger | 路由合同问题并起草请示 |
-| `/commercial-legal:review-proposals` | (internal) | 审查和批准待处理的审查指引更新建议 |
-| `/commercial-legal:matter-workspace` | matter-workspace | 管理事项工作空间 |
+| `「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md）` | cold-start-interview | 冷启动——了解你的商事合同实践 |
+| `「review」工作流（加载 commercial-legal/skills/review/SKILL.md）` | vendor-agreement-review · nda-review · saas-msa-review | 审查供应商协议、保密协议或 SaaS 订阅合同 |
+| `「amendment-history」工作流（加载 commercial-legal/skills/amendment-history/SKILL.md）` | amendment-history | 追踪合同从原始版本到历次修订的变更 |
+| `「renewal-tracker」工作流（加载 commercial-legal/skills/renewal-tracker/SKILL.md）` | renewal-tracker | 显示 90 天内解约截止日期的合同 |
+| `「escalation-flagger」工作流（加载 commercial-legal/skills/escalation-flagger/SKILL.md）` | escalation-flagger | 路由合同问题并起草请示 |
+| `「review-proposals」工作流（加载 commercial-legal/skills/review-proposals/SKILL.md）` | (internal) | 审查和批准待处理的审查指引更新建议 |
+| `「matter-workspace」工作流（加载 commercial-legal/skills/matter-workspace/SKILL.md）` | matter-workspace | 管理事项工作空间 |
 | — | stakeholder-summary | 将审查结果转化为业务人员可读的摘要 |
 | scheduled | renewal-watcher (agent) | 每周扫描续签台账 |
 | scheduled | deal-debrief (agent) | 每周汇总含偏离项的已签署协议 |
@@ -489,15 +489,15 @@ scripts/                  # deploy-managed-agent.sh · validate.py · orchestrat
 
 | 命令 | 技能 | 功能 |
 |------|------|------|
-| `/corporate-legal:cold-start-interview` | cold-start-interview | 内部冷启动，可选 `--new-deal` 启动新交易 |
-| `/corporate-legal:tabular-review` | tabular-review | 表格式审查——每份文件一行，每格附带引用 |
-| `/corporate-legal:diligence-issue-extraction` | diligence-issue-extraction | 按内部阈值从数据室文件中提取问题 |
-| `/corporate-legal:material-contract-schedule` | material-contract-schedule | 编制重大合同披露清单 |
-| `/corporate-legal:closing-checklist` | closing-checklist | 阻碍交割的事项和关键路径 |
-| `/corporate-legal:written-consent` | written-consent | 按内部格式起草董事会/股东会决议 |
-| `/corporate-legal:entity-compliance` | entity-compliance | 跨地域企业合规追踪 |
-| `/corporate-legal:integration-management` | integration-management | 交割后整合追踪，含同意管理 |
-| `/corporate-legal:matter-workspace` | matter-workspace | 管理事项工作空间 |
+| `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md）` | cold-start-interview | 内部冷启动，可选 `--new-deal` 启动新交易 |
+| `「tabular-review」工作流（加载 corporate-legal/skills/tabular-review/SKILL.md）` | tabular-review | 表格式审查——每份文件一行，每格附带引用 |
+| `「diligence-issue-extraction」工作流（加载 corporate-legal/skills/diligence-issue-extraction/SKILL.md）` | diligence-issue-extraction | 按内部阈值从数据室文件中提取问题 |
+| `「material-contract-schedule」工作流（加载 corporate-legal/skills/material-contract-schedule/SKILL.md）` | material-contract-schedule | 编制重大合同披露清单 |
+| `「closing-checklist」工作流（加载 corporate-legal/skills/closing-checklist/SKILL.md）` | closing-checklist | 阻碍交割的事项和关键路径 |
+| `「written-consent」工作流（加载 corporate-legal/skills/written-consent/SKILL.md）` | written-consent | 按内部格式起草董事会/股东会决议 |
+| `「entity-compliance」工作流（加载 corporate-legal/skills/entity-compliance/SKILL.md）` | entity-compliance | 跨地域企业合规追踪 |
+| `「integration-management」工作流（加载 corporate-legal/skills/integration-management/SKILL.md）` | integration-management | 交割后整合追踪，含同意管理 |
+| `「matter-workspace」工作流（加载 corporate-legal/skills/matter-workspace/SKILL.md）` | matter-workspace | 管理事项工作空间 |
 | — | board-minutes | 按内部格式起草董事会/股东会会议纪要 |
 | — | deal-team-summary | 将尽调发现汇总为交易简报 |
 | — | ai-tool-handoff | 检测 AI 尽调工具输出，进行质量检查 |
@@ -507,22 +507,22 @@ scripts/                  # deploy-managed-agent.sh · validate.py · orchestrat
 
 | 命令 | 技能 | 功能 |
 |------|------|------|
-| `/employment-legal:cold-start-interview` | cold-start-interview | 冷启动——了解用工地区和升级规则 |
-| `/employment-legal:wage-hour-qa` | wage-hour-qa | 劳动用工法律问答 |
-| `/employment-legal:hiring-review` | hiring-review | 审查录用通知和竞业限制/服务期条款 |
-| `/employment-legal:termination-review` | termination-review | 解除审查，含高风险标记检测 |
-| `/employment-legal:worker-classification` | worker-classification | 依据〔2005〕12号三要素认定劳动关系 |
-| `/employment-legal:policy-drafting` | policy-drafting | 起草劳动规章制度（含民主程序和公示） |
-| `/employment-legal:leave-tracker` | leave-tracker | 检查在休假期中的截止日期预警 |
-| `/employment-legal:log-leave` | log-leave | 新增假期记录 |
-| `/employment-legal:investigation-open` | internal-investigation | 启动新的内部调查事项 |
-| `/employment-legal:investigation-add` | internal-investigation | 向进行中的调查添加数据——文件、笔记 |
-| `/employment-legal:investigation-memo` | internal-investigation | 起草或更新调查备忘录 |
-| `/employment-legal:investigation-query` | internal-investigation | 就已开调查记录提问 |
-| `/employment-legal:investigation-summary` | internal-investigation | 基于调查备忘录起草按受众分类的摘要 |
-| `/employment-legal:expansion-kickoff` | international-expansion | 启动新省份用工规划 |
-| `/employment-legal:expansion-update` | international-expansion | 更新进行中的跨省用工项目状态 |
-| `/employment-legal:matter-workspace` | matter-workspace | 管理事项工作空间 |
+| `「cold-start-interview」工作流（加载 employment-legal/skills/cold-start-interview/SKILL.md）` | cold-start-interview | 冷启动——了解用工地区和升级规则 |
+| `「wage-hour-qa」工作流（加载 employment-legal/skills/wage-hour-qa/SKILL.md）` | wage-hour-qa | 劳动用工法律问答 |
+| `「hiring-review」工作流（加载 employment-legal/skills/hiring-review/SKILL.md）` | hiring-review | 审查录用通知和竞业限制/服务期条款 |
+| `「termination-review」工作流（加载 employment-legal/skills/termination-review/SKILL.md）` | termination-review | 解除审查，含高风险标记检测 |
+| `「worker-classification」工作流（加载 employment-legal/skills/worker-classification/SKILL.md）` | worker-classification | 依据〔2005〕12号三要素认定劳动关系 |
+| `「policy-drafting」工作流（加载 employment-legal/skills/policy-drafting/SKILL.md）` | policy-drafting | 起草劳动规章制度（含民主程序和公示） |
+| `「leave-tracker」工作流（加载 employment-legal/skills/leave-tracker/SKILL.md）` | leave-tracker | 检查在休假期中的截止日期预警 |
+| `「log-leave」工作流（加载 employment-legal/skills/log-leave/SKILL.md）` | log-leave | 新增假期记录 |
+| `「investigation-open」工作流（加载 employment-legal/skills/investigation-open/SKILL.md）` | internal-investigation | 启动新的内部调查事项 |
+| `「investigation-add」工作流（加载 employment-legal/skills/investigation-add/SKILL.md）` | internal-investigation | 向进行中的调查添加数据——文件、笔记 |
+| `「investigation-memo」工作流（加载 employment-legal/skills/investigation-memo/SKILL.md）` | internal-investigation | 起草或更新调查备忘录 |
+| `「investigation-query」工作流（加载 employment-legal/skills/investigation-query/SKILL.md）` | internal-investigation | 就已开调查记录提问 |
+| `「investigation-summary」工作流（加载 employment-legal/skills/investigation-summary/SKILL.md）` | internal-investigation | 基于调查备忘录起草按受众分类的摘要 |
+| `「expansion-kickoff」工作流（加载 employment-legal/skills/expansion-kickoff/SKILL.md）` | international-expansion | 启动新省份用工规划 |
+| `「expansion-update」工作流（加载 employment-legal/skills/expansion-update/SKILL.md）` | international-expansion | 更新进行中的跨省用工项目状态 |
+| `「matter-workspace」工作流（加载 employment-legal/skills/matter-workspace/SKILL.md）` | matter-workspace | 管理事项工作空间 |
 | — | handbook-updates | 差异对比员工手册变更并标记地区影响 |
 | scheduled | leave-tracker (agent) | 每周监控在休假期（含硬截止日期） |
 
@@ -530,64 +530,64 @@ scripts/                  # deploy-managed-agent.sh · validate.py · orchestrat
 
 | 命令 | 技能 | 功能 |
 |------|------|------|
-| `/ip-legal:cold-start-interview` | cold-start-interview | 冷启动——了解你的知识产权实践和策略 |
-| `/ip-legal:clearance` | clearance | 商标可注册性初步检索——相同/近似筛查 |
-| `/ip-legal:fto-triage` | fto-triage | 自由实施初步分析（非正式 FTO 意见） |
-| `/ip-legal:cease-desist` | cease-desist | 起草侵权警告函或分流收到的警告函 |
-| `/ip-legal:takedown` | takedown | 通知-删除及反通知（信息网络传播权保护条例） |
-| `/ip-legal:infringement-triage` | infringement-triage | 跨四种知识产权的侵权初步分流 |
-| `/ip-legal:ip-clause-review` | ip-clause-review | 审查知识产权条款——转让、许可、保证 |
-| `/ip-legal:oss-review` | oss-review | 开源许可证合规检查 |
-| `/ip-legal:portfolio` | portfolio | 追踪知识产权组合的截止日期和续展 |
-| `/ip-legal:matter-workspace` | matter-workspace | 管理事项工作空间 |
+| `「cold-start-interview」工作流（加载 ip-legal/skills/cold-start-interview/SKILL.md）` | cold-start-interview | 冷启动——了解你的知识产权实践和策略 |
+| `「clearance」工作流（加载 ip-legal/skills/clearance/SKILL.md）` | clearance | 商标可注册性初步检索——相同/近似筛查 |
+| `「fto-triage」工作流（加载 ip-legal/skills/fto-triage/SKILL.md）` | fto-triage | 自由实施初步分析（非正式 FTO 意见） |
+| `「cease-desist」工作流（加载 ip-legal/skills/cease-desist/SKILL.md）` | cease-desist | 起草侵权警告函或分流收到的警告函 |
+| `「takedown」工作流（加载 ip-legal/skills/takedown/SKILL.md）` | takedown | 通知-删除及反通知（信息网络传播权保护条例） |
+| `「infringement-triage」工作流（加载 ip-legal/skills/infringement-triage/SKILL.md）` | infringement-triage | 跨四种知识产权的侵权初步分流 |
+| `「ip-clause-review」工作流（加载 ip-legal/skills/ip-clause-review/SKILL.md）` | ip-clause-review | 审查知识产权条款——转让、许可、保证 |
+| `「oss-review」工作流（加载 ip-legal/skills/oss-review/SKILL.md）` | oss-review | 开源许可证合规检查 |
+| `「portfolio」工作流（加载 ip-legal/skills/portfolio/SKILL.md）` | portfolio | 追踪知识产权组合的截止日期和续展 |
+| `「matter-workspace」工作流（加载 ip-legal/skills/matter-workspace/SKILL.md）` | matter-workspace | 管理事项工作空间 |
 | scheduled | ip-renewal-watcher (agent) | 每周知识产权组合截止日期报告 |
 
 ### litigation-legal
 
 | 命令 | 技能 | 功能 |
 |------|------|------|
-| `/litigation-legal:cold-start-interview` | cold-start-interview | 冷启动——风险、格局、内部文书风格 |
-| `/litigation-legal:matter-intake` | matter-intake | 登记新案件——写入案件文件和历史记录 |
-| `/litigation-legal:matter-briefing` | matter-briefing | 单个案件深度简报——会议准备 |
-| `/litigation-legal:matter-update` | matter-update | 为案件历史追加带日期的事件 |
-| `/litigation-legal:portfolio-status` | portfolio-status | 案件组合汇总——风险、截止日期、停滞案件 |
-| `/litigation-legal:matter-close` | matter-close | 结案——归档、保留记录 |
-| `/litigation-legal:matter-workspace` | matter-workspace | 管理事项工作空间 |
-| `/litigation-legal:demand-intake` | demand-intake | 律师函起草前准备——当事人、事实、谈判筹码 |
-| `/litigation-legal:demand-draft` | demand-draft | 起草律师函，设置发送门槛 |
-| `/litigation-legal:demand-received` | demand-received | 分流收到的律师函——选项、案件交叉检查 |
-| `/litigation-legal:subpoena-triage` | subpoena-triage | 分流法院调查令/协查通知——范围、负担、方案 |
-| `/litigation-legal:legal-hold` | legal-hold | 签发、更新、解除或报告证据保全 |
-| `/litigation-legal:oc-status` | oc-status | 致外部律师的每周状态催问 |
-| `/litigation-legal:claim-chart` | claim-chart | 要件分析表——专利或民事案由 |
-| `/litigation-legal:chronology` | chronology | 从来源和上传材料构建或更新大事记 |
-| `/litigation-legal:deposition-prep` | deposition-prep | 庭前准备提纲——与案件理论挂钩 |
-| `/litigation-legal:privilege-log-review` | privilege-log-review | 第一轮证据三性审查，附标记 |
-| `/litigation-legal:brief-section-drafter` | brief-section-drafter | 按内部风格起草法律文书章节 |
+| `「cold-start-interview」工作流（加载 litigation-legal/skills/cold-start-interview/SKILL.md）` | cold-start-interview | 冷启动——风险、格局、内部文书风格 |
+| `「matter-intake」工作流（加载 litigation-legal/skills/matter-intake/SKILL.md）` | matter-intake | 登记新案件——写入案件文件和历史记录 |
+| `「matter-briefing」工作流（加载 litigation-legal/skills/matter-briefing/SKILL.md）` | matter-briefing | 单个案件深度简报——会议准备 |
+| `「matter-update」工作流（加载 litigation-legal/skills/matter-update/SKILL.md）` | matter-update | 为案件历史追加带日期的事件 |
+| `「portfolio-status」工作流（加载 litigation-legal/skills/portfolio-status/SKILL.md）` | portfolio-status | 案件组合汇总——风险、截止日期、停滞案件 |
+| `「matter-close」工作流（加载 litigation-legal/skills/matter-close/SKILL.md）` | matter-close | 结案——归档、保留记录 |
+| `「matter-workspace」工作流（加载 litigation-legal/skills/matter-workspace/SKILL.md）` | matter-workspace | 管理事项工作空间 |
+| `「demand-intake」工作流（加载 litigation-legal/skills/demand-intake/SKILL.md）` | demand-intake | 律师函起草前准备——当事人、事实、谈判筹码 |
+| `「demand-draft」工作流（加载 litigation-legal/skills/demand-draft/SKILL.md）` | demand-draft | 起草律师函，设置发送门槛 |
+| `「demand-received」工作流（加载 litigation-legal/skills/demand-received/SKILL.md）` | demand-received | 分流收到的律师函——选项、案件交叉检查 |
+| `「subpoena-triage」工作流（加载 litigation-legal/skills/subpoena-triage/SKILL.md）` | subpoena-triage | 分流法院调查令/协查通知——范围、负担、方案 |
+| `「legal-hold」工作流（加载 litigation-legal/skills/legal-hold/SKILL.md）` | legal-hold | 签发、更新、解除或报告证据保全 |
+| `「oc-status」工作流（加载 litigation-legal/skills/oc-status/SKILL.md）` | oc-status | 致外部律师的每周状态催问 |
+| `「claim-chart」工作流（加载 litigation-legal/skills/claim-chart/SKILL.md）` | claim-chart | 要件分析表——专利或民事案由 |
+| `「chronology」工作流（加载 litigation-legal/skills/chronology/SKILL.md）` | chronology | 从来源和上传材料构建或更新大事记 |
+| `「deposition-prep」工作流（加载 litigation-legal/skills/deposition-prep/SKILL.md）` | deposition-prep | 庭前准备提纲——与案件理论挂钩 |
+| `「privilege-log-review」工作流（加载 litigation-legal/skills/privilege-log-review/SKILL.md）` | privilege-log-review | 第一轮证据三性审查，附标记 |
+| `「brief-section-drafter」工作流（加载 litigation-legal/skills/brief-section-drafter/SKILL.md）` | brief-section-drafter | 按内部风格起草法律文书章节 |
 | scheduled | docket-watcher (agent) | 监控法院案件进展和截止日期 |
 
 ### privacy-legal
 
 | 命令 | 技能 | 功能 |
 |------|------|------|
-| `/privacy-legal:cold-start-interview` | cold-start-interview | 冷启动——了解你的隐私数据实践 |
-| `/privacy-legal:use-case-triage` | use-case-triage | 判断是否需要个保法第55条评估或可直接推进 |
-| `/privacy-legal:pia-generation` | pia-generation | 按内部格式生成个人信息保护影响评估报告 |
-| `/privacy-legal:dpa-review` | dpa-review | 审查个人信息处理协议——自动检测控制者/处理者 |
-| `/privacy-legal:dsar-response` | dsar-response | 处理主体权利请求并起草回复——核实、定位、评估 |
-| `/privacy-legal:reg-gap-analysis` | reg-gap-analysis | 将法规与现行政策和实践进行差异比对 |
-| `/privacy-legal:policy-monitor` | policy-monitor | 保持隐私政策与实践同步 |
-| `/privacy-legal:matter-workspace` | matter-workspace | 管理事项工作空间 |
+| `「cold-start-interview」工作流（加载 privacy-legal/skills/cold-start-interview/SKILL.md）` | cold-start-interview | 冷启动——了解你的隐私数据实践 |
+| `「use-case-triage」工作流（加载 privacy-legal/skills/use-case-triage/SKILL.md）` | use-case-triage | 判断是否需要个保法第55条评估或可直接推进 |
+| `「pia-generation」工作流（加载 privacy-legal/skills/pia-generation/SKILL.md）` | pia-generation | 按内部格式生成个人信息保护影响评估报告 |
+| `「dpa-review」工作流（加载 privacy-legal/skills/dpa-review/SKILL.md）` | dpa-review | 审查个人信息处理协议——自动检测控制者/处理者 |
+| `「dsar-response」工作流（加载 privacy-legal/skills/dsar-response/SKILL.md）` | dsar-response | 处理主体权利请求并起草回复——核实、定位、评估 |
+| `「reg-gap-analysis」工作流（加载 privacy-legal/skills/reg-gap-analysis/SKILL.md）` | reg-gap-analysis | 将法规与现行政策和实践进行差异比对 |
+| `「policy-monitor」工作流（加载 privacy-legal/skills/policy-monitor/SKILL.md）` | policy-monitor | 保持隐私政策与实践同步 |
+| `「matter-workspace」工作流（加载 privacy-legal/skills/matter-workspace/SKILL.md）` | matter-workspace | 管理事项工作空间 |
 
 ### product-legal
 
 | 命令 | 技能 | 功能 |
 |------|------|------|
-| `/product-legal:cold-start-interview` | cold-start-interview | 冷启动——连接上线追踪器，了解风险校准 |
-| `/product-legal:is-this-a-problem` | is-this-a-problem | 快速判断——对"快速问答"给出即时答案 |
-| `/product-legal:launch-review` | launch-review | 依据框架和校准进行完整上线审查 |
-| `/product-legal:marketing-claims-review` | marketing-claims-review | 审查需要调整的营销文案（广告法/反不正当竞争法） |
-| `/product-legal:matter-workspace` | matter-workspace | 管理事项工作空间 |
+| `「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md）` | cold-start-interview | 冷启动——连接上线追踪器，了解风险校准 |
+| `「is-this-a-problem」工作流（加载 product-legal/skills/is-this-a-problem/SKILL.md）` | is-this-a-problem | 快速判断——对"快速问答"给出即时答案 |
+| `「launch-review」工作流（加载 product-legal/skills/launch-review/SKILL.md）` | launch-review | 依据框架和校准进行完整上线审查 |
+| `「marketing-claims-review」工作流（加载 product-legal/skills/marketing-claims-review/SKILL.md）` | marketing-claims-review | 审查需要调整的营销文案（广告法/反不正当竞争法） |
+| `「matter-workspace」工作流（加载 product-legal/skills/matter-workspace/SKILL.md）` | matter-workspace | 管理事项工作空间 |
 | — | feature-risk-assessment | 当上线审查标记时对单个功能的深度风险评估 |
 | scheduled | launch-watcher (agent) | 监控上线追踪器中即将需要审查的产品 |
 
@@ -595,31 +595,31 @@ scripts/                  # deploy-managed-agent.sh · validate.py · orchestrat
 
 | 命令 | 技能 | 功能 |
 |------|------|------|
-| `/regulatory-legal:cold-start-interview` | cold-start-interview | 冷启动——监控清单、政策索引、重要性阈值 |
-| `/regulatory-legal:reg-feed-watcher` | reg-feed-watcher | 即时检查法规动态并报告更新 |
-| `/regulatory-legal:policy-diff` | policy-diff | 将法规变化与政策库进行差异比对 |
-| `/regulatory-legal:gaps` | gap-surfacer | 开放差距追踪器——已标记尚未关闭的项目 |
-| `/regulatory-legal:policy-redraft` | policy-redraft | 带修改标记的政策重述——供政策负责人审阅的建议稿 |
-| `/regulatory-legal:comments` | (tracker) | 审查开放的征求意见期和截止日期 |
-| `/regulatory-legal:matter-workspace` | matter-workspace | 管理事项工作空间 |
+| `「cold-start-interview」工作流（加载 regulatory-legal/skills/cold-start-interview/SKILL.md）` | cold-start-interview | 冷启动——监控清单、政策索引、重要性阈值 |
+| `「reg-feed-watcher」工作流（加载 regulatory-legal/skills/reg-feed-watcher/SKILL.md）` | reg-feed-watcher | 即时检查法规动态并报告更新 |
+| `「policy-diff」工作流（加载 regulatory-legal/skills/policy-diff/SKILL.md）` | policy-diff | 将法规变化与政策库进行差异比对 |
+| `「gaps」工作流（加载 regulatory-legal/skills/gaps/SKILL.md）` | gap-surfacer | 开放差距追踪器——已标记尚未关闭的项目 |
+| `「policy-redraft」工作流（加载 regulatory-legal/skills/policy-redraft/SKILL.md）` | policy-redraft | 带修改标记的政策重述——供政策负责人审阅的建议稿 |
+| `「comments」工作流（加载 regulatory-legal/skills/comments/SKILL.md）` | (tracker) | 审查开放的征求意见期和截止日期 |
+| `「matter-workspace」工作流（加载 regulatory-legal/skills/matter-workspace/SKILL.md）` | matter-workspace | 管理事项工作空间 |
 | scheduled | reg-change-monitor (agent) | 定时法规动态扫描，含重要性过滤 |
 
 ### law-student
 
 | 命令 | 技能 | 功能 |
 |------|------|------|
-| `/law-student:cold-start-interview` | cold-start-interview | 关于你的面试——课程、法考、学习风格 |
-| `/law-student:socratic-drill` | socratic-drill | 课堂问答训练——它问、你答、它追问 |
-| `/law-student:case-brief` | case-brief | 按你偏好的格式做案例摘要 |
-| `/law-student:outline-builder` | outline-builder | 按你的格式构建或扩展知识体系 |
-| `/law-student:irac-practice` | irac-practice | IRAC 作文评分——结构、问题、规则、分析 |
-| `/law-student:legal-writing` | legal-writing | 对你写作的结构性反馈——从不代写 |
-| `/law-student:cold-call-prep` | cold-call-prep | 预测教授提问并进行针对性训练 |
-| `/law-student:bar-prep-questions` | bar-prep-questions | 针对薄弱科目的客观题或主观题练习 |
-| `/law-student:flashcards` | flashcards | 生成或训练记忆卡片——Leitner 式 |
-| `/law-student:exam-forecast` | exam-forecast | 分析历年试题以预测可能重点 |
-| `/law-student:study-plan` | study-plan | 构建或更新长期学习计划 |
-| `/law-student:session` | study-plan | 运行一个 N 题的专注学习单元并更新计划 |
+| `「cold-start-interview」工作流（加载 law-student/skills/cold-start-interview/SKILL.md）` | cold-start-interview | 关于你的面试——课程、法考、学习风格 |
+| `「socratic-drill」工作流（加载 law-student/skills/socratic-drill/SKILL.md）` | socratic-drill | 课堂问答训练——它问、你答、它追问 |
+| `「case-brief」工作流（加载 law-student/skills/case-brief/SKILL.md）` | case-brief | 按你偏好的格式做案例摘要 |
+| `「outline-builder」工作流（加载 law-student/skills/outline-builder/SKILL.md）` | outline-builder | 按你的格式构建或扩展知识体系 |
+| `「irac-practice」工作流（加载 law-student/skills/irac-practice/SKILL.md）` | irac-practice | IRAC 作文评分——结构、问题、规则、分析 |
+| `「legal-writing」工作流（加载 law-student/skills/legal-writing/SKILL.md）` | legal-writing | 对你写作的结构性反馈——从不代写 |
+| `「cold-call-prep」工作流（加载 law-student/skills/cold-call-prep/SKILL.md）` | cold-call-prep | 预测教授提问并进行针对性训练 |
+| `「bar-prep-questions」工作流（加载 law-student/skills/bar-prep-questions/SKILL.md）` | bar-prep-questions | 针对薄弱科目的客观题或主观题练习 |
+| `「flashcards」工作流（加载 law-student/skills/flashcards/SKILL.md）` | flashcards | 生成或训练记忆卡片——Leitner 式 |
+| `「exam-forecast」工作流（加载 law-student/skills/exam-forecast/SKILL.md）` | exam-forecast | 分析历年试题以预测可能重点 |
+| `「study-plan」工作流（加载 law-student/skills/study-plan/SKILL.md）` | study-plan | 构建或更新长期学习计划 |
+| `「session」工作流（加载 law-student/skills/session/SKILL.md）` | study-plan | 运行一个 N 题的专注学习单元并更新计划 |
 
 ## 贡献
 
@@ -627,7 +627,7 @@ scripts/                  # deploy-managed-agent.sh · validate.py · orchestrat
 
 - **新技能** → 添加到 `<插件名>/skills/<技能名>/SKILL.md`，使用现有技能的前置元数据（`name`、`description`、`argument-hint`）。描述保持在 1024 字符以内——这是触发信号。技能可通过 `/<插件名>:<技能名>` 调用。纯参考技能标记 `user-invocable: false`。
 - **新 Agent** → 添加 `<插件名>/agents/<名称>.md`，含调度前置元数据和 system prompt。如需无头部署，添加匹配的 `managed-agent-cookbooks/<名称>/`。
-- **社区技能** → 使用 `/legal-builder-hub:skill-installer` 在你的环境中测试社区技能。Hub 在每次安装前运行 `/legal-builder-hub:skills-qa`，对技能进行评分（九个设计参数、三种法律失败模式、信任面检查），拒绝任何不通过的技能。
+- **社区技能** → 使用 `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）` 在你的环境中测试社区技能。Hub 在每次安装前运行 `（该功能属于 Claude 技能市场生态，KIMI 版本已移除）`，对技能进行评分（九个设计参数、三种法律失败模式、信任面检查），拒绝任何不通过的技能。
 - **推送前验证蓝图** → `bash scripts/test-cookbooks.sh` 对所有托管 Agent 蓝图进行预检，并对编排器工具范围进行 lint。
 
 ## 许可证

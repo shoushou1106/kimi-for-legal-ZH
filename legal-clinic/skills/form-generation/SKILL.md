@@ -3,7 +3,6 @@ name: form-generation
 description: >
   参考：已弃用——请使用 `/draft` 代替。本技能已在 v2 重构中并入
   draft 技能，后者处理实践领域文件生成（含表格填充）。保留为重定向以支持迁移。
-user-invocable: false
 ---
 
 # [已弃用] 表格生成 → 参见 `/draft`

@@ -4,12 +4,11 @@ description: >
   按受众的案件状态摘要——面向当事人（通俗语言）、面向内部（供指导老师）、
   或面向法院（按本地规则的正式文书标题格式）。同样的事实，不同的表述框架和深度。
   当学生需要更新当事人、向指导老师汇报或准备法院状态报告时使用。
-argument-hint: "[client | internal | court]"
 ---
 
 # /status
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md` → 指导风格、通俗语言标准、管辖地。
+1. 加载 `legal-profile/legal-clinic.md` → 指导风格、通俗语言标准、管辖地。
 2. 使用以下工作流。读取案件笔记。
 3. 为指定受众生成：
    - `client` — 通俗语言，发生了什么/下一步/你做什么/联系我们
@@ -18,15 +17,15 @@ argument-hint: "[client | internal | court]"
 4. 按受众进行指导路由（面向当事人和面向法院通常触发标记）。
 
 ```
-/legal-clinic:status client
+「status」工作流（加载 legal-clinic/skills/status/SKILL.md） client
 ```
 
 ```
-/legal-clinic:status internal
+「status」工作流（加载 legal-clinic/skills/status/SKILL.md） internal
 ```
 
 ```
-/legal-clinic:status court
+「status」工作流（加载 legal-clinic/skills/status/SKILL.md） court
 ```
 
 ---
@@ -39,14 +38,14 @@ argument-hint: "[client | internal | court]"
 
 ## 加载上下文
 
-`~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md` → 指导风格、通俗语言标准（用于面向当事人）、管辖地。
+`legal-profile/legal-clinic.md` → 指导风格、通俗语言标准（用于面向当事人）、管辖地。
 案件笔记用于获取事实。
 
 ## 受众模式
 
 ### 面向当事人
 
-**读者：** 当事人。可能焦虑。可能不熟悉法律程序。阅读水平按 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md` 通俗语言标准（默认初中水平）。
+**读者：** 当事人。可能焦虑。可能不熟悉法律程序。阅读水平按 `legal-profile/legal-clinic.md` 通俗语言标准（默认初中水平）。
 
 **包含：**
 - 自上次收到诊所消息以来发生了什么
@@ -83,7 +82,7 @@ argument-hint: "[client | internal | court]"
 [诊所名称]
 ```
 
-**发送前：** 向当事人发送状态更新是一项具有法律后果的行为。门控是 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md` 中 `## 指导风格` 描述的指导工作流程，由确认持证指导律师拥有诊所设置的 Part 0 身份检查强化。确认草稿已按指导协议（队列 / 标记 / 较轻触）审查，所有内部审查标签（`[AI辅助草稿]`、`[待核实]` 等）已从当事人可见版本中移除。
+**发送前：** 向当事人发送状态更新是一项具有法律后果的行为。门控是 `legal-profile/legal-clinic.md` 中 `## 指导风格` 描述的指导工作流程，由确认持证指导律师拥有诊所设置的 Part 0 身份检查强化。确认草稿已按指导协议（队列 / 标记 / 较轻触）审查，所有内部审查标签（`[AI辅助草稿]`、`[待核实]` 等）已从当事人可见版本中移除。
 
 ### 面向内部（供指导老师）
 
@@ -169,7 +168,7 @@ argument-hint: "[client | internal | court]"
 
 ## 指导路由
 
-按 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md`：
+按 `legal-profile/legal-clinic.md`：
 - 面向当事人 → 通常触发标记（当事人沟通）
 - 面向内部 → 无标记（本就是给指导老师的）
 - 面向法院 → 如正式队列启用则始终标记（法院提交）

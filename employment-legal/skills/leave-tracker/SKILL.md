@@ -4,7 +4,6 @@ description: >
   检查进行中的假期，获取截止日期预警和需要做出的决策。仅呈现
   需要采取行动的假期并说明原因——不是状态面板。建议每周运行，
   或每当律师需要知道哪些假期有即将到来的审批、证明或到期截止时使用。
-argument-hint: "[无需参数——从假期登记册 leave-register.yaml 读取]"
 ---
 
 # /leave-tracker
@@ -13,9 +12,9 @@ argument-hint: "[无需参数——从假期登记册 leave-register.yaml 读取
 
 ## 指令
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md` → 管辖地表和假期管理部分。
+1. 加载 `legal-profile/employment-legal.md` → 管辖地表和假期管理部分。
 
-2. 如果 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/leave-register.yaml` 不存在或无数据，提示律师上传假期电子表格或使用 `/employment-legal:log-leave` 添加条目。
+2. 如果 `legal-profile/employment-legal/leave-register.yaml` 不存在或无数据，提示律师上传假期电子表格或使用 `「log-leave」工作流（加载 employment-legal/skills/log-leave/SKILL.md）` 添加条目。
 
 3. 仅对需要行动的假期发出预警。无问题的假期每项一行总结。
 
@@ -32,7 +31,7 @@ argument-hint: "[无需参数——从假期登记册 leave-register.yaml 读取
 ## 示例
 
 ```
-/employment-legal:leave-tracker
+「leave-tracker」工作流（加载 employment-legal/skills/leave-tracker/SKILL.md）
 ```
 
-建议每周运行——设置周一上午提醒调用 `/employment-legal:leave-tracker`。自动排期需要单独的集成（日历提醒、定时任务等）；Claude Code 不自行排期。
+建议每周运行——设置周一上午提醒调用 `「leave-tracker」工作流（加载 employment-legal/skills/leave-tracker/SKILL.md）`。自动排期需要单独的集成（日历提醒、定时任务等）；Claude Code 不自行排期。

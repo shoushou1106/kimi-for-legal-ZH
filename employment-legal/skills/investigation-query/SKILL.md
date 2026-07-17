@@ -4,7 +4,6 @@ description: >
   对进行中的调查日志进行查询——证人说了什么、哪些地方陈述互相矛盾、
   存在哪些证据缺口、每个问题上最有证明力的证据是什么。
   当律师需要查询调查记录而不重新阅读每个条目时使用。
-argument-hint: "[调查事项名称] [问题]"
 ---
 
 # /investigation-query
@@ -34,16 +33,16 @@ argument-hint: "[调查事项名称] [问题]"
 ## 示例
 
 ```
-/employment-legal:investigation-query [调查事项名称]
+「investigation-query」工作流（加载 employment-legal/skills/investigation-query/SKILL.md） [调查事项名称]
 被投诉人关于12月部门聚餐说了什么？
 ```
 
 ```
-/employment-legal:investigation-query [调查事项名称]
+「investigation-query」工作流（加载 employment-legal/skills/investigation-query/SKILL.md） [调查事项名称]
 投诉人和被投诉人的陈述在哪些地方互相矛盾？
 ```
 
 ```
-/employment-legal:investigation-query [调查事项名称]
+「investigation-query」工作流（加载 employment-legal/skills/investigation-query/SKILL.md） [调查事项名称]
 我们还缺什么？
 ```

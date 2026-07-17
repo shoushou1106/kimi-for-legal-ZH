@@ -4,14 +4,13 @@ description: >
   从 _log.yaml 汇总案件组合——风险分布、即将到期的节点、
   陈旧案件、重要性汇总、阶段分布和异常标注。
   当用户问"案件总体情况如何"、"有多少个未结案件"或需要案件组合汇总时使用。
-argument-hint: "[--all | --risk=high | --stale]"
 ---
 
 # /portfolio-status
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` → 风险校准（定义如何解读 `risk:` 字段）。
+1. 加载 `legal-profile/litigation-legal.md` → 风险校准（定义如何解读 `risk:` 字段）。
 2. 按以下工作流操作。
-3. 解析 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/_log.yaml`。默认过滤已结案件（使用 `--all` 包含）。
+3. 解析 `legal-profile/litigation-legal/matters/_log.yaml`。默认过滤已结案件（使用 `--all` 包含）。
 4. 生成汇总：风险分布、未来 14/30/60 天内到期节点、超过30天未更新案件、重要性汇总、阶段分布。
 5. 标注异常——所有标记为危急、`next_deadline` 已逾期、风险为中或高但未指定外聘律师的案件。
 
@@ -25,8 +24,8 @@ argument-hint: "[--all | --risk=high | --stale]"
 
 ## 加载上下文
 
-- `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/_log.yaml` —— 真实来源
-- `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` —— 风险校准（正确解读风险/重要性字段）
+- `legal-profile/litigation-legal/matters/_log.yaml` —— 真实来源
+- `legal-profile/litigation-legal.md` —— 风险校准（正确解读风险/重要性字段）
 
 ## 标记与过滤
 

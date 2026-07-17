@@ -4,7 +4,6 @@ description: >
   向进行中的调查添加数据——文件、访谈记录或观察意见。
   按已记录的筛选标准批量处理，浮现重要事项，记录所有已审查内容
   以供覆盖验证。当新的证据、访谈记录或文件材料进入进行中的调查时使用。
-argument-hint: "[调查事项名称，然后粘贴或附上数据]"
 ---
 
 # /investigation-add
@@ -13,7 +12,7 @@ argument-hint: "[调查事项名称，然后粘贴或附上数据]"
 
 ## 指令
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md`。
+1. 加载 `legal-profile/employment-legal.md`。
 2. 运行添加数据模式：
    - 将新数据追加到调查日志
    - 按筛选标准评估：是否与调查要点相关？是否重要？
@@ -42,11 +41,11 @@ argument-hint: "[调查事项名称，然后粘贴或附上数据]"
 ## 示例
 
 ```
-/employment-legal:investigation-add [调查事项名称]
+「investigation-add」工作流（加载 employment-legal/skills/investigation-add/SKILL.md） [调查事项名称]
 [粘贴访谈记录]
 ```
 
 ```
-/employment-legal:investigation-add [调查事项名称]
+「investigation-add」工作流（加载 employment-legal/skills/investigation-add/SKILL.md） [调查事项名称]
 [附上邮件导出文件]
 ```

@@ -7,23 +7,22 @@ description: >
   规章制度立场、调查偏好或案件工作空间路径。当用户说
   "修改我的[某物]"、"添加管辖地"、"更新我的画像"、
   "编辑我的配置"或"自定义"时使用。
-argument-hint: "[章节名称，或描述你要修改的内容]"
 ---
 
 # /customize
 
 ## 何时运行
 
-用户输入了 `/employment-legal:customize`。他们想要修改其实践画像中的某项内容——管辖地、风险姿态、上报联系人、规章制度立场——而不重新运行整个首次配置访谈，也不手动编辑 YAML。
+用户输入了 `「customize」工作流（加载 employment-legal/skills/customize/SKILL.md）`。他们想要修改其实践画像中的某项内容——管辖地、风险姿态、上报联系人、规章制度立场——而不重新运行整个首次配置访谈，也不手动编辑 YAML。
 
 ## 做什么
 
 1. **读取配置。** 读取
-   `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md`
-   （和上一级的 `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md`）。
+   `legal-profile/employment-legal.md`
+   （和上一级的 `legal-profile/company-profile.md`）。
    如果插件配置不存在或仍包含 `[PLACEHOLDER]` 值，说：
 
-   > 你尚未运行设置。先运行 `/employment-legal:cold-start-interview`——customize 是用于调整已有画像的。
+   > 你尚未运行设置。先运行 `「cold-start-interview」工作流（加载 employment-legal/skills/cold-start-interview/SKILL.md）`——customize 是用于调整已有画像的。
 
 2. **展示可自定义的映射。** 列举画像中的内容，按组，附当前值的一行摘要：
 
@@ -51,13 +50,13 @@ argument-hint: "[章节名称，或描述你要修改的内容]"
    - *风险姿态从中等改为保守：* "我将标记更多解除供上报，建议更强的保护性协议语言，并在竞业限制上更严格。"
 
 5. **对于共享画像变更**（公司名称、行业、管辖地、执业场景、阶段）：写入
-   `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md` 并注明：
+   `legal-profile/company-profile.md` 并注明：
 
    > 此变更影响所有法律插件——任何读取管辖范围的插件现在看到[新值]。
 
 6. **收尾。**
 
-   > 完成。你的下一次输出将反映此变更。还有其他吗？你可以随时运行 `/employment-legal:customize`。
+   > 完成。你的下一次输出将反映此变更。还有其他吗？你可以随时运行 `「customize」工作流（加载 employment-legal/skills/customize/SKILL.md）`。
 
 ## 护栏
 

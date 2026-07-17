@@ -1,7 +1,6 @@
 ---
 name: comments
 description: 审阅公开的征求意见期，记录决策，跟踪截止日期。适用于征求意见稿征求意见窗口开启时，你需要呈现截止日期、决定是否提交意见或记录已提交/不提交/放弃的决策时（--decide CMT-ID）。
-argument-hint: "[可选: --decide CMT-ID]"
 ---
 
 # /comments
@@ -12,8 +11,8 @@ argument-hint: "[可选: --decide CMT-ID]"
 
 ## 加载上下文
 
-`~/.claude/plugins/config/claude-for-legal-zh/regulatory-legal/comment-tracker.yaml` → 所有已跟踪的征求意见稿及其状态。
-`~/.claude/plugins/config/claude-for-legal-zh/regulatory-legal/CLAUDE.md` → 默认意见征集决策负责人。
+`legal-profile/regulatory-legal/comment-tracker.yaml` → 所有已跟踪的征求意见稿及其状态。
+`legal-profile/regulatory-legal.md` → 默认意见征集决策负责人。
 
 ## 默认视图——开放的征求意见期
 
@@ -44,7 +43,7 @@ argument-hint: "[可选: --decide CMT-ID]"
 ## 记录决策
 
 ```
-/regulatory-legal:comments --decide CMT-001
+「comments」工作流（加载 regulatory-legal/skills/comments/SKILL.md） --decide CMT-001
 决策：[提交 / 不提交 / 放弃]
 理由："[简要——如'该法规不适用于我们的业务模式'或'就第3条提交意见']"
 ```
@@ -66,4 +65,4 @@ argument-hint: "[可选: --decide CMT-ID]"
 
 - 不起草意见书。那是独立的律师任务。
 - 不做出提交决策。它跟踪决策；律师做出决策。
-- 不监测征集后的活动。一旦决策已记录，此跟踪器的工作就完成了——通过 `/regulatory-legal:reg-feed-watcher` 跟踪规则的后续进展。
+- 不监测征集后的活动。一旦决策已记录，此跟踪器的工作就完成了——通过 `「reg-feed-watcher」工作流（加载 regulatory-legal/skills/reg-feed-watcher/SKILL.md）` 跟踪规则的后续进展。
