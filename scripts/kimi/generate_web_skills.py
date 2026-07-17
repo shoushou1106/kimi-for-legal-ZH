@@ -17,10 +17,11 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "install" / "web-skills"
 
 # 仓库改名或换默认分支时，改这里并重跑
-RAW_BASE = "https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main"
-# Gitee 镜像（国内访问兜底），目录浏览用 Gitee tree 页面
-GITEE_RAW_BASE = "https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main"
-GITEE_TREE = "https://gitee.com/shoushou1106/kimi-for-legal-ZH/tree/main"
+# 主源：Gitee 镜像（国内访问更快）；兜底：GitHub
+RAW_BASE = "https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main"
+TREE_BASE = "https://gitee.com/shoushou1106/kimi-for-legal-ZH/tree/main"
+FALLBACK_RAW_BASE = "https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main"
+FALLBACK_TREE = "https://github.com/shoushou1106/kimi-for-legal-ZH/tree/main"
 
 DOMAINS = {
     "commercial-legal": ("legal-commercial", "商事合同",
@@ -73,7 +74,7 @@ TEMPLATE = """# KIMI 自定义技能定义：{skill}
 
 ## 相对路径解析规则
 
-工作流文件中引用的所有相对路径（如 `{domain}/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `{RAW_BASE}/` 后作为 URL 读取。如果该地址无法访问（网络原因），改用 Gitee 镜像前缀 `{GITEE_RAW_BASE}/`。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 或 Gitee 页面 `{GITEE_TREE}/<目录>` 查看文件列表。
+工作流文件中引用的所有相对路径（如 `{domain}/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `{RAW_BASE}/` 后作为 URL 读取。如果该地址无法访问（Gitee 同步延迟或网络原因），改用 GitHub 前缀 `{FALLBACK_RAW_BASE}/`。需要读取目录清单时，用 Gitee 页面 `{TREE_BASE}/<目录>` 或 GitHub 页面 `{FALLBACK_TREE}/<目录>` 查看文件列表。
 
 ## 检索与引用规则
 
@@ -134,7 +135,9 @@ def main() -> None:
         (OUT / f"{skill}.md").write_text(
             TEMPLATE.format(skill=skill, display=display, triggers=triggers,
                             domain=domain, table=table, RAW_BASE=RAW_BASE,
-                            GITEE_RAW_BASE=GITEE_RAW_BASE, GITEE_TREE=GITEE_TREE),
+                            TREE_BASE=TREE_BASE,
+                            FALLBACK_RAW_BASE=FALLBACK_RAW_BASE,
+                            FALLBACK_TREE=FALLBACK_TREE),
             encoding="utf-8")
         print(f"wrote install/web-skills/{skill}.md ({len(rows)} workflows)")
 

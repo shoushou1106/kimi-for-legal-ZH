@@ -15,17 +15,17 @@
 ```text
 请依次读取以下 11 个链接，每个链接是一个自定义技能的完整定义（文件顶部标注了技能名称和触发描述，正文是技能内容）。请为每个文件创建一个自定义技能，共 11 个：
 
-1. https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/install/web-skills/legal-commercial.md
-2. https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/install/web-skills/legal-corporate.md
-3. https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/install/web-skills/legal-employment.md
-4. https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/install/web-skills/legal-privacy.md
-5. https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/install/web-skills/legal-product.md
-6. https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/install/web-skills/legal-regulatory.md
-7. https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/install/web-skills/legal-ai-governance.md
-8. https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/install/web-skills/legal-ip.md
-9. https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/install/web-skills/legal-litigation.md
-10. https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/install/web-skills/legal-clinic.md
-11. https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/install/web-skills/legal-law-student.md
+1. https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/install/web-skills/legal-commercial.md
+2. https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/install/web-skills/legal-corporate.md
+3. https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/install/web-skills/legal-employment.md
+4. https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/install/web-skills/legal-privacy.md
+5. https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/install/web-skills/legal-product.md
+6. https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/install/web-skills/legal-regulatory.md
+7. https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/install/web-skills/legal-ai-governance.md
+8. https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/install/web-skills/legal-ip.md
+9. https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/install/web-skills/legal-litigation.md
+10. https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/install/web-skills/legal-clinic.md
+11. https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/install/web-skills/legal-law-student.md
 
 全部创建完成后，请告诉我"技能包安装完成"，并列出已创建的技能名称清单。
 ```
@@ -50,7 +50,7 @@
 本技能包含 9 个定时监控蓝图（合同续约预警、法规动态简报、案件进度监控等）。网页版 KIMI 支持定时任务，以"合同续约监控"为例，对 KIMI 说：
 
 ```text
-读取 https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/commercial-legal/agents/renewal-watcher.md ，按文件末尾「在 KIMI 中创建定时任务」一节为我创建定时任务
+读取 https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/commercial-legal/agents/renewal-watcher.md ，按文件末尾「在 KIMI 中创建定时任务」一节为我创建定时任务
 ```
 
 其他蓝图位于仓库各领域的 `agents/` 目录下（如 `litigation-legal/agents/docket-watcher.md` 案件进度监控、`regulatory-legal/agents/reg-change-monitor.md` 法规动态简报），同理创建。
@@ -64,7 +64,7 @@
 
 ## 仓库地址
 
-- GitHub（主仓库）：https://github.com/shoushou1106/kimi-for-legal-ZH （KIMI 适配版，基于 CSlawyer1985/claude-for-legal-ZH）
-- Gitee 镜像（国内访问更快）：https://gitee.com/shoushou1106/kimi-for-legal-ZH
+- Gitee（主源，国内访问快）：https://gitee.com/shoushou1106/kimi-for-legal-ZH
+- GitHub（镜像）：https://github.com/shoushou1106/kimi-for-legal-ZH （KIMI 适配版，基于 CSlawyer1985/claude-for-legal-ZH）
 
-**Gitee 用户提示**：如果上面第一步中的 `raw.githubusercontent.com` 链接无法访问，把所有链接中的前缀 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/` 替换为 `https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/` 即可，其余不变。技能运行时也会自动在两个镜像间切换。
+**GitHub 用户提示**：上面第一步中的链接默认走 Gitee。如果 Gitee 镜像同步延迟导致文件缺失，把链接中的前缀 `https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/` 替换为 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/` 即可，其余不变。技能运行时也会自动在两个源之间切换。

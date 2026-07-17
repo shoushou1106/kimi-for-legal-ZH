@@ -13,8 +13,8 @@
 ## 开工前的画像门禁（每次必做）
 
 1. 从 KIMI 记忆中读取你的画像：共享公司画像（company-profile）和本领域画像（product-legal）。
-2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/product-legal/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆，**每条记忆以「kimi-for-legal-ZH 法律画像」开头标注来源，并注明仅在法律工作任务中适用**（KIMI 的记忆在所有会话中始终生效，标注是防止法律画像渗入无关对话）。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
-3. 共享安全规则（发送目的地检查、来源溯源标签、律师审查门槛）见 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/product-legal/profile-template.md` 的「共享安全机制」段，所有输出适用。
+2. 如果记忆中没有画像或画像仍是占位符：**停止实质工作**，告知用户需要先运行冷启动访谈（约 10–15 分钟），经同意后读取 `https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/product-legal/skills/cold-start-interview/SKILL.md` 并执行；访谈结束后将画像全文写入 KIMI 记忆，**每条记忆以「kimi-for-legal-ZH 法律画像」开头标注来源，并注明仅在法律工作任务中适用**（KIMI 的记忆在所有会话中始终生效，标注是防止法律画像渗入无关对话）。用户也可选择"临时模式"——按通用默认值工作，每个输出标注 `[临时模式]`。
+3. 共享安全规则（发送目的地检查、来源溯源标签、律师审查门槛）见 `https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/product-legal/profile-template.md` 的「共享安全机制」段，所有输出适用。
 
 ## 工作流路由
 
@@ -22,17 +22,17 @@
 
 | 用户意图 | 读取 URL |
 |---|---|
-| **首次使用：冷启动访谈（配置画像）** | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/product-legal/skills/cold-start-interview/SKILL.md |
-| 对产品法务实务画像进行引导式定制——修改单项设置，无需重新运行完整冷启动访谈 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/product-legal/skills/customize/SKILL.md |
-| 对单个功能或产品领域进行更深入的风险评估，当上线审查发现某个议题需要 超出单行条目的深度分析时使… | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/product-legal/skills/feature-risk-assessment/SKILL.md |
-| 对快速的飞书/钉钉问题给出"这有问题吗？"答复——对照您的校准进行模式匹配 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/product-legal/skills/is-this-a-problem/SKILL.md |
-| 对照您的框架和风险校准进行全面产品上线审查 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/product-legal/skills/launch-review/SKILL.md |
-| 审查营销文案中的宣传主张，识别哪些需要证实、改写或删除 | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/product-legal/skills/marketing-claims-review/SKILL.md |
-| 管理事项工作空间——新建、列表、切换、关闭或脱钩（实务级） | https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/product-legal/skills/matter-workspace/SKILL.md |
+| **首次使用：冷启动访谈（配置画像）** | https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/product-legal/skills/cold-start-interview/SKILL.md |
+| 对产品法务实务画像进行引导式定制——修改单项设置，无需重新运行完整冷启动访谈 | https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/product-legal/skills/customize/SKILL.md |
+| 对单个功能或产品领域进行更深入的风险评估，当上线审查发现某个议题需要 超出单行条目的深度分析时使… | https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/product-legal/skills/feature-risk-assessment/SKILL.md |
+| 对快速的飞书/钉钉问题给出"这有问题吗？"答复——对照您的校准进行模式匹配 | https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/product-legal/skills/is-this-a-problem/SKILL.md |
+| 对照您的框架和风险校准进行全面产品上线审查 | https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/product-legal/skills/launch-review/SKILL.md |
+| 审查营销文案中的宣传主张，识别哪些需要证实、改写或删除 | https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/product-legal/skills/marketing-claims-review/SKILL.md |
+| 管理事项工作空间——新建、列表、切换、关闭或脱钩（实务级） | https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/product-legal/skills/matter-workspace/SKILL.md |
 
 ## 相对路径解析规则
 
-工作流文件中引用的所有相对路径（如 `product-legal/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/` 后作为 URL 读取。如果该地址无法访问（网络原因），改用 Gitee 镜像前缀 `https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/`。需要读取目录清单时，改用 GitHub 页面 `https://github.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 或 Gitee 页面 `https://gitee.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 查看文件列表。
+工作流文件中引用的所有相对路径（如 `product-legal/references/contract-law-core.md`、`references/knowledge-base-crossref.md`），一律加上前缀 `https://raw.giteeusercontent.com/shoushou1106/kimi-for-legal-ZH/raw/main/` 后作为 URL 读取。如果该地址无法访问（Gitee 同步延迟或网络原因），改用 GitHub 前缀 `https://raw.githubusercontent.com/shoushou1106/kimi-for-legal-ZH/main/`。需要读取目录清单时，用 Gitee 页面 `https://gitee.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 或 GitHub 页面 `https://github.com/shoushou1106/kimi-for-legal-ZH/tree/main/<目录>` 查看文件列表。
 
 ## 检索与引用规则
 

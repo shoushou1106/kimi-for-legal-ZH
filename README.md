@@ -9,10 +9,10 @@
 ### 方式一：KIMI Work（推荐，完整能力）
 
 ```bash
-# GitHub（主仓库）
-git clone https://github.com/shoushou1106/kimi-for-legal-ZH.git
-# 或 Gitee 镜像（国内访问更快）
-# git clone https://gitee.com/shoushou1106/kimi-for-legal-ZH.git
+# Gitee（主源，国内访问快）
+git clone https://gitee.com/shoushou1106/kimi-for-legal-ZH.git
+# 或 GitHub 镜像
+# git clone https://github.com/shoushou1106/kimi-for-legal-ZH.git
 cd kimi-for-legal-ZH
 python3 scripts/kimi/install_kimi_work.py
 ```
