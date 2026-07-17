@@ -7,8 +7,6 @@ description: >
   within a rolling 12-month window (configurable in `legal-profile/commercial-legal.md`).
   Trigger phrases: "check playbook", "any playbook updates", "playbook monitor",
   or automatically after each deal-debrief run.
-model: sonnet
-tools: ["Read", "Write", "mcp__*__notify", "mcp__*__slack_send_message"]
 ---
 
 # Playbook Monitor Agent
@@ -188,3 +186,17 @@ Next playbook check: after [N] more deals are logged
 - Generate proposals if no threshold is crossed — silence means the playbook is holding
 - Re-raise rejected proposals until a new pattern emerges after the rejection date
 - Accumulate stale proposals — each run overwrites the proposals file
+
+---
+
+## 在 KIMI 中创建定时任务（KIMI 版）
+
+**KIMI Work：** 对本文件说"按此蓝图创建定时任务"，或按以下参数创建定时任务（cron job）：
+
+- 建议时间：每周三 09:23（cron `23 9 * * 3`，时区 Asia/Shanghai；可按需调整）
+- 执行内容：读取 `legal-profile/commercial-legal.md` 获取配置，然后按上方工作流执行，报告输出到对话
+- 可选：要求附加完成通知
+
+**网页版 KIMI：** 在对话中说"创建定时任务：审查指引监控：分析偏离日志，当条款持续偏移时提出审查指引更新建议，每周三 09:23执行"，或在定时任务表单中手动填写。画像以 KIMI 记忆为准。
+
+**注意：** 原蓝图中的频道推送（Slack/飞书）在 KIMI 版中改为对话内输出或写入工作区文件；确需推送到 IM 时，可通过 WebBridge 操作网页版 IM 转发。

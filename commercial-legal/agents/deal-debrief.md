@@ -6,8 +6,6 @@ description: >
   Runs weekly by default (Monday morning). Also runs on-demand.
   Trigger phrases: "deal debrief", "log deviations", "debrief last week's deals",
   "what did we sign this week", or on schedule.
-model: sonnet
-tools: ["Read", "Write", "mcp__*__search", "mcp__*__fetch", "mcp__*__query", "mcp__*__list"]
 ---
 
 # Deal Debrief Agent
@@ -35,7 +33,7 @@ Read `legal-profile/commercial-legal.md` in full. Extract:
 
 Using the repository location from `legal-profile/commercial-legal.md`:
 
-- **If CLM connected:** query for agreements with status = executed/signed in the last 7 days using `mcp__*__search` or `mcp__*__query`.
+- **If CLM connected:** query for agreements with status = executed/signed in the last 7 days using the available contract-management plugin or WebBridge.
 - **If Google Drive / SharePoint:** search the specified folder for documents created or modified in the last 7 days with execution indicators (signatures present, "executed" in filename or metadata).
 - **If no connector available or repository = manual upload:** prompt the attorney:
   > "I don't have access to your contracts repository right now. Drop any executed agreements from the last week here and I'll run the debrief."
@@ -174,3 +172,17 @@ Playbook monitor will surface patterns when frequency thresholds are hit.
 - Surface agreements with no deviations — clean deals do not clutter the debrief
 - Create duplicate entries — checks deal_id before writing
 - Use one-off flagged deals in pattern analysis — exclude_from_patterns is the signal to playbook-monitor
+
+---
+
+## 在 KIMI 中创建定时任务（KIMI 版）
+
+**KIMI Work：** 对本文件说"按此蓝图创建定时任务"，或按以下参数创建定时任务（cron job）：
+
+- 建议时间：每周五 17:52（cron `52 17 * * 5`，时区 Asia/Shanghai；可按需调整）
+- 执行内容：读取 `legal-profile/commercial-legal.md` 获取配置，然后按上方工作流执行，报告输出到对话
+- 可选：要求附加完成通知
+
+**网页版 KIMI：** 在对话中说"创建定时任务：签署合同复盘：汇总本周已签署协议中的审查指引偏离项，每周五 17:52执行"，或在定时任务表单中手动填写。画像以 KIMI 记忆为准。
+
+**注意：** 原蓝图中的频道推送（Slack/飞书）在 KIMI 版中改为对话内输出或写入工作区文件；确需推送到 IM 时，可通过 WebBridge 操作网页版 IM 转发。

@@ -5,8 +5,6 @@ description: >
   Runs per the cadence in legal-profile/regulatory-legal.md. Filters by materiality threshold so the
   digest is signal, not noise. Trigger: "reg digest", "what's new from
   regulators", or on schedule.
-model: sonnet
-tools: ["Read", "Write", "WebFetch", "mcp__thomson-reuters__*", "mcp__*__slack_send_message"]
 ---
 
 # Reg Change Monitor Agent
@@ -49,3 +47,17 @@ If nothing material, short all-clear with FYI count.
 
 - Update policies — flags gaps, human updates
 - Make materiality calls on edge cases — filters by the threshold, borderline items go in "review-worthy"
+
+---
+
+## 在 KIMI 中创建定时任务（KIMI 版）
+
+**KIMI Work：** 对本文件说"按此蓝图创建定时任务"，或按以下参数创建定时任务（cron job）：
+
+- 建议时间：每周一 07:43（cron `43 7 * * 1`，时区 Asia/Shanghai；可按需调整）
+- 执行内容：读取 `legal-profile/regulatory-legal.md` 获取配置，然后按上方工作流执行，报告输出到对话
+- 可选：要求附加完成通知
+
+**网页版 KIMI：** 在对话中说"创建定时任务：法规动态监控：轮询法规信息源，生成周一晨会监管简报，每周一 07:43执行"，或在定时任务表单中手动填写。画像以 KIMI 记忆为准。
+
+**注意：** 原蓝图中的频道推送（Slack/飞书）在 KIMI 版中改为对话内输出或写入工作区文件；确需推送到 IM 时，可通过 WebBridge 操作网页版 IM 转发。
