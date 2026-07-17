@@ -10,9 +10,15 @@
 
 ```bash
 git clone https://github.com/shoushou1106/claude-for-legal-ZH.git
+cd claude-for-legal-ZH
+python3 scripts/kimi/install_kimi_work.py
 ```
 
-在 KIMI Work 中**把该目录作为工作区打开**——`.agents/skills/` 下的 11 个领域入口技能会被自动发现，无需任何安装动作。
+安装器会把 11 个领域入口技能复制到 KIMI Work 的技能目录，并把路由路径改写为本仓库的绝对路径。**开启新的 KIMI Work 会话**后技能即可用（KIMI Work 的技能索引在会话启动时构建）。
+
+- 仓库请放在**固定位置**——技能中的路由使用绝对路径指向本仓库；移动仓库后重跑一次安装器即可。
+- 卸载：`python3 scripts/kimi/install_kimi_work.py --uninstall`
+- KIMI 大版本更新后若技能消失，重跑安装器即可恢复。
 
 然后对 KIMI 说「运行商事合同冷启动访谈」（或你所在领域），完成 10–15 分钟的访谈，它会生成你的实务画像（`legal-profile/`），所有工作流从此按你的实务方式执行。
 
@@ -23,7 +29,7 @@ git clone https://github.com/shoushou1106/claude-for-legal-ZH.git
 ## 仓库结构
 
 ```
-.agents/skills/            # 11 个 KIMI 领域入口技能（KIMI 自动发现）
+.agents/skills/            # 11 个 KIMI 领域入口技能（源文件，经安装器部署到 KIMI Work）
   legal-commercial/        # 商事合同     legal-corporate/    # 公司与并购
   legal-employment/        # 劳动用工     legal-privacy/      # 数据合规与隐私
   legal-product/           # 产品合规     legal-regulatory/   # 监管合规
@@ -95,4 +101,5 @@ python3 scripts/kimi/patch_cold_start.py     # 冷启动专项改写（幂等）
 python3 scripts/kimi/patch_agents.py         # 定时 Agent 改写（幂等）
 python3 scripts/kimi/generate_entry_skills.py  # 重新生成入口技能
 python3 scripts/kimi/generate_web_skills.py    # 重新生成网页版技能
+python3 scripts/kimi/install_kimi_work.py      # 刷新 KIMI Work 中的全局技能副本
 ```

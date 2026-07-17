@@ -2,10 +2,11 @@
 
 ## KIMI Work 用户（60 秒）
 
-1. `git clone https://github.com/shoushou1106/claude-for-legal-ZH.git`
-2. 在 KIMI Work 中打开该目录作为工作区——11 个领域技能自动可用。
-3. 对 KIMI 说：**「运行商事合同冷启动访谈」**（换成你的领域）。约 10–15 分钟，生成你的实务画像。
-4. 开始工作，例如：「审查这份供应商合同」。
+1. `git clone https://github.com/shoushou1106/claude-for-legal-ZH.git && cd claude-for-legal-ZH`
+2. `python3 scripts/kimi/install_kimi_work.py`（卸载加 `--uninstall`）
+3. **开启新的 KIMI Work 会话**——11 个领域技能生效。
+4. 对 KIMI 说：**「运行商事合同冷启动访谈」**（换成你的领域）。约 10–15 分钟，生成你的实务画像。
+5. 开始工作，例如：「审查这份供应商合同」。
 
 ## 网页版 KIMI 用户（10 分钟）
 
