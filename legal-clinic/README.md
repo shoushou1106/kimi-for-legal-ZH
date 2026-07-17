@@ -1,3 +1,5 @@
+> ⚠️ **KIMI 适配版说明**：本文件保留自上游仓库，其中 Claude Code 安装方式、斜杠命令与配置路径描述已不适用。KIMI 版的安装与使用以根目录 [README.md](../README.md) 和 [QUICKSTART.md](../QUICKSTART.md) 为准；本领域工作流内容仍然有效，经入口技能路由使用。
+
 # Claude for 法学院法律诊所
 
 *通过 AI 赋能的诊所法律教育，放大司法可及性（access to justice）。*

@@ -1,3 +1,5 @@
+> ⚠️ **KIMI 适配版说明**：本文件保留自上游仓库，其中 Claude Code 安装方式、斜杠命令与配置路径描述已不适用。KIMI 版的安装与使用以根目录 [README.md](../README.md) 和 [QUICKSTART.md](../QUICKSTART.md) 为准；本领域工作流内容仍然有效，经入口技能路由使用。
+
 # 法学学生插件（Law Student Plugin）
 
 学习模式，而非答案模式。互动式问答训练（Socratic drilling）——向你提问，指出你推理中的漏洞。案例摘要（case brief）、知识体系搭建（outline builder）、记忆卡片（flashcards）、IRAC 写作评估、课堂提问准备（cold-call prep）、写作反馈（绝不代写），以及基于同一位教授历年考题的考试预测（exam forecast）。一切适配你的情况——你的课程、你的法考报考地、你希望被"追问训练（drill-me）"还是"讲解引导（explain-to-me）"。
