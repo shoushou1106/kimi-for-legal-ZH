@@ -5,23 +5,22 @@ description: >
   调整风险姿态、上报联系人、活跃模块（并购/董事会与公司秘书/公众公司/主体管理）、
   重要性阈值、披露清单格式、决议先例或事项工作区路径。当用户说"改一下我的[某配置]"
   "更新我的配置""编辑我的实务画像""调整我的设置"或"定制"时使用。
-argument-hint: "[配置部分名称，或描述你想修改的内容]"
 ---
 
 # /customize
 
 ## 何时运行
 
-用户键入 `/corporate-legal:customize`。他们想修改实务画像中的某项——风险姿态、上报联系人、模块开关、输出格式——而无需重新运行完整冷启动访谈，也无需手工编辑 YAML。
+用户键入 `「customize」工作流（加载 corporate-legal/skills/customize/SKILL.md）`。他们想修改实务画像中的某项——风险姿态、上报联系人、模块开关、输出格式——而无需重新运行完整冷启动访谈，也无需手工编辑 YAML。
 
 ## 做什么
 
 1. **读取配置。** 读取
-   `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/CLAUDE.md`
-   （以及上一级目录的 `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md`）。
+   `legal-profile/corporate-legal.md`
+   （以及上一级目录的 `legal-profile/company-profile.md`）。
    如果插件配置不存在或仍包含 `[PLACEHOLDER]`，说：
 
-   > 你还没有运行设置。先运行 `/corporate-legal:cold-start-interview`
+   > 你还没有运行设置。先运行 `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md）`
    > ——定制功能用于调整已有的画像。
 
 2. **展示可定制项目清单。** 按组列出配置中的内容，附当前值的一行摘要：
@@ -65,7 +64,7 @@ argument-hint: "[配置部分名称，或描述你想修改的内容]"
 
 6. **收尾。**
 
-   > 完成。你的下一个输出将反映该变更。随时可运行 `/corporate-legal:customize`。
+   > 完成。你的下一个输出将反映该变更。随时可运行 `「customize」工作流（加载 corporate-legal/skills/customize/SKILL.md）`。
 
 ## 防护措施
 

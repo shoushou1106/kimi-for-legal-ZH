@@ -4,7 +4,6 @@ description: >
   管理事务工作区——创建、列表、切换、关闭或解除活跃事务。
   适用于多客户私人执业场景，将一个客户或委托的上下文与另一个
   隔离开。也可以在实质技能需要知道它在哪个事务中工作时使用。
-argument-hint: "<new | list | switch | close | none> [slug]"
 ---
 
 # /matter-workspace
@@ -13,21 +12,21 @@ argument-hint: "<new | list | switch | close | none> [slug]"
 
 ## 子命令
 
-- `/ai-governance-legal:matter-workspace new <slug>` — 创建新的事务工作区，运行简短录入，写入 `matter.md`
-- `/ai-governance-legal:matter-workspace list` — 列出事务及其状态和活跃标记
-- `/ai-governance-legal:matter-workspace switch <slug>` — 设置活跃事务
-- `/ai-governance-legal:matter-workspace close <slug>` — 归档事务（移动到 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/matters/_archived/`，不删除）
-- `/ai-governance-legal:matter-workspace none` — 解除活跃事务，仅在实践层面工作
+- `「matter-workspace」工作流（加载 ai-governance-legal/skills/matter-workspace/SKILL.md） new <slug>` — 创建新的事务工作区，运行简短录入，写入 `matter.md`
+- `「matter-workspace」工作流（加载 ai-governance-legal/skills/matter-workspace/SKILL.md） list` — 列出事务及其状态和活跃标记
+- `「matter-workspace」工作流（加载 ai-governance-legal/skills/matter-workspace/SKILL.md） switch <slug>` — 设置活跃事务
+- `「matter-workspace」工作流（加载 ai-governance-legal/skills/matter-workspace/SKILL.md） close <slug>` — 归档事务（移动到 `legal-profile/ai-governance-legal/matters/_archived/`，不删除）
+- `「matter-workspace」工作流（加载 ai-governance-legal/skills/matter-workspace/SKILL.md） none` — 解除活跃事务，仅在实践层面工作
 
 ## 指令
 
-1. 读取 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/CLAUDE.md` — 确认 `## 事务工作区` 部分已填充。如果 `已启用` 为 `✗`，告知用户："事务工作区已关闭——你被配置为法务内部实践，只有一个客户，因此插件自动从实践级上下文工作。如果你实际上跨多个客户工作，请重新运行 `/ai-governance-legal:cold-start-interview --redo` 并选择私人执业设置。否则，你不需要 `/ai-governance-legal:matter-workspace`。" 不要报错——关闭状态是法务内部用户的预期状态。
+1. 读取 `legal-profile/ai-governance-legal.md` — 确认 `## 事务工作区` 部分已填充。如果 `已启用` 为 `✗`，告知用户："事务工作区已关闭——你被配置为法务内部实践，只有一个客户，因此插件自动从实践级上下文工作。如果你实际上跨多个客户工作，请重新运行 `「cold-start-interview」工作流（加载 ai-governance-legal/skills/cold-start-interview/SKILL.md） --redo` 并选择私人执业设置。否则，你不需要 `「matter-workspace」工作流（加载 ai-governance-legal/skills/matter-workspace/SKILL.md）`。" 不要报错——关闭状态是法务内部用户的预期状态。
 2. 按照以下子命令逻辑操作。
 3. 根据 `$ARGUMENTS` 的第一个词分发：
-   - `new` → 运行录入访谈，写入 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/matters/<slug>/matter.md`，种子化 `history.md` 和 `notes.md`。
-   - `list` → 枚举 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/matters/*/matter.md`，打印表格，标记活跃事务。
+   - `new` → 运行录入访谈，写入 `legal-profile/ai-governance-legal/matters/<slug>/matter.md`，种子化 `history.md` 和 `notes.md`。
+   - `list` → 枚举 `legal-profile/ai-governance-legal/matters/*/matter.md`，打印表格，标记活跃事务。
    - `switch` → 更新实践级 CLAUDE.md 中的 `活跃事务：` 行。
-   - `close` → 将 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/matters/<slug>/` 移动到 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/matters/_archived/<slug>/`，在 `history.md` 中记录关闭日期。
+   - `close` → 将 `legal-profile/ai-governance-legal/matters/<slug>/` 移动到 `legal-profile/ai-governance-legal/matters/_archived/<slug>/`，在 `history.md` 中记录关闭日期。
    - `none` → 将 `活跃事务：` 设置为 `无 — 仅实践级上下文`。
 4. 向用户展示变更内容，确认后再写入。
 
@@ -43,14 +42,14 @@ argument-hint: "<new | list | switch | close | none> [slug]"
 
 跨多客户执业的律师（私人执业——独立执业、小型律所、大型律所）处理多个事务。一个事务的上下文不得泄露到另一个事务中。此技能是使这一点成立的轻量文件管理层。
 
-**默认状态是关闭的。** 法务内部用户永远看不到这个——他们仅在实践级运行。事务工作区在冷启动时为私人执业用户开启，或通过编辑实践级 CLAUDE.md 中的 `## 事务工作区` 开启。如果 `已启用` 为 `✗`，此技能不运行；上述工作流解释关闭状态并为确实需要事务隔离的用户建议 `/ai-governance-legal:cold-start-interview --redo`。
+**默认状态是关闭的。** 法务内部用户永远看不到这个——他们仅在实践级运行。事务工作区在冷启动时为私人执业用户开启，或通过编辑实践级 CLAUDE.md 中的 `## 事务工作区` 开启。如果 `已启用` 为 `✗`，此技能不运行；上述工作流解释关闭状态并为确实需要事务隔离的用户建议 `「cold-start-interview」工作流（加载 ai-governance-legal/skills/cold-start-interview/SKILL.md） --redo`。
 
 ## 存储布局
 
 所有事务数据位于：
 
 ```
-~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/
+legal-profile/ai-governance-legal/
 ├── CLAUDE.md                       # 实践级实践配置文件
 └── matters/
     ├── <slug>/
@@ -84,7 +83,7 @@ Slug 使用小写字母加连字符。示例：`acme-ai-vendor-2026`、`zenith-a
 3. 使用以下模板写入 `matters/<slug>/matter.md`。
 4. 种子化 `matters/<slug>/history.md`，写入一条"已开设"条目。
 5. 创建空的 `matters/<slug>/notes.md`。
-6. **不要**自动切换到新事务。询问："是否现在切换到 `<slug>`？（`/ai-governance-legal:matter-workspace switch <slug>`）"
+6. **不要**自动切换到新事务。询问："是否现在切换到 `<slug>`？（`「matter-workspace」工作流（加载 ai-governance-legal/skills/matter-workspace/SKILL.md） switch <slug>`）"
 
 ### `list`
 
@@ -97,7 +96,7 @@ Slug 使用小写字母加连字符。示例：`acme-ai-vendor-2026`、`zenith-a
 
 ### `switch <slug>`
 
-1. 确认 `matters/<slug>/matter.md` 存在。如果不存在，提供 `/ai-governance-legal:matter-workspace new <slug>`。
+1. 确认 `matters/<slug>/matter.md` 存在。如果不存在，提供 `「matter-workspace」工作流（加载 ai-governance-legal/skills/matter-workspace/SKILL.md） new <slug>`。
 2. 编辑实践级 CLAUDE.md 中的 `活跃事务：` 行为 `活跃事务：<slug>`。
 3. 向用户展示 matter.md 摘要，以便确认他们在正确的事务上。
 

@@ -1,3 +1,5 @@
+> ⚠️ **KIMI 适配版说明**：本文件保留自上游仓库，其中 Claude Code 安装方式、斜杠命令与配置路径描述已不适用。KIMI 版的安装与使用以根目录 [README.md](../README.md) 和 [QUICKSTART.md](../QUICKSTART.md) 为准；本领域工作流内容仍然有效，经入口技能路由使用。
+
 # 公司业务律师插件
 
 企业法务公司业务工作流，覆盖四个业务领域：并购交易、董事会与公司秘书、公众公司治理以及主体管理。仅激活适用于您角色的模块。冷启动访谈采用模块化设计——按活跃业务领域提出针对性问题，仅向您的实务画像写入相关章节。
@@ -17,36 +19,36 @@
 ## 首次运行
 
 ```
-/corporate-legal:cold-start-interview
+「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md）
 ```
 
-依次完成模块选择，然后针对每个活跃业务领域进行简短访谈。将模块化的实务画像写入 `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/CLAUDE.md`，仅包含相关章节。您的配置存储于该路径并在插件更新后继续生效。
+依次完成模块选择，然后针对每个活跃业务领域进行简短访谈。将模块化的实务画像写入 `legal-profile/corporate-legal.md`，仅包含相关章节。您的配置存储于该路径并在插件更新后继续生效。
 
 逐项交易设置（仅并购模块）：
 
 ```
-/corporate-legal:cold-start-interview --new-deal
+「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md） --new-deal
 ```
 
 ## 指令
 
 | 指令 | 功能 |
 |---|---|
-| `/corporate-legal:cold-start-interview` | 模块化冷启动，或 `--new-deal` / `--module [m&a \| board \| public \| entities]` |
-| `/corporate-legal:diligence-issue-extraction [文件夹]` | 读取数据室文件，按公司格式提取问题 |
-| `/corporate-legal:tabular-review` | 表格化审查——一行一份文件，一列一个数据点，每单元格附来源引用，输出Excel |
-| `/corporate-legal:material-contract-schedule` | 根据尽调发现制作重大合同披露函 |
-| `/corporate-legal:closing-checklist` | 交割检查表——哪些事项在阻断、关键路径是什么 |
-| `/corporate-legal:written-consent` | 书面决议（股东会/董事会）——匹配先例的草稿+签署跟踪 |
-| `/corporate-legal:entity-compliance` | 主体合规追踪器——初始化、报告、更新、体检、导出 |
-| `/corporate-legal:integration-management` | 交割后整合工作计划、同意函追踪、合同概括转让、状态报告 |
-| `/corporate-legal:matter-workspace` | 管理事项工作空间（仅多客户私人执业）——新建、列表、切换、关闭、无事项 |
+| `「cold-start-interview」工作流（加载 corporate-legal/skills/cold-start-interview/SKILL.md）` | 模块化冷启动，或 `--new-deal` / `--module [m&a \| board \| public \| entities]` |
+| `「diligence-issue-extraction」工作流（加载 corporate-legal/skills/diligence-issue-extraction/SKILL.md） [文件夹]` | 读取数据室文件，按公司格式提取问题 |
+| `「tabular-review」工作流（加载 corporate-legal/skills/tabular-review/SKILL.md）` | 表格化审查——一行一份文件，一列一个数据点，每单元格附来源引用，输出Excel |
+| `「material-contract-schedule」工作流（加载 corporate-legal/skills/material-contract-schedule/SKILL.md）` | 根据尽调发现制作重大合同披露函 |
+| `「closing-checklist」工作流（加载 corporate-legal/skills/closing-checklist/SKILL.md）` | 交割检查表——哪些事项在阻断、关键路径是什么 |
+| `「written-consent」工作流（加载 corporate-legal/skills/written-consent/SKILL.md）` | 书面决议（股东会/董事会）——匹配先例的草稿+签署跟踪 |
+| `「entity-compliance」工作流（加载 corporate-legal/skills/entity-compliance/SKILL.md）` | 主体合规追踪器——初始化、报告、更新、体检、导出 |
+| `「integration-management」工作流（加载 corporate-legal/skills/integration-management/SKILL.md）` | 交割后整合工作计划、同意函追踪、合同概括转让、状态报告 |
+| `「matter-workspace」工作流（加载 corporate-legal/skills/matter-workspace/SKILL.md）` | 管理事项工作空间（仅多客户私人执业）——新建、列表、切换、关闭、无事项 |
 
 ## 前提条件
 
-部分功能引用飞书、Google Drive、SharePoint、Box 或数据室集成。这些需要您的环境中已配置MCP服务器——**不随插件打包**。没有这些服务器时，插件降级为文件输出（草稿写入本地而非推送至频道，追踪器文件写入磁盘而非从已连接存储库读取）。
+部分功能引用飞书、Google Drive、SharePoint、Box 或数据室集成。这些需要您的环境中已配置插件服务器——**不随插件打包**。没有这些服务器时，插件降级为文件输出（草稿写入本地而非推送至频道，追踪器文件写入磁盘而非从已连接存储库读取）。
 
-在存储库级别或用户级别的 `.mcp.json` 中配置 MCP 服务器。技能和代理将在运行时检测可用内容并调整行为。
+在存储库级别或用户级别的 `.mcp.json` 中配置 KIMI 插件。技能和代理将在运行时检测可用内容并调整行为。
 
 ## 技能
 
@@ -76,7 +78,7 @@
 
 ## 集成
 
-**首先对接法律检索工具——引用安全机制依赖于此。** 没有检索工具，每项引用均标记为 `[需核实]`。技能无论是否接入检索工具均可运行；yuandian MCP（中国法律法规与案例检索）可将核实工作从您的清单中移除。
+**首先对接法律检索工具——引用安全机制依赖于此。** 没有检索工具，每项引用均标记为 `[需核实]`。技能无论是否接入检索工具均可运行；元典检索（中国法律法规与案例检索）可将核实工作从您的清单中移除。
 
 随附：
 
@@ -90,7 +92,7 @@
 
 ## 如何学习
 
-您在 `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/CLAUDE.md` 中的实务画像并非一成不变——它会随着您使用插件而持续改进。技能会告知您何时某次输出使用了应予调整的默认值。您可以重新运行设置、直接编辑文件或告知某项技能记录新的立场。
+您在 `legal-profile/corporate-legal.md` 中的实务画像并非一成不变——它会随着您使用插件而持续改进。技能会告知您何时某次输出使用了应予调整的默认值。您可以重新运行设置、直接编辑文件或告知某项技能记录新的立场。
 
 ## 并购说明
 

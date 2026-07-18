@@ -4,12 +4,11 @@ description: >
   为证人构建庭前准备提纲——从案件材料中提取其相关文件，
   围绕案件理论组织要点，并浮现质证材料。当用户说
   "为[证人]做庭前准备"、"构建庭审提纲"或"准备[姓名]的庭前会议/庭审"时使用。
-argument-hint: "[证人姓名]"
 ---
 
 # /deposition-prep
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` → 案件理论、关键事实。
+1. 加载 `legal-profile/litigation-legal.md` → 案件理论、关键事实。
 2. 遵循以下工作流和参考材料。
 3. 提取证人撰写或被提及的文件。
 4. 构建提纲：背景、关键文件、与理论相关的要点、质证材料。
@@ -36,7 +35,7 @@ argument-hint: "[证人姓名]"
 
 ## 加载上下文
 
-`~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` → 案件理论。
+`legal-profile/litigation-legal.md` → 案件理论。
 
 ## 工作流
 

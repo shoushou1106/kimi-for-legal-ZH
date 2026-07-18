@@ -5,18 +5,17 @@ description: >
   调整监管机构监测清单、政策库索引、重要度阈值、差距响应流程、
   动态源配置或事务工作区路径。适用于用户说"改我的[某配置]"、"增加一个监管机构"、
   "更新我的监测清单"、"编辑阈值"或"定制"时。
-argument-hint: "[配置节名称，或描述你要变更的内容]"
 ---
 
 # /customize
 
 ## 何时运行
 
-用户输入了 `/regulatory-legal:customize`。他们希望更改监管配置中的某些内容——一个监测的监管机构、一个重要度阈值或一个动态源——而不重新运行完整的冷启动访谈，也不手动编辑配置文件。
+用户输入了 `「customize」工作流（加载 regulatory-legal/skills/customize/SKILL.md）`。他们希望更改监管配置中的某些内容——一个监测的监管机构、一个重要度阈值或一个动态源——而不重新运行完整的冷启动访谈，也不手动编辑配置文件。
 
 ## 做什么
 
-1. **读取配置。** 读取 `~/.claude/plugins/config/claude-for-legal-zh/regulatory-legal/CLAUDE.md`。如果插件配置不存在或仍包含 `[PLACEHOLDER]` 值，说明："你还没有运行设置。先运行 `/regulatory-legal:cold-start-interview`——定制功能用于调整已有的配置。"
+1. **读取配置。** 读取 `legal-profile/regulatory-legal.md`。如果插件配置不存在或仍包含 `[PLACEHOLDER]` 值，说明："你还没有运行设置。先运行 `「cold-start-interview」工作流（加载 regulatory-legal/skills/cold-start-interview/SKILL.md）`——定制功能用于调整已有的配置。"
 
 2. **展示可定制的清单。** 列出配置中的内容，分组，附当前值的一行摘要：
 
@@ -38,9 +37,9 @@ argument-hint: "[配置节名称，或描述你要变更的内容]"
    - *收紧重要度阈值：* "摘要将更简短——低于新阈值的事项将不再出现在摘要中。"
    - *将新政策添加到库中：* "`/policy-diff` 在将新法规与库匹配时将包含此政策。"
 
-5. **对共享配置的变更**（公司名称、行业、管辖区域、执业设置、阶段）：写入 `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md` 并注明此变更影响所有插件。
+5. **对共享配置的变更**（公司名称、行业、管辖区域、执业设置、阶段）：写入 `legal-profile/company-profile.md` 并注明此变更影响所有插件。
 
-6. **关闭。** "完成。你的下一次输出将反映该变更。还有别的吗？你可以随时运行 `/regulatory-legal:customize`。"
+6. **关闭。** "完成。你的下一次输出将反映该变更。还有别的吗？你可以随时运行 `「customize」工作流（加载 regulatory-legal/skills/customize/SKILL.md）`。"
 
 ## 护栏
 

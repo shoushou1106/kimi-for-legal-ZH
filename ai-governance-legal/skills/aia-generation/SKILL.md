@@ -5,18 +5,17 @@ description: >
   透明度、安全性和监管注册表。在用例分类为"附条件-高"后使用，
   产品或工程团队提出"我们需要做AI影响评估"时使用，或定期重新
   认证已部署系统时使用。采用快速/全面双轨制。
-argument-hint: "[系统名称或AI用例描述]"
 ---
 
 # /aia-generation
 
-1. 读取 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/CLAUDE.md` → 监管注册表（适用法规、阈值、义务）、AI系统清单、科技伦理审查配置。
+1. 读取 `legal-profile/ai-governance-legal.md` → 监管注册表（适用法规、阈值、义务）、AI系统清单、科技伦理审查配置。
 2. 运行以下工作流。
 3. 判定走快速轨还是全面轨。提取系统描述 → 确定监管角色和风险等级 → 生成评估。
 4. 输出：定级 + 评估文件，包含具体行动项、负责人和截止日期。
 
 ```
-/ai-governance-legal:aia-generation "客户信用评分模型 v2"
+「aia-generation」工作流（加载 ai-governance-legal/skills/aia-generation/SKILL.md） "客户信用评分模型 v2"
 ```
 
 ---
@@ -25,7 +24,7 @@ argument-hint: "[系统名称或AI用例描述]"
 
 ## 事务上下文
 
-**事务上下文。** 检查实践级 CLAUDE.md 中的 `## 事务工作区`。如果 `已启用` 为 `✗`（法务内部用户的默认值），跳过本段其余部分——技能使用实践级上下文，事务机制不可见。如果已启用且无活跃事务，询问："此事务属于哪个事务？运行 `/ai-governance-legal:matter-workspace switch <slug>` 或回答 `实践级`。" 加载活跃事务的 `matter.md` 获取事务特定上下文和覆盖项。将输出写入事务文件夹 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/matters/<matter-slug>/`。除非 `跨事务上下文` 为 `开`，否则绝不读取其他事务的文件。
+**事务上下文。** 检查实践级 CLAUDE.md 中的 `## 事务工作区`。如果 `已启用` 为 `✗`（法务内部用户的默认值），跳过本段其余部分——技能使用实践级上下文，事务机制不可见。如果已启用且无活跃事务，询问："此事务属于哪个事务？运行 `「matter-workspace」工作流（加载 ai-governance-legal/skills/matter-workspace/SKILL.md） switch <slug>` 或回答 `实践级`。" 加载活跃事务的 `matter.md` 获取事务特定上下文和覆盖项。将输出写入事务文件夹 `legal-profile/ai-governance-legal/matters/<matter-slug>/`。除非 `跨事务上下文` 为 `开`，否则绝不读取其他事务的文件。
 
 ---
 
@@ -45,7 +44,7 @@ argument-hint: "[系统名称或AI用例描述]"
 
 ## 加载当前状态
 
-读取 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/CLAUDE.md`：
+读取 `legal-profile/ai-governance-legal.md`：
 - `## AI系统清单` — 系统中每个AI系统的角色和等级
 - `## 监管注册表` — 适用的法规及阈值
 - `## 科技伦理审查配置` — 伦理审查委员会设置和审查触发条件
@@ -195,7 +194,7 @@ argument-hint: "[系统名称或AI用例描述]"
 
 ### 第6步：输出和归档
 
-将评估文件保存到 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/outputs/aia-[系统简称]-[日期].md`。同时更新 `## AI系统清单` 中的相应条目——添加评估日期和结论。
+将评估文件保存到 `legal-profile/ai-governance-legal/outputs/aia-[系统简称]-[日期].md`。同时更新 `## AI系统清单` 中的相应条目——添加评估日期和结论。
 
 ## 重新评估触发条件
 
@@ -220,7 +219,7 @@ argument-hint: "[系统名称或AI用例描述]"
 
 - `[法条原文]` — 直接引用法规条文原文
 - `[模型知识 — 需验证]` — 来源于模型训练数据，未独立核实
-- `[yuandian检索]` — 通过 yuandian MCP 获取
+- `[yuandian检索]` — 通过 元典检索 获取
 - `[联网检索 — 需复核]` — 联网搜索获取，未经二次验证
 
 ---

@@ -4,7 +4,6 @@ description: >
   追踪知识产权组合——注册、续展、维持费和商标使用声明。
   用于检查到期续展事项、添加或更新资产、记录维持费缴纳，
   或审计登记簿中的空白、失效及商业使用问题。
-argument-hint: "[--report [--days N] | --add | --update | --audit]"
 ---
 
 # /portfolio
@@ -14,7 +13,7 @@ argument-hint: "[--report [--days N] | --add | --update | --audit]"
 ## 使用说明
 
 1. **按以下工作流执行** 并读取
-   `~/.claude/plugins/config/claude-for-legal-zh/ip-legal/portfolio.yaml`。
+   `legal-profile/ip-legal/portfolio.yaml`。
 
 2. **默认（无参数）：** 相当于 `--report` — 显示未来90天内到期事项，
    按紧迫性分组（🔴 已失效/宽限期、⏰ 窗口内到期、
@@ -42,23 +41,23 @@ argument-hint: "[--report [--days N] | --add | --update | --audit]"
 ## 示例
 
 ```
-/ip-legal:portfolio
+「portfolio」工作流（加载 ip-legal/skills/portfolio/SKILL.md）
 ```
 
 ```
-/ip-legal:portfolio --report --days 180
+「portfolio」工作流（加载 ip-legal/skills/portfolio/SKILL.md） --report --days 180
 ```
 
 ```
-/ip-legal:portfolio --add
+「portfolio」工作流（加载 ip-legal/skills/portfolio/SKILL.md） --add
 ```
 
 ```
-/ip-legal:portfolio --update
+「portfolio」工作流（加载 ip-legal/skills/portfolio/SKILL.md） --update
 ```
 
 ```
-/ip-legal:portfolio --audit
+「portfolio」工作流（加载 ip-legal/skills/portfolio/SKILL.md） --audit
 ```
 
 ---
@@ -97,7 +96,7 @@ argument-hint: "[--report [--days N] | --add | --update | --audit]"
 
 ## 登记簿
 
-位于 `~/.claude/plugins/config/claude-for-legal-zh/ip-legal/portfolio.yaml`。
+位于 `legal-profile/ip-legal/portfolio.yaml`。
 结构：
 
 ```yaml
@@ -189,7 +188,7 @@ assets:
 
 ### 第一步：确定来源
 
-读取 `~/.claude/plugins/config/claude-for-legal-zh/ip-legal/CLAUDE.md`：
+读取 `legal-profile/ip-legal.md`：
 - **知识产权管理系统已连接：** 通过集成拉取组合。IP系统为权威来源；本登记簿镜像它并不添加系统已具备的到期日。
 - **无知识产权管理系统，但电子表格/导出可用：** 要求用户分享导出。导入现有内容；将缺失注册日或授权日的资产标注为到期日计算`unknown`。
 - **无任何来源：** 交互式逐一录入资产 — 类型、管辖、编号、关键日期、权利人。
@@ -216,7 +215,7 @@ assets:
 代理管理 / 管辖待确认： [N] — 与外国代理人确认
 未知（缺失关键日期）： [N] — 依赖报告前补充完整
 
-运行 /ip-legal:portfolio --report 查看到期事项。
+运行 「portfolio」工作流（加载 ip-legal/skills/portfolio/SKILL.md） --report 查看到期事项。
 ```
 
 ---
@@ -224,12 +223,12 @@ assets:
 ## 模式2：报告
 
 ```
-/ip-legal:portfolio --report [--days 30|60|90|180]
+「portfolio」工作流（加载 ip-legal/skills/portfolio/SKILL.md） --report [--days 30|60|90|180]
 ```
 
 默认窗口：90天。生成报告前刷新每项资产的计算到期日——不依赖仅存储的日期。
 
-输出（附加工作成果页眉，按 `~/.claude/plugins/config/claude-for-legal-zh/ip-legal/CLAUDE.md` → 输出）：
+输出（附加工作成果页眉，按 `legal-profile/ip-legal.md` → 输出）：
 
 ```
 知识产权组合到期报告 — [日期]
@@ -272,7 +271,7 @@ assets:
 ## 模式3：添加
 
 ```
-/ip-legal:portfolio --add
+「portfolio」工作流（加载 ip-legal/skills/portfolio/SKILL.md） --add
 ```
 
 交互式添加单项资产。询问：
@@ -311,13 +310,13 @@ assets:
 ## 模式4：更新
 
 ```
-/ip-legal:portfolio --update
+「portfolio」工作流（加载 ip-legal/skills/portfolio/SKILL.md） --update
 ```
 
 ### 相应行动门槛
 
 **在记录维持费缴纳或年费支付完成之前：** 读取
-`~/.claude/plugins/config/claude-for-legal-zh/ip-legal/CLAUDE.md` 中的 `## 使用者`。如角色为**非律师**：
+`legal-profile/ip-legal.md` 中的 `## 使用者`。如角色为**非律师**：
 
 > 将续展注册、年费缴纳或国际年费记录为"已缴纳"产生后果。如记录错误——错的到期日、错的费减资格——到期日不会改变，资产仍可能失效。你是否已与实际办理该事务的律师或外国代理人（或与国家知识产权局查询系统/WIPO马德里监控/相关注册机构）核实？如是，继续。如否：
 >
@@ -341,7 +340,7 @@ assets:
 ## 模式5：审计
 
 ```
-/ip-legal:portfolio --audit
+「portfolio」工作流（加载 ip-legal/skills/portfolio/SKILL.md） --audit
 ```
 
 超出本月到期日的更广泛健康检查：

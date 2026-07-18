@@ -1,3 +1,5 @@
+> ⚠️ **KIMI 适配版说明**：本文件保留自上游仓库，其中 Claude Code 安装方式、斜杠命令与配置路径描述已不适用。KIMI 版的安装与使用以根目录 [README.md](../README.md) 和 [QUICKSTART.md](../QUICKSTART.md) 为准；本领域工作流内容仍然有效，经入口技能路由使用。
+
 # 中国诉讼业务管理插件
 
 中国企业/律所诉讼业务支持：管理案件组合、跟踪审理进度、起草诉讼文书。Cold-start 捕获你的风险校准、争议类型画像和文书风格——作为每个案件分流的基础框架。统一案件登记将新案件转化为结构化日志条目和逐案历史文件。组合概览和深度简报从日志中读取。
@@ -25,29 +27,29 @@ Cold-start 访谈编写*事务所/法务部*级别的实践画像——跨所有
 每一步提供合理默认值（如 3x3 严重性-可能性矩阵），所有内容保持自由文本可编辑。
 
 ```
-/litigation-legal:cold-start-interview
+「cold-start-interview」工作流（加载 litigation-legal/skills/cold-start-interview/SKILL.md）
 ```
 
-你的配置存储于 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md`，不受插件更新影响。
+你的配置存储于 `legal-profile/litigation-legal.md`，不受插件更新影响。
 
 ## 命令
 
 | 命令 | 功能 |
 |---|---|
-| `/litigation-legal:cold-start-interview` | Cold-start → 编写实践画像 |
-| `/litigation-legal:matter-intake` | 统一案件登记 → 写入 `matters/[slug]/` + 追加至 `_log.yaml` |
-| `/litigation-legal:portfolio-status` | 案件组合概览——风险分布、即将到期的期限、停滞案件 |
-| `/litigation-legal:matter-briefing [slug]` | 单一案件深度简报——与法务负责人或外部律师沟通前的完整阅读 |
-| `/litigation-legal:matter-update [slug]` | 追加带日期的事件至案件历史；刷新日志的 `last_updated` |
-| `/litigation-legal:matter-close [slug]` | 将案件从活跃组合归档（保留，不删除） |
-| `/litigation-legal:demand-intake [title]` | 律师函发送前的背景信息收集 |
-| `/litigation-legal:demand-draft [slug]` | 基于收集信息起草律师函——经保密性审查，输出 `.docx`，附发送后核查清单 |
-| `/litigation-legal:demand-received [path]` | 收悉对方律师函——方案分析、案件组合交叉检索、转交至案件登记 |
-| `/litigation-legal:subpoena-triage [path]` | 法院调查令/协查通知分类——范围/负担/保密性分析、异议框架、合规方案 |
-| `/litigation-legal:legal-hold [slug] [--issue/--refresh/--release/--status]` | 证据保全通知的签发、更新、解除或状态报告 |
-| `/litigation-legal:chronology [slug]` | 从已声明文件来源+上传材料构建或更新大事记/时间线——按案件理论标注重要性 |
-| `/litigation-legal:oc-status` | 起草周期性的外部律师案件进度询问函 |
-| `/litigation-legal:claim-chart` | 构建或审查要件分析表——对任一请求权基础或抗辩事由进行构成要件逐项分析，附法条编号，检测证据缺口 |
+| `「cold-start-interview」工作流（加载 litigation-legal/skills/cold-start-interview/SKILL.md）` | Cold-start → 编写实践画像 |
+| `「matter-intake」工作流（加载 litigation-legal/skills/matter-intake/SKILL.md）` | 统一案件登记 → 写入 `matters/[slug]/` + 追加至 `_log.yaml` |
+| `「portfolio-status」工作流（加载 litigation-legal/skills/portfolio-status/SKILL.md）` | 案件组合概览——风险分布、即将到期的期限、停滞案件 |
+| `「matter-briefing」工作流（加载 litigation-legal/skills/matter-briefing/SKILL.md） [slug]` | 单一案件深度简报——与法务负责人或外部律师沟通前的完整阅读 |
+| `「matter-update」工作流（加载 litigation-legal/skills/matter-update/SKILL.md） [slug]` | 追加带日期的事件至案件历史；刷新日志的 `last_updated` |
+| `「matter-close」工作流（加载 litigation-legal/skills/matter-close/SKILL.md） [slug]` | 将案件从活跃组合归档（保留，不删除） |
+| `「demand-intake」工作流（加载 litigation-legal/skills/demand-intake/SKILL.md） [title]` | 律师函发送前的背景信息收集 |
+| `「demand-draft」工作流（加载 litigation-legal/skills/demand-draft/SKILL.md） [slug]` | 基于收集信息起草律师函——经保密性审查，输出 `.docx`，附发送后核查清单 |
+| `「demand-received」工作流（加载 litigation-legal/skills/demand-received/SKILL.md） [path]` | 收悉对方律师函——方案分析、案件组合交叉检索、转交至案件登记 |
+| `「subpoena-triage」工作流（加载 litigation-legal/skills/subpoena-triage/SKILL.md） [path]` | 法院调查令/协查通知分类——范围/负担/保密性分析、异议框架、合规方案 |
+| `「legal-hold」工作流（加载 litigation-legal/skills/legal-hold/SKILL.md） [slug] [--issue/--refresh/--release/--status]` | 证据保全通知的签发、更新、解除或状态报告 |
+| `「chronology」工作流（加载 litigation-legal/skills/chronology/SKILL.md） [slug]` | 从已声明文件来源+上传材料构建或更新大事记/时间线——按案件理论标注重要性 |
+| `「oc-status」工作流（加载 litigation-legal/skills/oc-status/SKILL.md）` | 起草周期性的外部律师案件进度询问函 |
+| `「claim-chart」工作流（加载 litigation-legal/skills/claim-chart/SKILL.md）` | 构建或审查要件分析表——对任一请求权基础或抗辩事由进行构成要件逐项分析，附法条编号，检测证据缺口 |
 
 ## 技能
 
@@ -106,7 +108,7 @@ litigation-legal/
 
 ## 检索工具与引用核验
 
-**请先连接检索工具——引用保护机制依赖于此。** 无检索工具时，每条引用均标注 `[需核实]`，审查备注记录来源未经验证。通过 **yuan dian MCP**（案例语义检索、法规检索）、**聚法案例**或**人民法院案例库**检索获得的引用，标注来源并可追溯。来自模型知识或联网搜索的引用标注 `[需核实]` 或 `[需核实-精确引用]`，应在信赖前对照一手来源核验。插件对引用分层标注，使你的核实时间集中在最重要的地方。
+**请先连接检索工具——引用保护机制依赖于此。** 无检索工具时，每条引用均标注 `[需核实]`，审查备注记录来源未经验证。通过 **yuan dian 插件**（案例语义检索、法规检索）、**聚法案例**或**人民法院案例库**检索获得的引用，标注来源并可追溯。来自模型知识或联网搜索的引用标注 `[需核实]` 或 `[需核实-精确引用]`，应在信赖前对照一手来源核验。插件对引用分层标注，使你的核实时间集中在最重要的地方。
 
 ## 内联标记惯例
 
@@ -120,7 +122,7 @@ litigation-legal/
 
 ## 注意事项
 
-- 每个技能首先从 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` 读取配置。如果你的风险偏好变化或增加了新的外部律师，更新该文件——不要在个案中覆盖。
+- 每个技能首先从 `legal-profile/litigation-legal.md` 读取配置。如果你的风险偏好变化或增加了新的外部律师，更新该文件——不要在个案中覆盖。
 - `_log.yaml` 是案件组合状态的唯一事实来源。保持整洁。
 - 案件历史仅追加。如果之前记录有误，以新条目记录更正——不修改既往记录。
 - 已结案案件保留在 `_log.yaml` 中（可搜索历史）。`/portfolio-status` 默认过滤已结案案件。

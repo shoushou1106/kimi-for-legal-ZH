@@ -5,18 +5,17 @@ description: >
   调整风险姿态、上报联系人、审查指引立场、保密协议分类偏好、行文风格、
   审查偏好或事项工作区路径。当用户说"改一下我的[某配置]""更新我的配置"
   "编辑我的审查指引""调整我的设置"或"定制"时使用。
-argument-hint: "[配置部分名称，或描述你想修改的内容]"
 ---
 
 # /customize
 
 ## 何时运行
 
-用户键入 `/commercial-legal:customize`。他们想修改业务领域配置中的某项——风险姿态、上报联系人、审查指引立场、管辖、输出格式——而无需重新运行完整冷启动访谈。
+用户键入 `「customize」工作流（加载 commercial-legal/skills/customize/SKILL.md）`。他们想修改业务领域配置中的某项——风险姿态、上报联系人、审查指引立场、管辖、输出格式——而无需重新运行完整冷启动访谈。
 
 ## 做什么
 
-1. **读取配置。** 读取 `~/.claude/plugins/config/claude-for-legal-zh/commercial-legal/CLAUDE.md`。如果不存在或仍有占位符，说：你还没有运行设置。先运行 `/commercial-legal:cold-start-interview`——定制功能用于调整已有的配置。
+1. **读取配置。** 读取 `legal-profile/commercial-legal.md`。如果不存在或仍有占位符，说：你还没有运行设置。先运行 `「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md）`——定制功能用于调整已有的配置。
 
 2. **展示可定制项目清单。** 按组列出配置中的内容：
    - **公司/你是谁** — 名称、行业、法域范围、执业场景
@@ -39,7 +38,7 @@ argument-hint: "[配置部分名称，或描述你想修改的内容]"
 
 5. **共享配置变更** 写入 `company-profile.md` 并注明该变更影响所有插件。
 
-6. **收尾。** "完成。你的下一个输出将反映该变更。随时可运行 `/commercial-legal:customize`。"
+6. **收尾。** "完成。你的下一个输出将反映该变更。随时可运行 `「customize」工作流（加载 commercial-legal/skills/customize/SKILL.md）`。"
 
 ## 防护措施
 

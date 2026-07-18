@@ -1,3 +1,5 @@
+> ⚠️ **KIMI 适配版说明**：本文件保留自上游仓库，其中 Claude Code 安装方式、斜杠命令与配置路径描述已不适用。KIMI 版的安装与使用以根目录 [README.md](../README.md) 和 [QUICKSTART.md](../QUICKSTART.md) 为准；本领域工作流内容仍然有效，经入口技能路由使用。
+
 # 监管追踪实务插件
 
 监测监管法规动态，对比新法规与政策库的差异，发现合规差距。学习你的重要性阈值，不会对每条部门动态都报警。通过元典法律检索和部委网站进行法规监测。
@@ -17,20 +19,20 @@
 询问你关注哪些监管机构，连接你的政策文件文件夹，学习"重要"对你意味着什么。建立监测清单并索引你的政策库。
 
 ```
-/regulatory-legal:cold-start-interview
+「cold-start-interview」工作流（加载 regulatory-legal/skills/cold-start-interview/SKILL.md）
 ```
 
 ## 技能
 
 | 技能 | 功能 |
 |---|---|
-| `/regulatory-legal:cold-start-interview` | 冷启动：监测清单 + 政策索引 + 重要性阈值 |
-| `/regulatory-legal:reg-feed-watcher` | 即刻检查法规动态，报告新增内容 |
-| `/regulatory-legal:policy-diff [reg]` | 对比特定法规变化与政策库的差异 |
-| `/regulatory-legal:gaps` | 未闭合差距追踪器——已标注但未闭合的差距 |
-| `/regulatory-legal:comments` | 审查开放征求意见的征求意见稿，记录决策，跟踪期限 |
-| `/regulatory-legal:policy-redraft` | 提出标记修订的政策重述草案以闭合差距——供内部审查的初稿，非对源文件的直接编辑 |
-| `/regulatory-legal:matter-workspace` | 管理事项工作区（仅多客户私人执业）— 新建、列表、切换、关闭、无 |
+| `「cold-start-interview」工作流（加载 regulatory-legal/skills/cold-start-interview/SKILL.md）` | 冷启动：监测清单 + 政策索引 + 重要性阈值 |
+| `「reg-feed-watcher」工作流（加载 regulatory-legal/skills/reg-feed-watcher/SKILL.md）` | 即刻检查法规动态，报告新增内容 |
+| `「policy-diff」工作流（加载 regulatory-legal/skills/policy-diff/SKILL.md） [reg]` | 对比特定法规变化与政策库的差异 |
+| `「gaps」工作流（加载 regulatory-legal/skills/gaps/SKILL.md）` | 未闭合差距追踪器——已标注但未闭合的差距 |
+| `「comments」工作流（加载 regulatory-legal/skills/comments/SKILL.md）` | 审查开放征求意见的征求意见稿，记录决策，跟踪期限 |
+| `「policy-redraft」工作流（加载 regulatory-legal/skills/policy-redraft/SKILL.md）` | 提出标记修订的政策重述草案以闭合差距——供内部审查的初稿，非对源文件的直接编辑 |
+| `「matter-workspace」工作流（加载 regulatory-legal/skills/matter-workspace/SKILL.md）` | 管理事项工作区（仅多客户私人执业）— 新建、列表、切换、关闭、无 |
 | **gap-surfacer** *(参考)* | `/gaps` 和 `/comments` 加载的共享差距和征求意见追踪框架 |
 
 ## 交互技能 vs 定时代理
@@ -45,7 +47,7 @@
 
 **先连接法律研究工具——引用护栏依赖它。** 没有连接时，每个引用都标注 `[verify]`，每个交付物上方的审阅备注记录来源未经核实。插件在两种情况下都能工作；有研究工具连接时能为你做更多验证工作。
 
-本插件中的法律研究连接器不仅是数据源——它们区分已验证引用和需要你核实的引用。通过连接的研究工具检索到的引用标有来源且可追溯。来自模型知识或网络搜索的引用标注 `[verify]` 或 `[verify-pinpoint]`，在任何人依赖之前应核实原始来源。插件对引用进行分级，使你的核实时间花在关键处。
+本插件中的法律检索插件不仅是数据源——它们区分已验证引用和需要你核实的引用。通过连接的研究工具检索到的引用标有来源且可追溯。来自模型知识或网络搜索的引用标注 `[verify]` 或 `[verify-pinpoint]`，在任何人依赖之前应核实原始来源。插件对引用进行分级，使你的核实时间花在关键处。
 
 ## 集成
 
@@ -59,11 +61,11 @@
 
 ## 前置条件
 
-负责人通知（差距分配、到期提醒、征求意见稿预警）需要环境中配置消息类 MCP 服务器。没有时，差距追踪器和征求意见追踪器仍可工作——只是通知不会推送，技能会在状态报告中标注未推送事项。
+负责人通知（差距分配、到期提醒、征求意见稿预警）需要环境中配置消息类 KIMI 插件。没有时，差距追踪器和征求意见追踪器仍可工作——只是通知不会推送，技能会在状态报告中标注未推送事项。
 
 ## 如何持续学习
 
-你的实务画像位于 `~/.claude/plugins/config/claude-for-legal-zh/regulatory-legal/CLAUDE.md` 不是静态的——随着你使用插件不断改进。技能会告知你输出何时使用了应调整的默认值。`reg-change-monitor` 代理监测法规动态并对照你的政策库标注变化。你可以重新运行设置、直接编辑文件或告知技能记录新立场。
+你的实务画像位于 `legal-profile/regulatory-legal.md` 不是静态的——随着你使用插件不断改进。技能会告知你输出何时使用了应调整的默认值。`reg-change-monitor` 代理监测法规动态并对照你的政策库标注变化。你可以重新运行设置、直接编辑文件或告知技能记录新立场。
 
 ## 注意事项
 
@@ -73,4 +75,4 @@
 
 ## 配置
 
-你的配置存储在 `~/.claude/plugins/config/claude-for-legal-zh/regulatory-legal/CLAUDE.md`，可跨插件更新保留——你只需运行设置一次。
+你的配置存储在 `legal-profile/regulatory-legal.md`，可跨插件更新保留——你只需运行设置一次。

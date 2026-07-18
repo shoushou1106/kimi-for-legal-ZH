@@ -4,12 +4,11 @@ description: >
   对照您的框架和风险校准进行全面产品上线审查。当用户说"审查这个上线"
   "[功能]法务审查""我们能上线吗""[产品]有什么法律问题"或引用了需要
   逐类审查备忘录的产品需求文档或上线追踪工单时使用。
-argument-hint: "[PRD文件 | 飞书文档链接 | 追踪工单号]"
 ---
 
 # /launch-review
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` → 框架 + 校准。如为占位符则停止。
+1. 加载 `legal-profile/product-legal.md` → 框架 + 校准。如为占位符则停止。
 2. 获取PRD + 相关文档。如追踪器已连接，拉取工单和评论。
 3. 使用下述工作流遍历每个框架类别。
 4. 将每个发现对照校准表进行校准。全新 = 明确标记。
@@ -17,14 +16,14 @@ argument-hint: "[PRD文件 | 飞书文档链接 | 追踪工单号]"
 6. 交接：如涉及大量营销，转marketing-claims-review；如某发现需要深度分析，转feature-risk-assessment。
 
 ```
-/product-legal:launch-review PROJ-1234
+「launch-review」工作流（加载 product-legal/skills/launch-review/SKILL.md） PROJ-1234
 ```
 
 ---
 
 ## 事项上下文
 
-**事项上下文。** 检查实务级 CLAUDE.md 中的 `## 事项工作空间`。如果 `Enabled` 为 `✗`（企业法务用户的默认值），跳过本段其余内容——技能使用实务级上下文，事项机制不可见。如果已启用且无活跃事项，询问："这是哪个事项？运行 `/product-legal:matter-workspace switch <事项简称>` 或说 `实务级`。"加载活跃事项的 `matter.md` 获取事项特定上下文和覆盖规则。输出写入事项文件夹 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/matters/<事项简称>/`。除非 `跨事项上下文` 为 `开`，否则绝不读取其他事项的文件。
+**事项上下文。** 检查实务级 CLAUDE.md 中的 `## 事项工作空间`。如果 `Enabled` 为 `✗`（企业法务用户的默认值），跳过本段其余内容——技能使用实务级上下文，事项机制不可见。如果已启用且无活跃事项，询问："这是哪个事项？运行 `「matter-workspace」工作流（加载 product-legal/skills/matter-workspace/SKILL.md） switch <事项简称>` 或说 `实务级`。"加载活跃事项的 `matter.md` 获取事项特定上下文和覆盖规则。输出写入事项文件夹 `legal-profile/product-legal/matters/<事项简称>/`。除非 `跨事项上下文` 为 `开`，否则绝不读取其他事项的文件。
 
 ---
 
@@ -34,11 +33,11 @@ argument-hint: "[PRD文件 | 飞书文档链接 | 追踪工单号]"
 
 ## 目的
 
-阅读PRD，检查该团队框架中的每个类别，对照在此实际阻断什么进行校准（依据 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md`），并以内部格式输出审查。目标：产品经理读完就知道上线前必须完成什么。
+阅读PRD，检查该团队框架中的每个类别，对照在此实际阻断什么进行校准（依据 `legal-profile/product-legal.md`），并以内部格式输出审查。目标：产品经理读完就知道上线前必须完成什么。
 
 ## 加载校准
 
-读取 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md`：
+读取 `legal-profile/product-legal.md`：
 - `## 审查框架`——需检查的类别
 - `## 风险校准`——在*这家公司*什么阻断vs.什么是FYI告知
 - `## 产品上线审查流程`——输出格式
@@ -56,7 +55,7 @@ argument-hint: "[PRD文件 | 飞书文档链接 | 追踪工单号]"
 - **上线日期**——用于紧迫性校准
 - **上线追踪工单**——如已连接，拉取以获取上下文和评论
 
-如果飞书多维表格/钉钉/Teambition的MCP已连接，拉取工单历史——通常PRD未捕获的上下文在早期评论中。
+如果飞书多维表格/钉钉/Teambition的插件已连接，拉取工单历史——通常PRD未捕获的上下文在早期评论中。
 
 ### 第2步：理解上线内容
 
@@ -69,11 +68,11 @@ argument-hint: "[PRD文件 | 飞书文档链接 | 追踪工单号]"
 
 **AI检测——在遍历框架前运行。** 检查此次上线是否以任何形式使用AI：第三方模型、内部构建的模型、AI赋能的供应商功能、自动评分或分类、生成内容、推荐、预测。即使PRD未标注"AI"也要寻找——"智能""自动""个性化""生成""推荐"等词语是信号。
 
-如检测到AI组件 → 标记，然后在遍历框架的同时运行 `/ai-governance-legal:use-case-triage [功能]`。以下第8类处理细节；此标记确保即使PRD含糊也绝不被跳过。
+如检测到AI组件 → 标记，然后在遍历框架的同时运行 `「use-case-triage」工作流（加载 ai-governance-legal/skills/use-case-triage/SKILL.md） [功能]`。以下第8类处理细节；此标记确保即使PRD含糊也绝不被跳过。
 
 ### 第3步：遍历框架
 
-对 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` → 审查框架中的每个类别。如果团队没有，使用以下8类默认框架。类别是稳定的框架概念；在每个类别内，在校准严重程度之前，检索适用于产品领域、受众和法域的监管制度。在一个法域或领域是阻断的，可能在另一个是常规——`~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` 捕获团队的校准。
+对 `legal-profile/product-legal.md` → 审查框架中的每个类别。如果团队没有，使用以下8类默认框架。类别是稳定的框架概念；在每个类别内，在校准严重程度之前，检索适用于产品领域、受众和法域的监管制度。在一个法域或领域是阻断的，可能在另一个是常规——`legal-profile/product-legal.md` 捕获团队的校准。
 
 | # | 类别 | 关键问题 | 自动跳过条件 |
 |---|---|---|---|
@@ -92,7 +91,7 @@ argument-hint: "[PRD文件 | 飞书文档链接 | 追踪工单号]"
 > - `[需验证]` —— 模型知识引用是真实的但应被核实：具体实施细则、监管指引、执法行动、案件判决、阈值、生效日期、2024年后的修订。
 > - `[需精准核实]` —— 精准引用（具体条款项、司法解释编号、案件案号）具有最高的编造风险，应始终对照原始来源核实。
 >
-> 工具获取的引用保留其来源标签（`[北大法宝]`、`[威科先行]`、`[监管机构网站]`或MCP工具名称）；联网搜索引用保留 `[联网检索 — 需复核]`；用户提供的引用（来自PRD或种子材料）保留 `[用户提供]`。分层使真实的核实工作凸显——一个什么都核实的人等于什么都没核实。绝不剥离或折叠标签。
+> 工具获取的引用保留其来源标签（`[北大法宝]`、`[威科先行]`、`[监管机构网站]`或插件工具名称）；联网搜索引用保留 `[联网检索 — 需复核]`；用户提供的引用（来自PRD或种子材料）保留 `[用户提供]`。分层使真实的核实工作凸显——一个什么都核实的人等于什么都没核实。绝不剥离或折叠标签。
 >
 > `[平台政策 — 需对照现行规则核实]` —— 平台规则（Apple App Store审核指南、华为应用市场、微信小程序、支付宝小程序等规则）未获取现行政策页面即引用。平台政策绝不使用 `[已确认]` ——这些可能未经通知而变更，模型快照几乎总是滞后。如果上线依赖某个平台规则，在依赖前在会话中获取当前政策页面。
 | 7 | **营销宣传** | 有无需要证实的宣传？ | 无营销组件 |
@@ -129,7 +128,7 @@ argument-hint: "[PRD文件 | 飞书文档链接 | 追踪工单号]"
 
 ### 第4步：校准严重程度
 
-对每个发现，对照 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` 中的校准表检查：
+对每个发现，对照 `legal-profile/product-legal.md` 中的校准表检查：
 
 - 如果匹配"通常FYI告知"模式 → 注明，不阻断
 - 如果匹配"通常需付出工作量" → 指明具体工作，从表中预估时限
@@ -138,7 +137,7 @@ argument-hint: "[PRD文件 | 飞书文档链接 | 追踪工单号]"
 
 ### 第5步：组装审查
 
-格式依据 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` → 产品上线审查流程 → 输出格式。冠以 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` `## 输出规范` 中的工作成果页眉（因用户角色而异——参见 `## 使用者`）。如无内部格式指定：
+格式依据 `legal-profile/product-legal.md` → 产品上线审查流程 → 输出格式。冠以 `legal-profile/product-legal.md` `## 输出规范` 中的工作成果页眉（因用户角色而异——参见 `## 使用者`）。如无内部格式指定：
 
 ```markdown
 [工作成果页眉 — 按插件配置 ## 输出规范]
@@ -156,7 +155,7 @@ argument-hint: "[PRD文件 | 飞书文档链接 | 追踪工单号]"
 
 **判断：**[可上线 | 有条件上线 | 因X而阻断 | 需上报]
 
-> **在对"可上线"或"有条件上线"判断输出前：** 读取 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` 中的 `## 使用者`。如果角色为非法务人员：
+> **在对"可上线"或"有条件上线"判断输出前：** 读取 `legal-profile/product-legal.md` 中的 `## 使用者`。如果角色为非法务人员：
 >
 > > 通过一项上线是一项法律行为——一旦产品上线，公司即承诺于此文件记录的法律立场。您是否已与律师审查？如已审查，继续。如未审查，以下是带给律师的简要说明：
 > >
@@ -205,7 +204,7 @@ argument-hint: "[PRD文件 | 飞书文档链接 | 追踪工单号]"
 
 **以下两项均为本技能的必需输出。** 两者都不是可选的。按下述顺序打印，两者之间有清晰分隔线，以便用户不会遗漏净化后的内容块。
 
-**输出1——保密上线审查备忘录。** 第5步组装的完整分析：工作成果页眉、底线、按类别分列发现（含风险理由）、行动事项、上报事项、下次注意事项、引用检查。这是内部法务工作成果。保存在您的事项文件中（飞书云文档、DMS或 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` 规定的审查文件存放位置）。仅分发给保密范围内的人员。
+**输出1——保密上线审查备忘录。** 第5步组装的完整分析：工作成果页眉、底线、按类别分列发现（含风险理由）、行动事项、上报事项、下次注意事项、引用检查。这是内部法务工作成果。保存在您的事项文件中（飞书云文档、DMS或 `legal-profile/product-legal.md` 规定的审查文件存放位置）。仅分发给保密范围内的人员。
 
 **输出2——净化后工单评论块——安全发布至追踪器。** 在备忘录后，以清晰 `---` 分隔线和标题 `## 安全发布至追踪器（非保密）`，产出一个简短评论块，仅包含：
 
@@ -237,8 +236,8 @@ argument-hint: "[PRD文件 | 飞书文档链接 | 追踪工单号]"
 
 - **转营销宣传审查：** 如有大量营销组件，交接宣传部分。
 - **转功能风险评估：** 如果某发现足够复杂需要独立文件（例如新型AI功能、儿童产品），生成更深入的评估。
-- **转个人信息保护：** 如果上线涉及个人数据，运行 `/privacy-legal:use-case-triage [功能]`。如果分流返回"需个人信息保护影响评估"或"需数据保护影响评估"，运行 `/privacy-legal:pia-generation [功能]`。不要仅注明"需PIA"——直接触发。
-- **转AI治理：** 如果第2步检测到AI组件，运行 `/ai-governance-legal:use-case-triage [功能]`。如果分流返回"条件性"，运行 `/ai-governance-legal:aia-generation [功能]`。如果涉及新的AI供应商，运行 `/ai-governance-legal:vendor-ai-review [供应商协议]`。
+- **转个人信息保护：** 如果上线涉及个人数据，运行 `「use-case-triage」工作流（加载 privacy-legal/skills/use-case-triage/SKILL.md） [功能]`。如果分流返回"需个人信息保护影响评估"或"需数据保护影响评估"，运行 `「pia-generation」工作流（加载 privacy-legal/skills/pia-generation/SKILL.md） [功能]`。不要仅注明"需PIA"——直接触发。
+- **转AI治理：** 如果第2步检测到AI组件，运行 `「use-case-triage」工作流（加载 ai-governance-legal/skills/use-case-triage/SKILL.md） [功能]`。如果分流返回"条件性"，运行 `「aia-generation」工作流（加载 ai-governance-legal/skills/aia-generation/SKILL.md） [功能]`。如果涉及新的AI供应商，运行 `「vendor-ai-review」工作流（加载 ai-governance-legal/skills/vendor-ai-review/SKILL.md） [供应商协议]`。
 
 ## 以下一步决策树收尾
 
@@ -248,4 +247,4 @@ argument-hint: "[PRD文件 | 飞书文档链接 | 追踪工单号]"
 
 - 它不替代与产品经理的对话。通常PRD是错误的或过时的——审查揭示问题，人提问。
 - 它不批准上线。它为批准提供信息。
-- 它不追溯校准。如果本次上线结果良好（或糟糕）且应以某种方式更新校准表，由人工更新 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md`。
+- 它不追溯校准。如果本次上线结果良好（或糟糕）且应以某种方式更新校准表，由人工更新 `legal-profile/product-legal.md`。

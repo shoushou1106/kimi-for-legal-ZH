@@ -4,14 +4,13 @@ description: >
   单个案件深度简报——当前姿态、变化之处、下个节点、
   待解决问题和风险重评估检查，适用于向法务负责人汇报或外部律师通话前准备。
   当用户说"简报[案件]"、"这个案件什么情况"或需要了解特定案件时使用。
-argument-hint: "[代号]"
 ---
 
 # /matter-briefing
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` → 风险校准 + 相关方。
+1. 加载 `legal-profile/litigation-legal.md` → 风险校准 + 相关方。
 2. 按以下工作流操作。
-3. 读取 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/[slug]/matter.md` + `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/[slug]/history.md` + `_log.yaml` 中的日志行。
+3. 读取 `legal-profile/litigation-legal/matters/[slug]/matter.md` + `legal-profile/litigation-legal/matters/[slug]/history.md` + `_log.yaml` 中的日志行。
 4. 生成简报：当前姿态、自上次更新以来的变化、下个节点、待解决问题、风险重评估检查（"`risk:` 字段是否仍反映实际情况？"）。
 5. 标注陈旧度：如 `last_updated` > 30天，明确说明。
 
@@ -25,14 +24,14 @@ argument-hint: "[代号]"
 
 ## 加载上下文
 
-- `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/_log.yaml` —— 结构化行
-- `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/[slug]/matter.md` —— 记述式登记
-- `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/[slug]/history.md` —— 事件日志
-- `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` —— 风险校准（使"风险：高"有具体含义，而非泛泛）
+- `legal-profile/litigation-legal/matters/_log.yaml` —— 结构化行
+- `legal-profile/litigation-legal/matters/[slug]/matter.md` —— 记述式登记
+- `legal-profile/litigation-legal/matters/[slug]/history.md` —— 事件日志
+- `legal-profile/litigation-legal.md` —— 风险校准（使"风险：高"有具体含义，而非泛泛）
 
 **冲突门禁——不可绕过。** 在生成简报前，检查 `_log.yaml` 中是否存在该案件代号。如果案件不在 `_log.yaml` 中，拒绝并路由：
 
-> "我在案件日志中没有找到 [案件代号]。请先运行 `/litigation-legal:matter-intake`，以便冲突检索可以运行且案件工作空间建立。我不会为未登记的案件生成简报——冲突检索是门禁。"
+> "我在案件日志中没有找到 [案件代号]。请先运行 `「matter-intake」工作流（加载 litigation-legal/skills/matter-intake/SKILL.md）`，以便冲突检索可以运行且案件工作空间建立。我不会为未登记的案件生成简报——冲突检索是门禁。"
 
 ## 输入
 
@@ -95,7 +94,7 @@ argument-hint: "[代号]"
 
 ## 陈旧度
 
-如 `last_updated > 30天前`：在顶部标注并建议会议后运行 `/litigation-legal:matter-update [slug]` 以记录讨论内容。
+如 `last_updated > 30天前`：在顶部标注并建议会议后运行 `「matter-update」工作流（加载 litigation-legal/skills/matter-update/SKILL.md） [slug]` 以记录讨论内容。
 
 ## 语气
 

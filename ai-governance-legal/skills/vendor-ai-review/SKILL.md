@@ -5,18 +5,17 @@ description: >
   模型变更通知、合规义务向下传导。适用于审查AI SaaS协议、
   AI模型授权、AI API服务条款，或采购团队提出"这个AI供应商
   合同有问题吗"时使用。
-argument-hint: "[粘贴AI供应商合同条款]"
 ---
 
 # /vendor-ai-review
 
-1. 读取 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/CLAUDE.md` → 合同审查立场、可接受风险阈值、红线条款。
+1. 读取 `legal-profile/ai-governance-legal.md` → 合同审查立场、可接受风险阈值、红线条款。
 2. 运行以下工作流。
 3. 逐项核查AI特定风险——训练数据→责任→模型变更→合规传导。
 4. 输出：风险总结 + 红线标记 + 谈判立场（经核准/附条件/阻止）。
 
 ```
-/ai-governance-legal:vendor-ai-review
+「vendor-ai-review」工作流（加载 ai-governance-legal/skills/vendor-ai-review/SKILL.md）
 [paste the vendor AI terms]
 ```
 
@@ -36,7 +35,7 @@ AI供应商合同引入了传统技术合同没有的风险维度——供应商
 
 ## 加载当前状态
 
-读取 `~/.claude/plugins/config/claude-for-legal-zh/ai-governance-legal/CLAUDE.md`：
+读取 `legal-profile/ai-governance-legal.md`：
 - `## 合同审查配置` — 公司立场、风险偏好、红线
 - `## 监管注册表` — 适用的法规框架
 - `## 已批准的供应商` — 既有关系和已通过审查的条款

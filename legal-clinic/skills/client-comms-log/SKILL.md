@@ -5,7 +5,6 @@ description: >
   按案件仅追加记录，含日期条目、方向、媒介、摘要、行动事项。
   与 /client-letter 和 /status client 协同使用。
   当需要记录通话或当事人邮件、查阅沟通日志或询问"我们上次告诉[当事人]什么"时使用。
-argument-hint: "[案件编号] [--add（默认）| --read | --summary | --patterns]"
 ---
 
 # /client-comms-log
@@ -13,11 +12,11 @@ argument-hint: "[案件编号] [--add（默认）| --read | --summary | --patter
 1. 使用以下工作流。
 2. 要求案件编号（未提供则提示）。
 3. 按标志路由：
-   - `--add`（默认）：记录方向、媒介、学生、摘要、行动事项、后续截止日期。与用户确认。追加（最新在最前）到 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/client-comms/[案件编号]/log.md`。
+   - `--add`（默认）：记录方向、媒介、学生、摘要、行动事项、后续截止日期。与用户确认。追加（最新在最前）到 `legal-profile/legal-clinic/client-comms/[案件编号]/log.md`。
    - `--read`：显示最近 N 条记录。
    - `--summary`：一段话简要阅读。
    - `--patterns`：扫描未回复的沟通、遗漏的后续跟进、语言缺口、语气变化、联系缺口。面向指导的。
-4. 联动：如果记录创建了截止日期，提议 `/legal-clinic:deadlines --add`；通过 `--summary` 路由到 `/legal-clinic:semester-handoff`。
+4. 联动：如果记录创建了截止日期，提议 `「deadlines」工作流（加载 legal-clinic/skills/deadlines/SKILL.md） --add`；通过 `--summary` 路由到 `「semester-handoff」工作流（加载 legal-clinic/skills/semester-handoff/SKILL.md）`。
 
 ---
 
@@ -36,8 +35,8 @@ argument-hint: "[案件编号] [--add（默认）| --read | --summary | --patter
 
 ## 加载上下文
 
-- `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/client-comms/[案件编号]/log.md`（如存在）——追加目标
-- `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/CLAUDE.md` → 不重度读取；本技能是案件范围的
+- `legal-profile/legal-clinic/client-comms/[案件编号]/log.md`（如存在）——追加目标
+- `legal-profile/legal-clinic.md` → 不重度读取；本技能是案件范围的
 
 ## 模式
 
@@ -62,7 +61,7 @@ argument-hint: "[案件编号] [--add（默认）| --read | --summary | --patter
 
 **写入前：** 向用户展示格式化的条目并征求确认。诊所记录应在写入前审查，而非写入后。
 
-**追加**到 `~/.claude/plugins/config/claude-for-legal-zh/legal-clinic/client-comms/[案件编号]/log.md`。如果日志不存在，创建它并附页眉：
+**追加**到 `legal-profile/legal-clinic/client-comms/[案件编号]/log.md`。如果日志不存在，创建它并附页眉：
 
 ```markdown
 # 沟通日志 — [案件名称]

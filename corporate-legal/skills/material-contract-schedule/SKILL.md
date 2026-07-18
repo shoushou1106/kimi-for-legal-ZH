@@ -4,7 +4,6 @@ description: >
   从尽调发现构建重大合同披露清单，适用股权收购协议的重大合同定义，并按
   协议清单格式排版。当用户说"建合同清单""披露清单""清单 3.X"
   "重大合同列表"或起草披露清单时使用。
-argument-hint: "[股权收购协议路径，或粘贴重大合同定义]"
 ---
 
 # /material-contract-schedule
@@ -18,7 +17,7 @@ argument-hint: "[股权收购协议路径，或粘贴重大合同定义]"
 
 ## 事项上下文
 
-**事项上下文。** 检查实务级 CLAUDE.md 中的 `## 事项工作区`。如果 `Enabled` 为 `✗`（企业法务用户的默认值），跳过本段其余内容——技能使用实务级上下文，事项机制不可见。如果已启用且无活跃事项，询问："这是哪个事项？运行 `/corporate-legal:matter-workspace switch <事项简称>` 或说 `实务级`。"加载活跃事项的 `matter.md` 获取事项特定上下文和覆盖规则。输出写入事项文件夹 `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/matters/<事项简称>/`。除非 `跨事项上下文` 为 `开`，否则绝不读取其他事项的文件。
+**事项上下文。** 检查实务级 CLAUDE.md 中的 `## 事项工作区`。如果 `Enabled` 为 `✗`（企业法务用户的默认值），跳过本段其余内容——技能使用实务级上下文，事项机制不可见。如果已启用且无活跃事项，询问："这是哪个事项？运行 `「matter-workspace」工作流（加载 corporate-legal/skills/matter-workspace/SKILL.md） switch <事项简称>` 或说 `实务级`。"加载活跃事项的 `matter.md` 获取事项特定上下文和覆盖规则。输出写入事项文件夹 `legal-profile/corporate-legal/matters/<事项简称>/`。除非 `跨事项上下文` 为 `开`，否则绝不读取其他事项的文件。
 
 ---
 
@@ -29,7 +28,7 @@ argument-hint: "[股权收购协议路径，或粘贴重大合同定义]"
 ## 加载上下文
 
 - 股权收购协议草案——用于"重大合同"的定义和清单格式
-- `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/CLAUDE.md` → 重要性阈值（可能与协议定义不同——以协议为准）
+- `legal-profile/corporate-legal.md` → 重要性阈值（可能与协议定义不同——以协议为准）
 - `diligence-issue-extraction` 的尽调发现——合同层面的数据
 
 ## 工作流

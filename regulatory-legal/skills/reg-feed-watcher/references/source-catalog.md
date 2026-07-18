@@ -5,7 +5,7 @@ which sources to watch; this catalog provides the options. URLs verified as of
 **May 2026** — feed URLs change; verify if a source stops returning results.
 
 **How to read this catalog:**
-- **Format** — what the feed returns: JSON API (structured, best), RSS/Atom (semi-structured, good), HTML page (needs scraping or change detection), Email only (requires Gmail/Outlook MCP).
+- **Format** — what the feed returns: JSON API (structured, best), RSS/Atom (semi-structured, good), HTML page (needs scraping or change detection), Email only (requires Gmail/Outlook 插件).
 - **Tier** — *Primary* means the regulator itself; *Secondary* means a commentator, aggregator, or law firm summarizing primary sources. Always trace a secondary source back to the primary before treating it as authoritative.
 - **Auth** — None means open; Key means a free-but-registered API key; Paid means a subscription.
 - **Notes** — any gotchas (rate limits, feed retirement, discovery steps).
@@ -112,7 +112,7 @@ Tag items pulled from these feeds as `[secondary source]` in the digest.
 Some important sources don't publish feeds, or their RSS has been retired.
 Monitoring them requires either:
 - Web-page change detection (not currently built in)
-- Email newsletter forwarding (requires Gmail/Outlook MCP integration)
+- Email newsletter forwarding (requires Gmail/Outlook 插件 integration)
 - Manual checking via the reg-feed-watcher "manual entry" path
 
 | Source | URL | Notes |

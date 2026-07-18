@@ -4,7 +4,6 @@ description: >
   管理事项工作空间——新建、列表、切换、关闭或脱钩（实务级）。
   当您为多个客户或事项工作、需要创建、列出、切换、关闭或脱钩活跃事项
   以防一个委托事项的上下文泄漏到另一个时使用。
-argument-hint: "<new | list | switch | close | none> [事项简称]"
 ---
 
 # /matter-workspace
@@ -13,21 +12,21 @@ argument-hint: "<new | list | switch | close | none> [事项简称]"
 
 ## 子命令
 
-- `/product-legal:matter-workspace new <事项简称>` —— 创建新事项工作空间，运行简短收案，写入 `matter.md`
-- `/product-legal:matter-workspace list` —— 列出事项，含状态和活跃标记
-- `/product-legal:matter-workspace switch <事项简称>` —— 设置活跃事项
-- `/product-legal:matter-workspace close <事项简称>` —— 归档事项（移至 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/matters/_archived/`，绝不删除）
-- `/product-legal:matter-workspace none` —— 脱离任何活跃事项，仅在实务级工作
+- `「matter-workspace」工作流（加载 product-legal/skills/matter-workspace/SKILL.md） new <事项简称>` —— 创建新事项工作空间，运行简短收案，写入 `matter.md`
+- `「matter-workspace」工作流（加载 product-legal/skills/matter-workspace/SKILL.md） list` —— 列出事项，含状态和活跃标记
+- `「matter-workspace」工作流（加载 product-legal/skills/matter-workspace/SKILL.md） switch <事项简称>` —— 设置活跃事项
+- `「matter-workspace」工作流（加载 product-legal/skills/matter-workspace/SKILL.md） close <事项简称>` —— 归档事项（移至 `legal-profile/product-legal/matters/_archived/`，绝不删除）
+- `「matter-workspace」工作流（加载 product-legal/skills/matter-workspace/SKILL.md） none` —— 脱离任何活跃事项，仅在实务级工作
 
 ## 指令
 
-1. 读取 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md`——确认 `## 事项工作空间` 节已填充。如果 `Enabled` 为 `✗`，告诉用户："事项工作空间已关闭——您被配置为服务一家公司的企业产品法务，插件自动以实务级上下文运行。如果您实际为多个客户工作，请重新运行 `/product-legal:cold-start-interview --redo` 并选择私人执业设置。否则，您完全不需要 `/matter-workspace`。"不要报错——禁用状态是企业法务用户的预期状态。
+1. 读取 `legal-profile/product-legal.md`——确认 `## 事项工作空间` 节已填充。如果 `Enabled` 为 `✗`，告诉用户："事项工作空间已关闭——您被配置为服务一家公司的企业产品法务，插件自动以实务级上下文运行。如果您实际为多个客户工作，请重新运行 `「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md） --redo` 并选择私人执业设置。否则，您完全不需要 `/matter-workspace`。"不要报错——禁用状态是企业法务用户的预期状态。
 2. 应用以下存储布局和子命令逻辑。
 3. 按 `$ARGUMENTS` 的第一个标记分发：
-   - `new` → 运行收案访谈，写入 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/matters/<事项简称>/matter.md`，播种 `history.md` 和 `notes.md`。
-   - `list` → 枚举 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/matters/*/matter.md`，打印表格，标记活跃事项。
+   - `new` → 运行收案访谈，写入 `legal-profile/product-legal/matters/<事项简称>/matter.md`，播种 `history.md` 和 `notes.md`。
+   - `list` → 枚举 `legal-profile/product-legal/matters/*/matter.md`，打印表格，标记活跃事项。
    - `switch` → 更新实务级 CLAUDE.md 中的 `Active matter:` 行。
-   - `close` → 将 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/matters/<事项简称>/` 移至 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/matters/_archived/<事项简称>/`，在 `history.md` 中记录关闭日期。
+   - `close` → 将 `legal-profile/product-legal/matters/<事项简称>/` 移至 `legal-profile/product-legal/matters/_archived/<事项简称>/`，在 `history.md` 中记录关闭日期。
    - `none` → 将 `Active matter:` 设为 `none — practice-level context only`。
 4. 向用户展示变更内容并在写入前确认。
 
@@ -50,7 +49,7 @@ argument-hint: "<new | list | switch | close | none> [事项简称]"
 所有事项数据位于：
 
 ```
-~/.claude/plugins/config/claude-for-legal-zh/product-legal/
+legal-profile/product-legal/
 ├── CLAUDE.md                       # 实务级实务画像
 └── matters/
     ├── <事项简称>/
@@ -84,7 +83,7 @@ argument-hint: "<new | list | switch | close | none> [事项简称]"
 3. 使用以下模板写入 `matters/<事项简称>/matter.md`。
 4. 播种 `matters/<事项简称>/history.md`，含单条"已开设"记录。
 5. 创建空 `matters/<事项简称>/notes.md`。
-6. **不要**自动切换到新事项。询问："要现在切换到 `<事项简称>` 吗？（`/product-legal:matter-workspace switch <事项简称>`）"
+6. **不要**自动切换到新事项。询问："要现在切换到 `<事项简称>` 吗？（`「matter-workspace」工作流（加载 product-legal/skills/matter-workspace/SKILL.md） switch <事项简称>`）"
 
 ### `list`
 
@@ -97,7 +96,7 @@ argument-hint: "<new | list | switch | close | none> [事项简称]"
 
 ### `switch <事项简称>`
 
-1. 确认 `matters/<事项简称>/matter.md` 存在。如不存在，建议 `/product-legal:matter-workspace new <事项简称>`。
+1. 确认 `matters/<事项简称>/matter.md` 存在。如不存在，建议 `「matter-workspace」工作流（加载 product-legal/skills/matter-workspace/SKILL.md） new <事项简称>`。
 2. 将实务级 CLAUDE.md 中的 `Active matter:` 行编辑为 `Active matter: <事项简称>`。
 3. 向用户展示 matter.md 摘要以便确认在正确的事项上。
 

@@ -1,15 +1,14 @@
 ---
 name: cold-start-interview
 description: 冷启动访谈——建立你的监管监测清单、索引政策库并了解你的重要度阈值，使监测器输出信号而非噪音。适用于全新安装、重新配置时（--redo），或重新检查哪些连接器实际响应时（--check-integrations）。
-argument-hint: "[--redo | --check-integrations]"
 ---
 
 # /cold-start-interview
 
-1. 检查 `~/.claude/plugins/config/claude-for-legal-zh/regulatory-legal/CLAUDE.md`。如果已存在已填充的 CLAUDE.md（无 `[PLACEHOLDER]` 标记），跳过除非 `--redo`。如果 `--check-integrations`，跳过访谈——仅重新运行 Part 0 的"连接了什么？"检查并重写 `## 可用集成` 表。
+1. 检查 `legal-profile/regulatory-legal.md`。如果已存在已填充的 画像文件（无 `[PLACEHOLDER]` 标记），跳过除非 `--redo`。如果 `--check-integrations`，跳过访谈——仅重新运行 Part 0 的"连接了什么？"检查并重写 `## 可用集成` 表。
 2. 使用以下访谈工作流。先 Part 0（角色 + 集成）→ 然后监测清单：哪些监管机构，政策在哪里，什么是重要的。
 3. 连接政策文件夹。索引政策。
-4. 写入 `~/.claude/plugins/config/claude-for-legal-zh/regulatory-legal/CLAUDE.md`。
+4. 写入 `legal-profile/regulatory-legal.md`。
 
 ---
 
@@ -21,11 +20,11 @@ argument-hint: "[--redo | --check-integrations]"
 
 先展示以下导言（3-4句，不能再多）：
 
-> **`regulatory-legal` 适用于跟踪监管动态、评估政策差距和管理合规义务的人。** 不是你的领域？/legal-builder-hub:related-skills-surfacer。
+> **`regulatory-legal` 适用于跟踪监管动态、评估政策差距和管理合规义务的人。** 不是你关注的领域？直接使用对应领域的入口技能即可（见仓库 `.agents/skills/` 目录）。
 >
 > **2分钟**了解你的角色、执业设置和主要监管制度。**15分钟**添加完整的监测清单、重要度阈值、动态源频率、政策库索引和意见征集来源。
 >
-> 快速还是完整？（随时用 `/regulatory-legal:cold-start-interview --full` 升级。）
+> 快速还是完整？（随时用 `「cold-start-interview」工作流（加载 regulatory-legal/skills/cold-start-interview/SKILL.md） --full` 升级。）
 
 ## 用户选择快速或完整后
 
@@ -55,7 +54,7 @@ argument-hint: "[--redo | --check-integrations]"
 检查实际连接的内容，而非已配置的内容。报告发现：
 
 > - ✓ [集成] — 已连接（已测试）
-> - ⚪ [集成] — 已配置但未验证。打开你的MCP设置确认。
+> - ⚪ [集成] — 已配置但未验证。打开你的插件设置确认。
 > - ✗ [集成] — 未找到。[功能]将回退到[手动替代方式]。[如何连接。]
 
 #### 执业设置
@@ -129,7 +128,7 @@ argument-hint: "[--redo | --check-integrations]"
 - 国家法律法规数据库（https://flk.npc.gov.cn/）
 
 **付费来源（如已配置）：**
-- 法律数据库MCP（如元典、北大法宝、威科先行等）的法规更新推送
+- 法律数据库插件（如元典、北大法宝、威科先行等）的法规更新推送
 
 **手动录入回退：**
 > 如果你在公众号、律所简报或行业协会通知中看到什么——只需粘贴进来，我会将其与你的政策进行差异分析并跟踪任何差距。你不需要付费订阅。
@@ -163,11 +162,11 @@ argument-hint: "[--redo | --check-integrations]"
 
 告知用户：
 
-> "你的配置位于 `~/.claude/plugins/config/claude-for-legal-zh/regulatory-legal/CLAUDE.md`——一个你可以直接阅读和编辑的纯文本文件。你回答的任何内容都可以更改：
+> "你的配置位于 `legal-profile/regulatory-legal.md`——一个你可以直接阅读和编辑的纯文本文件。你回答的任何内容都可以更改：
 >
 > - 直接编辑文件进行快速更改
-> - 运行 `/regulatory-legal:cold-start-interview --redo` 进行完整重访
-> - 运行 `/regulatory-legal:cold-start-interview --check-integrations` 重新检查连接了什么
+> - 运行 `「cold-start-interview」工作流（加载 regulatory-legal/skills/cold-start-interview/SKILL.md） --redo` 进行完整重访
+> - 运行 `「cold-start-interview」工作流（加载 regulatory-legal/skills/cold-start-interview/SKILL.md） --check-integrations` 重新检查连接了什么
 >
 > 人们最常调整的设置：监测清单（你实际关注的监管机构）、重要度阈值（什么算"立即"vs"摘要"vs"仅供参考"）、以及检查频率。"
 
@@ -175,10 +174,10 @@ argument-hint: "[--redo | --check-integrations]"
 
 > "以下是监管实践方面我最擅长的："
 >
-> - **检查法规动态**——如"对监测清单中的法规制定、监管指引和执法行动进行过滤后的摘要"。尝试：`/regulatory-legal:reg-feed-watcher`
-> - **将法规变化与你的政策库进行差异分析**——如"准确查看一项新法规影响了哪些内部政策以及需要更新什么"。尝试：`/regulatory-legal:policy-diff`
-> - **开放差距跟踪器**——如"整个投资组合中已标记但尚未关闭的事项，附负责人和截止日期"。尝试：`/regulatory-legal:gaps`
-> - **跟踪征求意见期**——如"哪些是开放的、征求意见截止日期，以及是否提交的决策日志"。尝试：`/regulatory-legal:comments`
+> - **检查法规动态**——如"对监测清单中的法规制定、监管指引和执法行动进行过滤后的摘要"。尝试：`「reg-feed-watcher」工作流（加载 regulatory-legal/skills/reg-feed-watcher/SKILL.md）`
+> - **将法规变化与你的政策库进行差异分析**——如"准确查看一项新法规影响了哪些内部政策以及需要更新什么"。尝试：`「policy-diff」工作流（加载 regulatory-legal/skills/policy-diff/SKILL.md）`
+> - **开放差距跟踪器**——如"整个投资组合中已标记但尚未关闭的事项，附负责人和截止日期"。尝试：`「gaps」工作流（加载 regulatory-legal/skills/gaps/SKILL.md）`
+> - **跟踪征求意见期**——如"哪些是开放的、征求意见截止日期，以及是否提交的决策日志"。尝试：`「comments」工作流（加载 regulatory-legal/skills/comments/SKILL.md）`
 
 ## 你的实践配置会学习
 
@@ -186,6 +185,21 @@ argument-hint: "[--redo | --check-integrations]"
 >
 > - 当一个技能的输出感觉不对时，通常是一个需要调整的立场。输出会告诉你具体是哪一个。
 > - 你始终可以说"更新我的操作手册，偏好X"或"将我的升级阈值改为Y"。
-> - 运行 `/regulatory-legal:cold-start-interview --redo <section>` 对一部分进行重访，或直接编辑配置文件。
+> - 运行 `「cold-start-interview」工作流（加载 regulatory-legal/skills/cold-start-interview/SKILL.md） --redo <section>` 对一部分进行重访，或直接编辑配置文件。
 >
 > 十分钟的设置给你一个可工作的配置。一个月的使用给你一个读起来像你自己写的配置。
+
+
+---
+
+
+---
+
+## 追加步骤：写入 KIMI 记忆（KIMI 版新增）
+
+访谈完成、画像写入 `legal-profile/regulatory-legal.md` 后：
+
+1. 将画像**要点摘要**写入 KIMI 长期记忆，**每条记忆必须以「kimi-for-legal-ZH 法律画像」开头，标注来源与适用范围**。例如：「kimi-for-legal-ZH 法律画像（regulatory-legal）：用户为企业法务，采购方立场，风险偏好中等……仅在处理法律工作任务时适用」。摘要内容包括：执业场景、使用者角色、所在领域、风险偏好、升级阈值，以及画像文件位置 `legal-profile/regulatory-legal.md`。
+2. KIMI 的记忆在所有会话中始终生效——标注"仅在法律工作任务中适用"是为了防止法律画像渗入无关对话（日常聊天、非法律工作）。
+3. 详细审查指引以画像文件为唯一真实来源；记忆中只放摘要和文件指针，避免两处不一致。
+4. 如果用户使用**网页版 KIMI**（无工作区文件系统），则将画像全文写入 KIMI 记忆（同样以「kimi-for-legal-ZH 法律画像」开头标注），并在后续法律会话开始时主动读取。

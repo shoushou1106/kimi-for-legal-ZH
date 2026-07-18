@@ -1,3 +1,5 @@
+> ⚠️ **KIMI 适配版说明**：本文件保留自上游仓库，其中 Claude Code 安装方式、斜杠命令与配置路径描述已不适用。KIMI 版的安装与使用以根目录 [README.md](../README.md) 和 [QUICKSTART.md](../QUICKSTART.md) 为准；本领域工作流内容仍然有效，经入口技能路由使用。
+
 # 法学学生插件（Law Student Plugin）
 
 学习模式，而非答案模式。互动式问答训练（Socratic drilling）——向你提问，指出你推理中的漏洞。案例摘要（case brief）、知识体系搭建（outline builder）、记忆卡片（flashcards）、IRAC 写作评估、课堂提问准备（cold-call prep）、写作反馈（绝不代写），以及基于同一位教授历年考题的考试预测（exam forecast）。一切适配你的情况——你的课程、你的法考报考地、你希望被"追问训练（drill-me）"还是"讲解引导（explain-to-me）"。
@@ -13,7 +15,7 @@
 这是关于你个人的设置，非组织设置。你的课程、你的法考报考地、你的学习风格——追问训练型（drill-me）还是讲解引导型（explain-to-me）。请准备以下材料：既往大纲、有批改反馈的论文、历年考题（尤其是同一授课教师的）、法考真题集、课程大纲、论文。目标是10-20份材料；低于此数，实践画像将被标记为 `LIMITED DATA`（数据有限），下游技能在补充更多材料前将产出较薄的内容。
 
 ```
-/law-student:cold-start-interview
+「cold-start-interview」工作流（加载 law-student/skills/cold-start-interview/SKILL.md）
 ```
 
 ## 技能列表
@@ -22,18 +24,18 @@
 
 | 技能 | 功能 |
 |---|---|
-| `/law-student:cold-start-interview` | 个人访谈 + 材料录入 — 课程、法考、学习风格、材料 |
-| `/law-student:socratic-drill [subject]` | 互动式问答训练 — 它提问，你回答，它追问。不给答案。 |
-| `/law-student:case-brief [case]` | 按你偏好的格式生成案例摘要 |
-| `/law-student:outline-builder [subject]` | 从课程材料搭建或扩展知识体系大纲 |
-| `/law-student:bar-prep-questions [subject]` | 法考备考题目，客观题或主观题 — 区分全国统一命题与报考地规则 |
-| `/law-student:flashcards [subject]` | 生成或训练记忆卡片；Leitner 分层记忆法；按科目 markdown 存储；`--session <n>` 模式 |
-| `/law-student:study-plan` | 制定或更新长期学习计划 — 分阶段、按薄弱科目、从训练历史自适应每日安排 |
-| `/law-student:session <subject> <n>` | 某一科目的定向 N 题训练；用结果更新学习计划 |
-| `/law-student:irac-practice` | 评估你的 IRAC 论文 — 结构、争议点、规则、分析。跨训练追踪模式。绝不代写。 |
-| `/law-student:cold-call-prep [case]` | 课堂提问准备 — 预测教师可能提出的问题并进行训练 |
-| `/law-student:legal-writing [path-or-paste]` | 对任何草稿的结构性反馈 — 绝不代写，从未如此 |
-| `/law-student:exam-forecast [class]` | 分析同一位教师历年考题；预测即将到来的考试 |
+| `「cold-start-interview」工作流（加载 law-student/skills/cold-start-interview/SKILL.md）` | 个人访谈 + 材料录入 — 课程、法考、学习风格、材料 |
+| `「socratic-drill」工作流（加载 law-student/skills/socratic-drill/SKILL.md） [subject]` | 互动式问答训练 — 它提问，你回答，它追问。不给答案。 |
+| `「case-brief」工作流（加载 law-student/skills/case-brief/SKILL.md） [case]` | 按你偏好的格式生成案例摘要 |
+| `「outline-builder」工作流（加载 law-student/skills/outline-builder/SKILL.md） [subject]` | 从课程材料搭建或扩展知识体系大纲 |
+| `「bar-prep-questions」工作流（加载 law-student/skills/bar-prep-questions/SKILL.md） [subject]` | 法考备考题目，客观题或主观题 — 区分全国统一命题与报考地规则 |
+| `「flashcards」工作流（加载 law-student/skills/flashcards/SKILL.md） [subject]` | 生成或训练记忆卡片；Leitner 分层记忆法；按科目 markdown 存储；`--session <n>` 模式 |
+| `「study-plan」工作流（加载 law-student/skills/study-plan/SKILL.md）` | 制定或更新长期学习计划 — 分阶段、按薄弱科目、从训练历史自适应每日安排 |
+| `「session」工作流（加载 law-student/skills/session/SKILL.md） <subject> <n>` | 某一科目的定向 N 题训练；用结果更新学习计划 |
+| `「irac-practice」工作流（加载 law-student/skills/irac-practice/SKILL.md）` | 评估你的 IRAC 论文 — 结构、争议点、规则、分析。跨训练追踪模式。绝不代写。 |
+| `「cold-call-prep」工作流（加载 law-student/skills/cold-call-prep/SKILL.md） [case]` | 课堂提问准备 — 预测教师可能提出的问题并进行训练 |
+| `「legal-writing」工作流（加载 law-student/skills/legal-writing/SKILL.md） [path-or-paste]` | 对任何草稿的结构性反馈 — 绝不代写，从未如此 |
+| `「exam-forecast」工作流（加载 law-student/skills/exam-forecast/SKILL.md） [class]` | 分析同一位教师历年考题；预测即将到来的考试 |
 
 ## "学习模式"意味着什么
 
@@ -63,15 +65,15 @@
 
 相信标记甚于没有标记——没有标记的规则是技能有把握的，但考试准备仍需自主核实。
 
-## 研究连接器与引注核实
+## 检索插件与引注核实
 
 **请先连接研究工具——引注安全机制依赖它。**没有研究工具时，每条引注都被标记为 `[verify]`，且每份交付物上方的审查备注会记录来源未被核实。插件在有或没有研究工具的情况下都能工作；只是连接研究工具后能帮你做更多核实工作。
 
-本插件中的法律研究连接器不仅是数据来源——它们是核实过的引注和你需要核对的引注之间的区别。通过**元典（yuandian）**（中国法律法规、司法解释、裁判文书、权威案例全覆盖检索）或**北大法宝（pkulaw）**（中国法律资源总库，含法学期刊与法考资料）检索到的引注被标注为对应来源，可以追溯。来自模型知识或网络搜索的引注被标记为 `[verify]` 或 `[verify-pinpoint]`，任何人在依赖之前应核对手来源。插件对引注分级，使你的核实时间用在该用的地方。
+本插件中的法律检索插件不仅是数据来源——它们是核实过的引注和你需要核对的引注之间的区别。通过**元典（yuandian）**（中国法律法规、司法解释、裁判文书、权威案例全覆盖检索）或**北大法宝（pkulaw）**（中国法律资源总库，含法学期刊与法考资料）检索到的引注被标注为对应来源，可以追溯。来自模型知识或网络搜索的引注被标记为 `[verify]` 或 `[verify-pinpoint]`，任何人在依赖之前应核对手来源。插件对引注分级，使你的核实时间用在该用的地方。
 
 ## 存储
 
-你的实践画像存储在 `~/.claude/plugins/config/claude-for-legal-zh/law-student/CLAUDE.md`，插件更新时不受影响。其余内容位于你的工作目录：
+你的实践画像存储在 `legal-profile/law-student.md`，插件更新时不受影响。其余内容位于你的工作目录：
 
 ```
 law-student/
@@ -95,11 +97,11 @@ law-student/
 
 ## 它是如何学习的
 
-你在 `~/.claude/plugins/config/claude-for-legal-zh/law-student/CLAUDE.md` 中的学习画像不是静态的——它随着你使用插件而改善。技能会在输出使用了默认设置时提示你应该调整的地方。你可以重新运行设置、直接编辑文件，或者告诉某个技能记录新的偏好。
+你在 `legal-profile/law-student.md` 中的学习画像不是静态的——它随着你使用插件而改善。技能会在输出使用了默认设置时提示你应该调整的地方。你可以重新运行设置、直接编辑文件，或者告诉某个技能记录新的偏好。
 
 ## 注意事项
 
 - drill-me 与 explain-to-me 在 cold-start 时设定；可按训练随时切换。
 - 案例摘要和大纲使用**你的**格式。如果你有现成的大纲，在 cold-start 时指向它们。
-- 法考备考以 `~/.claude/plugins/config/claude-for-legal-zh/law-student/CLAUDE.md` 中的薄弱科目为目标。它会反复回到这些科目。
+- 法考备考以 `legal-profile/law-student.md` 中的薄弱科目为目标。它会反复回到这些科目。
 - 每个内容生成技能在不确信时均会标记。相信标记甚于没有标记——没有标记的规则是我有把握的；考试前仍请核实来源。

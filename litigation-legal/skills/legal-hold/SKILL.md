@@ -4,14 +4,13 @@ description: >
   发出、更新、解除或报告证据保全通知——将保全通知起草为 .docx，
   更新案件日志中的保全字段，并排期下次更新。当用户说
   "发出证据保全通知"、"更新保全通知"、"解除保全"或要求全案组合证据保全状态报告时使用。
-argument-hint: "[slug] [--issue | --refresh | --release | --status]"
 ---
 
 # /legal-hold
 
 1. 如 `--status`（无 slug）：读取案件日志，产生全案组合保全报告。
-2. 否则：加载 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/[slug]/matter.md` + 日志行。
-3. 加载 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` → 保密标记、保全通知模板。
+2. 否则：加载 `legal-profile/litigation-legal/matters/[slug]/matter.md` + 日志行。
+3. 加载 `legal-profile/litigation-legal.md` → 保密标记、保全通知模板。
 4. 按标记路由：
    - `--issue`：获取范围、保管人、日期范围、系统。起草保全通知。更新保全字段。
    - `--refresh`：获取范围/保管人变更。起草下一版本。标记已离职保管人。

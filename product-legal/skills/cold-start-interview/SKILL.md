@@ -4,30 +4,29 @@ description: >
   冷启动访谈——连接您的上线追踪器、读取过往审查记录、学习您的风险校准。
   在全新安装、产品法务入职或插件配置含有占位符时使用。运行 --redo 重新访谈，
   或 --check-integrations 仅重新检测连接器。
-argument-hint: "[--redo] [--check-integrations 仅重新检测集成]"
 ---
 
 # /cold-start-interview
 
-1. 检查 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` 状态。
+1. 检查 `legal-profile/product-legal.md` 状态。
 2. 运行以下冷启动访谈。
 3. 种子文件：10份过往产品上线审查文件（来自追踪器或飞书云文档）。全部阅读。
 4. 从实际阻断vs.上线的案例构建风险校准表。
-5. 迁移：如果 `~/.claude/plugins/cache/claude-for-legal-zh/product-legal/*/CLAUDE.md` 存在已填充的 CLAUDE.md（无 `[PLACEHOLDER]` 标记）但配置路径不存在，将其复制至配置路径并向用户展示迁移内容。
-6. 写入 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md`（按需创建父目录）。展示校准表供确认。
+5. **迁移：** 如果用户之前安装过 Claude Code 版本（画像位于 `~/.claude/plugins/config/claude-for-legal-zh/`），将对应画像复制到 `legal-profile/` 下并保持原文件名，向用户展示迁移内容；否则跳过。
+6. 写入 `legal-profile/product-legal.md`（按需创建父目录）。展示校准表供确认。
 
 ## `--check-integrations`
 
-重新运行集成可用性检查（上线追踪器、文档存储、飞书/Slack），并更新 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` 中的 `## 可用集成`。不重新访谈。在连接或断开MCP并希望插件感知而无需重新运行完整设置时使用。
+重新运行集成可用性检查（上线追踪器、文档存储、飞书/Slack），并更新 `legal-profile/product-legal.md` 中的 `## 可用集成`。不重新访谈。在连接或断开插件并希望插件感知而无需重新运行完整设置时使用。
 
-探测时：仅在MCP工具调用实际成功时报告 ✓。已配置但未测试的连接器应标记为 ⚪ 并附一句话确认方法。绝不基于 `.mcp.json` 声明报告 ✓——这会误导用户以为某功能已连接而实际并非如此。
-
-```
-/product-legal:cold-start-interview
-```
+探测时：仅在插件工具调用实际成功时报告 ✓。已配置但未测试的连接器应标记为 ⚪ 并附一句话确认方法。绝不基于 `.mcp.json` 声明报告 ✓——这会误导用户以为某功能已连接而实际并非如此。
 
 ```
-/product-legal:cold-start-interview --check-integrations
+「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md）
+```
+
+```
+「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md） --check-integrations
 ```
 
 ---
@@ -42,38 +41,38 @@ argument-hint: "[--redo] [--check-integrations 仅重新检测集成]"
 
 ## 冷启动检查
 
-读取 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md`：
+读取 `legal-profile/product-legal.md`：
 - **不存在** → 开始访谈。
 - **包含 `<!-- SETUP PAUSED AT: -->`** → 问候用户并提议从该节恢复。
 - **包含 `[PLACEHOLDER]` 标记但无暂停注释** → 模板从未完成；提议重新开始或从占位符开始处恢复。
 - **已填充（无占位符、无暂停注释）** → 已配置；跳过除非 `--redo`。
 
-模板结构位于 `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md`——将其作为节骨架。将完成的实务画像写入配置路径，按需创建父目录。
+模板结构位于 `product-legal/profile-template.md`——将其作为节骨架。将完成的实务画像写入配置路径，按需创建父目录。
 
-如果 `~/.claude/plugins/cache/claude-for-legal-zh/product-legal/*/CLAUDE.md` 旧缓存路径存在 CLAUDE.md 但配置路径不存在，将其向前复制。
+**迁移：** 如果用户之前安装过 Claude Code 版本（画像位于 `~/.claude/plugins/config/claude-for-legal-zh/`），将对应画像复制到 `legal-profile/` 下并保持原文件名，向用户展示迁移内容；否则跳过。
 
 ## 检查共享公司画像
 
-查找 `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md`。
+查找 `legal-profile/company-profile.md`。
 
 - **如果存在：** 读取。展示一行确认："您是 [名称]，[执业场景]，于 [公司]，[行业]，运营范围涵盖 [法域]。对吗？（或说'更新'以修改共享画像。）"如果确认，跳过公司问题——直接进入插件特定问题。
-- **如果不存在：** 您将是该用户设置的首个插件。在引导和分叉后，询问公司问题并写入共享画像（依据插件根目录 `references/company-profile-template.md` 的模板），然后继续插件特定问题。告诉用户："我已保存您的公司画像——其他法律插件将读取并跳过这些问题。"
+- **如果不存在：** 您将是该用户设置的首个插件。在引导和分叉后，询问公司问题并写入共享画像（依据仓库根目录 `references/company-profile-template.md` 的模板），然后继续插件特定问题。告诉用户："我已保存您的公司画像——其他法律插件将读取并跳过这些问题。"
 
 属于共享画像（如已存在则不应重复询问）的公司问题：执业场景、公司名称、行业、销售什么、规模、法域、监管机构、风险偏好、上报人姓名。插件特定问题（审查指引立场、审查框架、所内风格、监管模式等）保留在每个插件内。
 
-## 安装范围检查
+
 
 在引导之前，如果您注意到工作目录位于项目内（而非用户主目录），标记。说一次：
 
-> **注意——本插件似乎是项目范围的，这意味着我只能读取[当前目录]中的文件。如果您需要我读取其他位置的文件（下载、文档、Dropbox），请安装用户范围版本——参见 QUICKSTART.md。您可以继续使用项目范围，但需要将文件移入此文件夹。**
 
-请用户确认后再继续：继续项目范围，或暂停重新安装用户范围。如果工作目录*是*用户主目录，静默跳过此项检查。
+
+
 
 ## 访谈开始前
 
 在询问其他任何内容前，展示分叉优先前言——3-4行，不超过：
 
-> **`product-legal` 面向审查产品上线、营销宣传和功能风险的人员——产品发货中的法律侧面。** 不是您的领域？`/legal-builder-hub:related-skills-surfacer`。
+> **`product-legal` 面向审查产品上线、营销宣传和功能风险的人员——产品发货中的法律侧面。** 不是你关注的领域？直接使用对应领域的入口技能即可（见仓库 `.agents/skills/` 目录）。
 >
 > **2分钟**获得您的角色、审查框架级别（正式准入 vs.建议性）以及产品/业务上下文（消费者、企业，或两者），其他各处设置合理默认值。**15分钟**增加您的风险校准表（什么阻断 vs.什么可以上线）、您这的上报矩阵、您的审查框架类别、您的内部备忘录格式以及您的上线追踪器集成。
 >
@@ -98,7 +97,7 @@ argument-hint: "[--redo] [--check-integrations 仅重新检测集成]"
 
 不要读取用户的主目录 `~/CLAUDE.md`、`~/user.md` 或其他个人记忆来预填充访谈。唯一输入是用户输入的回答和他们指向或粘贴的文档。
 
-**快速启动路径：** 仅询问第0部分（角色、执业场景、集成）和产品领域。写入配置，其他各处标记 `[DEFAULT]`。以以下内容收尾："完成。您现在可以开始使用命令了。我在上线审查框架、风险校准和营销宣传立场上使用了合理默认值。当某个技能的输出感觉不对时，通常是某个默认值需要调校——它会告诉您是哪个。随时运行 `/product-legal:cold-start-interview --full` 进行完整访谈，或 `/product-legal:cold-start-interview --redo <节>` 重新做某一部分。"
+**快速启动路径：** 仅询问第0部分（角色、执业场景、集成）和产品领域。写入配置，其他各处标记 `[DEFAULT]`。以以下内容收尾："完成。您现在可以开始使用命令了。我在上线审查框架、风险校准和营销宣传立场上使用了合理默认值。当某个技能的输出感觉不对时，通常是某个默认值需要调校——它会告诉您是哪个。随时运行 `「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md） --full` 进行完整访谈，或 `「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md） --redo <节>` 重新做某一部分。"
 
 **完整设置路径：** 以下现有访谈流程。
 
@@ -113,7 +112,7 @@ argument-hint: "[--redo] [--check-integrations 仅重新检测集成]"
 - **对于上传（种子上线审查文件、PRD、追踪器链接）：** "粘贴内容、共享文件路径，或说'暂时跳过。'如果跳过，我会在您的配置中标记该缺口，以便您之后补充。"然后实际等待。
 - **在写入实务画像前：** 回顾访谈。列出每个被跳过或回答为占位符的问题。说："在写入您的配置之前，以下是仍悬未决的：[清单]。想现在补充其中任何项，还是将其保留为占位符？"在得到回答之前等待。
 - **绝不**以静默缺口写入实务画像。每个占位符应为用户刻意选择跳过，而非一个滚过未回答的问题。
-- **暂停与恢复。** 提前告诉用户："如果需要停下，说'暂停'（或'停'，或'让我稍后再来'），我会保存您的进度。稍后再次运行 `/product-legal:cold-start-interview`，我将从您中断处继续。"当用户暂停时，将部分配置写入 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md`，文件顶部附 `<!-- SETUP PAUSED AT: [节名] — run /product-legal:cold-start-interview to resume -->` 注释，未回答字段使用 `[PENDING]` 标记（区别于 `[PLACEHOLDER]`）。当设置重新运行并发现暂停的配置时，问候用户："欢迎回来。您暂停在[节]。您之前的答案已保存。从上次中断处继续，还是重新开始？"不重复询问已回答的问题。
+- **暂停与恢复。** 提前告诉用户："如果需要停下，说'暂停'（或'停'，或'让我稍后再来'），我会保存您的进度。稍后再次运行 `「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md）`，我将从您中断处继续。"当用户暂停时，将部分配置写入 `legal-profile/product-legal.md`，文件顶部附 `<!-- SETUP PAUSED AT: [节名] — run 「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md） to resume -->` 注释，未回答字段使用 `[PENDING]` 标记（区别于 `[PLACEHOLDER]`）。当设置重新运行并发现暂停的配置时，问候用户："欢迎回来。您暂停在[节]。您之前的答案已保存。从上次中断处继续，还是重新开始？"不重复询问已回答的问题。
 
 **在设置中用户陈述法律事实时验证之。** 当用户以具体规则引用、法条编号、案例名称、日期、期限、阈值、法域或登记号回答访谈问题时——且是您能做合理性检查的——在写入配置前做检查。如果他们说的与您的理解或与已粘贴内容冲突，揭示："您说阈值是X；我的理解是Y——您能确认哪个写入画像？`[前提已标记 — 需验证]`"一个写入CLAUDE.md的错误事实会传播到每个未来输出中；此时捕捉是产品法务中最高杠杆的时刻之一。
 
@@ -156,19 +155,19 @@ argument-hint: "[--redo] [--check-integrations 仅重新检测集成]"
 
 **检查什么实际已连接，而非什么已配置。** 一个在 `.mcp.json` 中列出的连接器是*可用*的。一个实际在响应的连接器是*已连接*的。这两者不同，混淆它们会摧毁信任。对本插件使用的每个连接器：
 
-- 如果您可以测试连接（调用一个简单的MCP工具如列出或搜索），仅在实际成功的响应上报告 ✓。
-- 如果您无法测试（无法从这探测），报告 ⚪ "已配置但未核实——打开您的MCP设置确认"并附一句话如何做。
+- 如果您可以测试连接（调用一个简单的插件工具如列出或搜索），仅在实际成功的响应上报告 ✓。
+- 如果您无法测试（无法从这探测），报告 ⚪ "已配置但未核实——打开您的插件设置确认"并附一句话如何做。
 - 绝不基于配置单独报告 ✓。
 
-对于显示为未连接的连接器，告诉用户如何连接。示例措辞："飞书多维表格未连接。在Claude Cowork：设置→连接器→添加→飞书多维表格→登录。在Claude Code：将飞书多维表格MCP添加到您的配置或通过 `/mcp`。此插件可以没有它运行——您将直接粘贴PRD和审查文件——但连接后产品上线监控代理可以自动拉取工单。"
+对于显示为未连接的连接器，告诉用户如何连接。示例措辞："飞书多维表格未连接。在Claude Cowork：设置→连接器→添加→飞书多维表格→登录。在Claude Code：将飞书多维表格插件添加到您的配置或通过 `/mcp`。此插件可以没有它运行——您将直接粘贴PRD和审查文件——但连接后产品上线监控代理可以自动拉取工单。"
 
 然后以以下形式报告发现：
 
 > - ✓ [集成] — 已连接（已测试）
-> - ⚪ [集成] — 已配置但未核实。打开您的MCP设置确认。
+> - ⚪ [集成] — 已配置但未核实。打开您的插件设置确认。
 > - ✗ [集成] — 未找到。[功能]将降级为[人工替代方案]。[如何连接。]
 
-您不需要所有这些。核心功能仅靠文件访问即可工作。如果您之后设置某功能，重新运行 `/product-legal:cold-start-interview --check-integrations`。
+您不需要所有这些。核心功能仅靠文件访问即可工作。如果您之后设置某功能，重新运行 `「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md） --check-integrations`。
 
 #### 记录至插件配置
 
@@ -335,7 +334,7 @@ argument-hint: "[--redo] [--check-integrations 仅重新检测集成]"
 | 文档存储（飞书云文档/Google Drive/SharePoint） | [✓/✗] | 审查备忘录本地保存；种子文件手动提取 |
 | 飞书/Slack | [✓/✗] | 分流回复以文字形式内联输出，而非推送至频道 |
 
-*重新检查：`/product-legal:cold-start-interview --check-integrations`*
+*重新检查：`「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md） --check-integrations`*
 
 ---
 
@@ -428,7 +427,7 @@ argument-hint: "[--redo] [--check-integrations 仅重新检测集成]"
 
 ---
 
-*重新运行：`/product-legal:cold-start-interview --redo`*
+*重新运行：`「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md） --redo`*
 ```
 
 ## 写入后
@@ -441,9 +440,9 @@ argument-hint: "[--redo] [--check-integrations 仅重新检测集成]"
 
 > **以下是产品法务实务中我擅长的：**
 >
-> - **产品上线的法务审查** —— 例如"PRD输入，对照您的审查框架和风险校准产出审查备忘录。"试：`/product-legal:launch-review`
-> - **对飞书问题的快速分流** —— 例如"'嗨法务，问个快问题'得到即时判断：没问题/需要认真审查/暂停。"试：`/product-legal:is-this-a-problem`
-> - **营销宣传审查** —— 例如"检查文案中需要证实、比较性、超级词汇以及产品兑现不了的承诺。"试：`/product-legal:marketing-claims-review`
+> - **产品上线的法务审查** —— 例如"PRD输入，对照您的审查框架和风险校准产出审查备忘录。"试：`「launch-review」工作流（加载 product-legal/skills/launch-review/SKILL.md）`
+> - **对飞书问题的快速分流** —— 例如"'嗨法务，问个快问题'得到即时判断：没问题/需要认真审查/暂停。"试：`「is-this-a-problem」工作流（加载 product-legal/skills/is-this-a-problem/SKILL.md）`
+> - **营销宣传审查** —— 例如"检查文案中需要证实、比较性、超级词汇以及产品兑现不了的承诺。"试：`「marketing-claims-review」工作流（加载 product-legal/skills/marketing-claims-review/SKILL.md）`
 >
 > **我对您第一个使用的建议：** 对一个您已回答过的产品经理问题运行 `/is-this-a-problem`——看答案是否匹配您的校准方式。或者告诉我您手头有什么，我来选。
 
@@ -452,7 +451,7 @@ argument-hint: "[--redo] [--check-integrations 仅重新检测集成]"
 
 1. **展示校准表。** "这是我从您过往审查中学习到的——这符合您对什么阻断、什么不阻断的感觉吗？"
 
-2. **研究连接器提示。** 说：
+2. **检索插件提示。** 说：
 
    > "在您的第一个产品上线审查前：连接一个研究工具。没有的话，我会将每条引用标记为未核实——有了的话，我对照现行数据库验证它们。在Cowork：设置→连接器。在Claude Code：技能提示时授权。"
 
@@ -462,11 +461,11 @@ argument-hint: "[--redo] [--check-integrations 仅重新检测集成]"
 
 5. **以可修改性说明收尾。** 说：
 
-   > "完成。您的配置位于 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md`——一份您可以直接阅读和编辑的纯文本文件。您回答的任何内容都可以修改：
+   > "完成。您的配置位于 `legal-profile/product-legal.md`——一份您可以直接阅读和编辑的纯文本文件。您回答的任何内容都可以修改：
    >
    > - 直接编辑文件实现快速修改
-   > - 运行 `/product-legal:cold-start-interview --redo` 进行完整重新访谈
-   > - 运行 `/product-legal:cold-start-interview --check-integrations` 重新检查什么已连接
+   > - 运行 `「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md） --redo` 进行完整重新访谈
+   > - 运行 `「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md） --check-integrations` 重新检查什么已连接
    >
    > 用户最常调校的设置：风险校准表（什么阻断 vs. 什么可以上线）、审查框架类别和上报矩阵。您的配置将在使用插件过程中改善——当一次审查感觉不对时（太谨慎、太宽松、框架不对），修复通常在这里。"
 
@@ -487,3 +486,18 @@ argument-hint: "[--redo] [--check-integrations 仅重新检测集成]"
 - **不要发明他们不用的框架。** 如果他们每次审查都是自由风格，捕获这一点——"审查为临时性，无正式检查表。"上线审查技能可以日后提供结构。
 - **不要把"我们从未阻断过这个"误认为"这个没问题"。** 有时他们只是从未遇到过这个问题。标记：`[未测试 —— 此问题在种子审查中未出现，校准为推测]`。
 - **不要读取PRD而非审查文件。** PRD告诉您功能做什么。审查文件告诉您律师担心什么。您要的是第二个。
+
+
+---
+
+
+---
+
+## 追加步骤：写入 KIMI 记忆（KIMI 版新增）
+
+访谈完成、画像写入 `legal-profile/product-legal.md` 后：
+
+1. 将画像**要点摘要**写入 KIMI 长期记忆，**每条记忆必须以「kimi-for-legal-ZH 法律画像」开头，标注来源与适用范围**。例如：「kimi-for-legal-ZH 法律画像（product-legal）：用户为企业法务，采购方立场，风险偏好中等……仅在处理法律工作任务时适用」。摘要内容包括：执业场景、使用者角色、所在领域、风险偏好、升级阈值，以及画像文件位置 `legal-profile/product-legal.md`。
+2. KIMI 的记忆在所有会话中始终生效——标注"仅在法律工作任务中适用"是为了防止法律画像渗入无关对话（日常聊天、非法律工作）。
+3. 详细审查指引以画像文件为唯一真实来源；记忆中只放摘要和文件指针，避免两处不一致。
+4. 如果用户使用**网页版 KIMI**（无工作区文件系统），则将画像全文写入 KIMI 记忆（同样以「kimi-for-legal-ZH 法律画像」开头标注），并在后续法律会话开始时主动读取。

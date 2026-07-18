@@ -4,12 +4,11 @@ description: >
   运行冷启动访谈以了解你的商事合同实务并写入团队业务领域配置。在首次使用插件时、
   配置文件缺失或仍为模板占位符时、或当用户说"设置插件""配置商事合同"
   "引导我""我们开始吧"时使用。这是全新安装时应运行的唯一技能。
-argument-hint: "[--redo 在已配置插件上重新运行] [--check-integrations 仅重新检测集成] [--side sales|purchasing 仅重新运行某一方的审查指引部分]"
 ---
 
 # /cold-start-interview
 
-运行冷启动访谈。首次运行写入 `~/.claude/plugins/config/claude-for-legal-zh/commercial-legal/CLAUDE.md`；后续使用 `--redo` 运行则重新访谈并在覆盖前展示差异。
+运行冷启动访谈。首次运行写入 `legal-profile/commercial-legal.md`；后续使用 `--redo` 运行则重新访谈并在覆盖前展示差异。
 
 ## 指令
 
@@ -21,7 +20,7 @@ argument-hint: "[--redo 在已配置插件上重新运行] [--check-integrations
 
 4. **阅读种子文件** 并提取实际审查指引立场。记录陈述立场与实际签署条款之间的差异。
 
-5. **迁移：** 如果缓存路径存在已填充的配置文件，复制到配置路径并向用户展示。
+5. ***迁移：** 如果用户之前安装过 Claude Code 版本（画像位于 `~/.claude/plugins/config/claude-for-legal-zh/`），将对应画像复制到 `legal-profile/` 下并保持原文件名，向用户展示迁移内容；否则跳过。
 
 6. **写入配置文件**（按需创建父目录）。尽量使用律师自己的表述。
 
@@ -30,10 +29,10 @@ argument-hint: "[--redo 在已配置插件上重新运行] [--check-integrations
 ## 示例
 
 ```
-/commercial-legal:cold-start-interview
-/commercial-legal:cold-start-interview --redo
-/commercial-legal:cold-start-interview --check-integrations
-/commercial-legal:cold-start-interview --side purchasing
+「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md）
+「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md） --redo
+「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md） --check-integrations
+「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md） --side purchasing
 ```
 
 ---
@@ -54,21 +53,21 @@ argument-hint: "[--redo 在已配置插件上重新运行] [--check-integrations
 
 ## 检查共享公司配置
 
-查找 `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md`。如果存在：读取并确认。如果不存在：先询问公司问题并写入共享配置。
+查找 `legal-profile/company-profile.md`。如果存在：读取并确认。如果不存在：先询问公司问题并写入共享配置。
 
-## 安装范围检查
 
-在访谈开始前，如果工作目录位于项目内部（而非用户主目录），标注一次："注意——插件可能是项目范围的。"确认是否继续。
+
+
 
 ## 访谈开始前
 
 在问任何事之前，展示分叉前引导语：
 
-> **`commercial-legal` 面向审查、谈判和管理商事合同（供应商协议、SaaS主协议、保密协议、续约）的人群。** 不是你关注的领域？`/legal-builder-hub:related-skills-surfacer`。
+> **`commercial-legal` 面向审查、谈判和管理商事合同（供应商协议、SaaS主协议、保密协议、续约）的人群。** 不是你关注的领域？直接使用对应领域的入口技能即可（见仓库 `.agents/skills/` 目录）。
 >
 > **2分钟** 获得角色、执业场景、管辖和审查指引方向（销售或采购），以及审查指引立场、上报阈值、责任上限、赔偿方向和行文风格的工作默认值。**15分钟** 增加你的真实审查指引立场（责任限制、赔偿、数据处理协议、期限、管辖法律）按你的方向校准、你的deal-breaker、带金额阈值和自动上报的完整上报矩阵、行文风格和续约提醒目的地，以及从你签署的协议中提取的立场。
 >
-> 快速还是完整？（随时用 `/commercial-legal:cold-start-interview --full` 升级。）
+> 快速还是完整？（随时用 `「cold-start-interview」工作流（加载 commercial-legal/skills/cold-start-interview/SKILL.md） --full` 升级。）
 
 等待用户选择。
 
@@ -97,7 +96,7 @@ argument-hint: "[--redo 在已配置插件上重新运行] [--check-integrations
 
 #### 连接了什么？
 
-检测实际连接状态（非仅配置）。测试MCP连接。报告：✓已连接 / ⚪已配置未验证 / ✗未找到。
+检测实际连接状态（非仅配置）。检查检索插件是否可用。报告：✓已连接 / ⚪已配置未验证 / ✗未找到。
 
 #### 执业场景
 
@@ -216,7 +215,7 @@ argument-hint: "[--redo 在已配置插件上重新运行] [--check-integrations
 
 展示插件功能、提示连接研究工具、建议起始技能、提供试运行、注明可修改性。
 
-> 完成。你的业务领域配置位于 `~/.claude/plugins/config/claude-for-legal-zh/commercial-legal/CLAUDE.md`。
+> 完成。你的业务领域配置位于 `legal-profile/commercial-legal.md`。
 
 ## 语气
 
@@ -228,3 +227,18 @@ argument-hint: "[--redo 在已配置插件上重新运行] [--check-integrations
 - **不要跳过种子文件。** 访谈告诉你他们认为的审查指引是什么。文件告诉你实际是什么。
 - **不要写通用审查指引。** 如果答案通用，温柔推动："给我一个数字。当供应商说24个月上限时，你是驳回还是签？"
 - **不要在每次会话都运行此访谈。** 首先检查插件配置。
+
+
+---
+
+
+---
+
+## 追加步骤：写入 KIMI 记忆（KIMI 版新增）
+
+访谈完成、画像写入 `legal-profile/commercial-legal.md` 后：
+
+1. 将画像**要点摘要**写入 KIMI 长期记忆，**每条记忆必须以「kimi-for-legal-ZH 法律画像」开头，标注来源与适用范围**。例如：「kimi-for-legal-ZH 法律画像（commercial-legal）：用户为企业法务，采购方立场，风险偏好中等……仅在处理法律工作任务时适用」。摘要内容包括：执业场景、使用者角色、所在领域、风险偏好、升级阈值，以及画像文件位置 `legal-profile/commercial-legal.md`。
+2. KIMI 的记忆在所有会话中始终生效——标注"仅在法律工作任务中适用"是为了防止法律画像渗入无关对话（日常聊天、非法律工作）。
+3. 详细审查指引以画像文件为唯一真实来源；记忆中只放摘要和文件指针，避免两处不一致。
+4. 如果用户使用**网页版 KIMI**（无工作区文件系统），则将画像全文写入 KIMI 记忆（同样以「kimi-for-legal-ZH 法律画像」开头标注），并在后续法律会话开始时主动读取。

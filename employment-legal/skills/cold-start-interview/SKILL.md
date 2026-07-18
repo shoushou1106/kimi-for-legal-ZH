@@ -3,19 +3,18 @@ name: cold-start-interview
 description: >
   首次配置访谈——从你的劳动规章制度和解除备忘录中学习你的管辖范围
   和上报规则。询问哪些省/直辖市有员工，阅读种子文件，并构建
-  管辖地感知的上报表。在首次安装、CLAUDE.md 中仍有 [PLACEHOLDER]
+  管辖地感知的上报表。在首次安装、画像文件 中仍有 [PLACEHOLDER]
   标记时使用，或使用 --redo 或 --check-integrations 重新运行时使用。
-argument-hint: "[--redo | --check-integrations]"
 ---
 
 # /cold-start-interview
 
-1. 检查 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md`。如果 `--check-integrations`，跳过访谈——仅重新运行 Part 0 `有什么连接？`检查并重写配置路径下的 `## Available integrations` 表格。探测时：只有 MCP 工具调用实际成功才报告 ✓。配置但未测试的连接器应标记 ⚪ 并附一行确认方法。绝不基于 `.mcp.json` 声明报告 ✓——这会误导用户以为某事已接通而实际没有。
+1. 检查 `legal-profile/employment-legal.md`。如果 `--check-integrations`，跳过访谈——仅重新运行 Part 0 `有什么连接？`检查并重写配置路径下的 `## Available integrations` 表格。探测时：只有 插件 工具调用实际成功才报告 ✓。配置但未测试的连接器应标记 ⚪ 并附一行确认方法。绝不基于 `.mcp.json` 声明报告 ✓——这会误导用户以为某事已接通而实际没有。
 2. 运行以下访谈（Part 0 优先——角色 + 集成——然后是管辖范围）：省/直辖市、录用/解除审查触发条件、经济补偿惯例。
 3. 种子文件：劳动规章制度 + 3 份解除备忘录。
 4. 构建管辖地特定上报表。
-5. 如果缓存路径下存在已填充的 CLAUDE.md（无 `[PLACEHOLDER]` 标记）但配置路径下不存在，将其复制到配置路径并告诉用户迁移了什么。
-6. 写入 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md`，根据需要创建父目录。
+5. **迁移：** 如果用户之前安装过 Claude Code 版本（画像位于 `~/.claude/plugins/config/claude-for-legal-zh/`），将对应画像复制到 `legal-profile/` 下并保持原文件名，向用户展示迁移内容；否则跳过。
+6. 写入 `legal-profile/employment-legal.md`，根据需要创建父目录。
 
 ---
 
@@ -27,28 +26,28 @@ argument-hint: "[--redo | --check-integrations]"
 
 ## 冷启动检查
 
-读取 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md`：
+读取 `legal-profile/employment-legal.md`：
 - **不存在** → 开始访谈。
 - **包含 `<!-- SETUP PAUSED AT: -->`** → 问候用户并提供从该节恢复。
 - **包含 `[PLACEHOLDER]` 标记但无暂停注释** → 模板从未完成；提供重新开始或从占位符开始处恢复。
 - **已填充（无占位符、无暂停注释）** → 已配置；除非 `--redo` 否则跳过。
 
-模板结构位于 `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md`——使用它作为章节框架。将完成的实践画像写入配置路径，根据需要创建父目录。如果旧缓存路径 `~/.claude/plugins/cache/claude-for-legal-zh/employment-legal/*/CLAUDE.md` 下有 CLAUDE.md 但此处没有，将其前移。
+**迁移：** 如果用户之前安装过 Claude Code 版本（画像位于 `~/.claude/plugins/config/claude-for-legal-zh/`），将对应画像复制到 `legal-profile/` 下并保持原文件名，向用户展示迁移内容；否则跳过。
 
 ## 检查共享公司画像
 
-查找 `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md`。
+查找 `legal-profile/company-profile.md`。
 
 - **如果存在：** 读取它。显示一行确认："你是[名称]，[执业场景]，在[公司]，[行业]，在[管辖地]运营。对吗？（或说'更新'来修改共享画像。）"如果确认，跳过公司问题——直接进入插件专属问题。
 - **如果不存在：** 你将是对此用户首个设置的插件。在定位和分叉后，询问公司问题并写入共享画像，然后继续插件专属问题。告诉用户："我已保存你的公司画像——其他法律插件将读取它并跳过这些问题。"
 
-## 安装范围检查
+
 
 在定位之前，如果你注意到工作目录在项目内（而非用户主目录），标记它。说一次：
 
-> **注意——看起来本插件可能是项目范围安装，这意味着我只能读取[当前目录]中的文件。如果你需要我读取其他位置（下载、文档、网盘）的文件，请改为用户范围安装——见 QUICKSTART.md。你可以继续使用项目范围，但需要将文件移入此文件夹。**
 
-在继续前要求用户确认：继续用项目范围，或暂停改为用户范围安装。如果工作目录*是*用户主目录，静默跳过此检查。
+
+
 
 ## 访谈开始前
 
@@ -60,7 +59,7 @@ argument-hint: "[--redo | --check-integrations]"
 >
 > 快速还是完整？（随时用 `/cold-start-interview --full` 升级。）
 
-**快速启动路径：** 仅询问 Part 0（角色、执业场景、集成）和管辖范围。用 `[DEFAULT]` 标记写入配置。以："完成。你现在可以开始使用命令了。我已为解除风险阈值、经济补偿姿态和规章制度使用了合理默认值。当某个技能的输出感觉不对劲时，那通常是一个你应该调优的默认值——它会告诉你哪个。随时运行 `/employment-legal:cold-start-interview --full` 来完成整个访谈。"
+**快速启动路径：** 仅询问 Part 0（角色、执业场景、集成）和管辖范围。用 `[DEFAULT]` 标记写入配置。以："完成。你现在可以开始使用命令了。我已为解除风险阈值、经济补偿姿态和规章制度使用了合理默认值。当某个技能的输出感觉不对劲时，那通常是一个你应该调优的默认值——它会告诉你哪个。随时运行 `「cold-start-interview」工作流（加载 employment-legal/skills/cold-start-interview/SKILL.md） --full` 来完成整个访谈。"
 
 **完整设置路径：** 以下现有访谈流程。用户选择后，给出更完整的定位，然后进入 Part 0。
 
@@ -72,7 +71,7 @@ argument-hint: "[--redo | --check-integrations]"
 
 然后是全新画像说明：
 
-> "设置从你的回答构建一个全新的专业画像。它不读取你的个人 Claude 历史、其他对话或你的主目录 CLAUDE.md。如果我在对话上下文中注意到相关信息——例如你之前提到了你的律所——我会在使用前询问。除非你键入或批准，个人信息不会被纳入你的实践配置。"
+> "设置从你的回答构建一个全新的专业画像。它不读取你的个人 Claude 历史、其他对话或你的主目录 画像文件。如果我在对话上下文中注意到相关信息——例如你之前提到了你的律所——我会在使用前询问。除非你键入或批准，个人信息不会被纳入你的实践配置。"
 
 然后："准备好了吗？先几个快速问题，然后我们深入。"
 
@@ -82,7 +81,7 @@ argument-hint: "[--redo | --check-integrations]"
 - **批处理大小——数子问题。** 一个回合2-3个*可回答的提示*，计算子问题。包含5个子问题的一个问题是5个问题。测试：用户能否不滚动回答？如果问题不适合一个屏幕，太多了。
 - **为真正答案暂停。** 需要用户键入或上传时，说："这个需要打字回答——我等着。"在上传时："粘贴内容、分享文件路径，或说'先跳过'。"
 - **在写入配置前审查访谈。** 列举被跳过或用占位符回答的任何问题。
-- **暂停和恢复。** 预先告诉用户："如果你需要停止，说'暂停'，我会保存你的进度。稍后运行 `/employment-legal:cold-start-interview` 继续，我会从你上次停下的地方拾起。"
+- **暂停和恢复。** 预先告诉用户："如果你需要停止，说'暂停'，我会保存你的进度。稍后运行 `「cold-start-interview」工作流（加载 employment-legal/skills/cold-start-interview/SKILL.md）` 继续，我会从你上次停下的地方拾起。"
 
 ## 访谈
 
@@ -131,7 +130,7 @@ argument-hint: "[--redo | --check-integrations]"
 
 **检查实际连接状态，而非仅配置状态。** 对每个连接器：
 - 如能测试连接，仅在成功响应时报告 ✓。
-- 如不能测试，报告 ⚪ "已配置但未验证——打开你的 MCP 设置确认"。
+- 如不能测试，报告 ⚪ "已配置但未验证——打开你的 插件 设置确认"。
 - 绝不基于仅配置报告 ✓。
 
 ### Part 1：管辖范围（2-3分钟）
@@ -193,7 +192,7 @@ argument-hint: "[--redo | --check-integrations]"
 
 ### Part 5：写入实践画像
 
-按 `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md` 的模板结构。将完成的实践画像写入插件配置，根据需要创建父目录。关键章节：管辖范围、录用/解除审查触发条件、高风险标记、管辖地特定上报表。
+按 `employment-legal/profile-template.md` 的模板结构。将完成的实践画像写入插件配置，根据需要创建父目录。关键章节：管辖范围、录用/解除审查触发条件、高风险标记、管辖地特定上报表。
 
 ## 写入后
 
@@ -205,22 +204,22 @@ argument-hint: "[--redo | --check-integrations]"
 
 > **以下是我在劳动法执业中擅长的事项：**
 >
-> - **审查录用通知书和竞业限制条款**——例如"竞业限制可执行性的管辖地检查、个人信息保护和通知义务。"试试：`/employment-legal:hiring-review`
-> - **解除审查及风险标记**——例如"经济补偿、协商解除协议、最终工资支付时点和高风险指标在决策前标记。"试试：`/employment-legal:termination-review`
-> - **劳动关系认定**——例如"劳动关系 vs 劳务关系 vs 承揽关系——含差距分析。"试试：`/employment-legal:worker-classification`
-> - **管辖地感知的劳动用工问答**——例如"按你的管辖范围内管辖地回答的用工问题。"试试：`/employment-legal:wage-hour-qa`
-> - **启动跨地域用工扩张**——例如"新省/直辖市在扩张路线上——规划劳动法工作流。"试试：`/employment-legal:expansion-kickoff`
-> - **开启内部调查**——例如"创建保密工作空间，启动日志，规划访谈路径。"试试：`/employment-legal:investigation-open`
+> - **审查录用通知书和竞业限制条款**——例如"竞业限制可执行性的管辖地检查、个人信息保护和通知义务。"试试：`「hiring-review」工作流（加载 employment-legal/skills/hiring-review/SKILL.md）`
+> - **解除审查及风险标记**——例如"经济补偿、协商解除协议、最终工资支付时点和高风险指标在决策前标记。"试试：`「termination-review」工作流（加载 employment-legal/skills/termination-review/SKILL.md）`
+> - **劳动关系认定**——例如"劳动关系 vs 劳务关系 vs 承揽关系——含差距分析。"试试：`「worker-classification」工作流（加载 employment-legal/skills/worker-classification/SKILL.md）`
+> - **管辖地感知的劳动用工问答**——例如"按你的管辖范围内管辖地回答的用工问题。"试试：`「wage-hour-qa」工作流（加载 employment-legal/skills/wage-hour-qa/SKILL.md）`
+> - **启动跨地域用工扩张**——例如"新省/直辖市在扩张路线上——规划劳动法工作流。"试试：`「expansion-kickoff」工作流（加载 employment-legal/skills/expansion-kickoff/SKILL.md）`
+> - **开启内部调查**——例如"创建保密工作空间，启动日志，规划访谈路径。"试试：`「investigation-open」工作流（加载 employment-legal/skills/investigation-open/SKILL.md）`
 >
 > **我对你第一个使用的建议：** 运行 `/termination-review` 对一个假设的解除——这是最可能浮现风险校准如何读取的技能。或者告诉我你手上有什么，我来选择。
 
 ### 以"你可以随时修改任何内容"结尾
 
-> "完成。你的配置在 `~/.claude/plugins/config/claude-for-legal-zh/employment-legal/CLAUDE.md`——一个你可以直接阅读和编辑的纯文本文件。你回答的任何内容都可以修改：
+> "完成。你的配置在 `legal-profile/employment-legal.md`——一个你可以直接阅读和编辑的纯文本文件。你回答的任何内容都可以修改：
 >
 > - 直接编辑文件进行快速修改
-> - 运行 `/employment-legal:cold-start-interview --redo` 进行完整重新访谈
-> - 运行 `/employment-legal:cold-start-interview --check-integrations` 重新检查连接状态
+> - 运行 `「cold-start-interview」工作流（加载 employment-legal/skills/cold-start-interview/SKILL.md） --redo` 进行完整重新访谈
+> - 运行 `「cold-start-interview」工作流（加载 employment-legal/skills/cold-start-interview/SKILL.md） --check-integrations` 重新检查连接状态
 >
 > 人们最常调整的三个设置：**管辖地列表**（随着你的管辖范围扩大）、**高风险解除标记**（当你校准什么是真正可怕 vs. 什么是噪音）、和**上报表**（当汇报关系变化时）。"
 
@@ -230,6 +229,21 @@ argument-hint: "[--redo | --check-integrations]"
 >
 > - 当某个技能的输出感觉不对劲时，那通常是一个需要调优的立场。输出会告诉你是哪个。
 > - 你可以随时说"更新我的实务实践以偏好 X"或"将我的上报阈值改为 Y"，相关技能将写入变更。
-> - 运行 `/employment-legal:cold-start-interview --redo <section>` 重新访谈一个部分，或直接编辑配置文件。
+> - 运行 `「cold-start-interview」工作流（加载 employment-legal/skills/cold-start-interview/SKILL.md） --redo <section>` 重新访谈一个部分，或直接编辑配置文件。
 >
 > 十分钟的设置让你获得一个可用的画像。一个月的使用让你获得一个读起来像你自己写的画像。
+
+
+---
+
+
+---
+
+## 追加步骤：写入 KIMI 记忆（KIMI 版新增）
+
+访谈完成、画像写入 `legal-profile/employment-legal.md` 后：
+
+1. 将画像**要点摘要**写入 KIMI 长期记忆，**每条记忆必须以「kimi-for-legal-ZH 法律画像」开头，标注来源与适用范围**。例如：「kimi-for-legal-ZH 法律画像（employment-legal）：用户为企业法务，采购方立场，风险偏好中等……仅在处理法律工作任务时适用」。摘要内容包括：执业场景、使用者角色、所在领域、风险偏好、升级阈值，以及画像文件位置 `legal-profile/employment-legal.md`。
+2. KIMI 的记忆在所有会话中始终生效——标注"仅在法律工作任务中适用"是为了防止法律画像渗入无关对话（日常聊天、非法律工作）。
+3. 详细审查指引以画像文件为唯一真实来源；记忆中只放摘要和文件指针，避免两处不一致。
+4. 如果用户使用**网页版 KIMI**（无工作区文件系统），则将画像全文写入 KIMI 记忆（同样以「kimi-for-legal-ZH 法律画像」开头标注），并在后续法律会话开始时主动读取。

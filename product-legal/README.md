@@ -1,3 +1,5 @@
+> ⚠️ **KIMI 适配版说明**：本文件保留自上游仓库，其中 Claude Code 安装方式、斜杠命令与配置路径描述已不适用。KIMI 版的安装与使用以根目录 [README.md](../README.md) 和 [QUICKSTART.md](../QUICKSTART.md) 为准；本领域工作流内容仍然有效，经入口技能路由使用。
+
 # 产品法务律师插件
 
 产品法务工作流：产品上线审查、营销宣传审查、功能风险评估以及快速"这有问题吗？"分流。围绕从您实际产品上线审查历史中学到的风险校准构建——在您的公司实际会阻断什么，而非通用标准。
@@ -17,27 +19,27 @@
 
 对接您的产品上线追踪器（飞书多维表格/钉钉/Teambition），读取您过往十份产品上线审查，学习您实际阻断什么、放行什么。构建每项技能均会读取的风险校准表。
 
-您的配置存储于 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` 并在插件更新后继续生效。
+您的配置存储于 `legal-profile/product-legal.md` 并在插件更新后继续生效。
 
 ```
-/product-legal:cold-start-interview
+「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md）
 ```
 
 ## 指令
 
 | 指令 | 功能 |
 |---|---|
-| `/product-legal:cold-start-interview` | 冷启动访谈 |
-| `/product-legal:launch-review [PRD或需求编号]` | 对照您的审查框架进行完整产品上线审查 |
-| `/product-legal:marketing-claims-review [文案]` | 营销宣传审查 |
-| `/product-legal:is-this-a-problem [问题]` | 快速"这有问题吗？"解答 |
-| `/product-legal:matter-workspace` | 管理事项工作空间（仅多客户私人执业）——新建、列表、切换、关闭、无事项 |
+| `「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md）` | 冷启动访谈 |
+| `「launch-review」工作流（加载 product-legal/skills/launch-review/SKILL.md） [PRD或需求编号]` | 对照您的审查框架进行完整产品上线审查 |
+| `「marketing-claims-review」工作流（加载 product-legal/skills/marketing-claims-review/SKILL.md） [文案]` | 营销宣传审查 |
+| `「is-this-a-problem」工作流（加载 product-legal/skills/is-this-a-problem/SKILL.md） [问题]` | 快速"这有问题吗？"解答 |
+| `「matter-workspace」工作流（加载 product-legal/skills/matter-workspace/SKILL.md）` | 管理事项工作空间（仅多客户私人执业）——新建、列表、切换、关闭、无事项 |
 
 ## 技能
 
 | 技能 | 用途 |
 |---|---|
-| **cold-start-interview** | 通过访谈+过往产品上线审查，写入 ~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md |
+| **cold-start-interview** | 通过访谈+过往产品上线审查，写入 legal-profile/product-legal.md |
 | **launch-review** | 按类别逐项审查，依据贵公司风险标准校准 |
 | **marketing-claims-review** | 宣传主张分类：夸大宣传/事实陈述/比较性/暗示性/绝对化用语 |
 | **feature-risk-assessment** | 当产品上线审查不够时，针对单一问题进行深度分析 |
@@ -54,7 +56,7 @@
 
 ## 集成
 
-**首先对接法律检索工具——引用安全机制依赖于此。** 没有检索工具，每项引用均标记为 `[需核实]`。技能无论是否接入检索工具均可运行；yuandian MCP（中国法律法规与案例检索）可将核实工作从您的清单中移除。
+**首先对接法律检索工具——引用安全机制依赖于此。** 没有检索工具，每项引用均标记为 `[需核实]`。技能无论是否接入检索工具均可运行；元典检索（中国法律法规与案例检索）可将核实工作从您的清单中移除。
 
 随附 `.mcp.json` 中的连接器配置：
 
@@ -69,26 +71,26 @@
 ## 快速入门
 
 ```
-/product-legal:cold-start-interview
+「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md）
 ```
 
 然后：
 
 ```
-/product-legal:is-this-a-problem "我们能否对定价页做A/B测试？"
+「is-this-a-problem」工作流（加载 product-legal/skills/is-this-a-problem/SKILL.md） "我们能否对定价页做A/B测试？"
 ```
 
 → 即时回答，依据您的风险校准表。
 
 ```
-/product-legal:launch-review PROJ-1234
+「launch-review」工作流（加载 product-legal/skills/launch-review/SKILL.md） PROJ-1234
 ```
 
 → 完整的逐项审查，附行动事项。
 
 ## 如何学习
 
-您在 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` 中的实务画像并非一成不变——它会随着您使用插件而持续改进。技能会告知您何时某次输出使用了应予调整的默认值。您可以重新运行设置、直接编辑文件或告知某项技能记录新的立场。
+您在 `legal-profile/product-legal.md` 中的实务画像并非一成不变——它会随着您使用插件而持续改进。技能会告知您何时某次输出使用了应予调整的默认值。您可以重新运行设置、直接编辑文件或告知某项技能记录新的立场。
 
 ## 说明
 
@@ -99,8 +101,8 @@
 
 ## 前提条件
 
-部分功能引用外部集成（文档管理、产品上线追踪器、电子签章、监管资讯）。这些不随插件打包——如果您的环境中存在对应MCP服务器，相关功能将使用这些服务器。没有时，插件降级为文件上传和手动工作流。运行 `/product-legal:cold-start-interview --check-integrations` 查看您环境中的可用内容。
+部分功能引用外部集成（文档管理、产品上线追踪器、电子签章、监管资讯）。这些不随插件打包——如果您的环境中存在对应插件服务器，相关功能将使用这些服务器。没有时，插件降级为文件上传和手动工作流。运行 `「cold-start-interview」工作流（加载 product-legal/skills/cold-start-interview/SKILL.md） --check-integrations` 查看您环境中的可用内容。
 
 ## 配置
 
-您的配置存储于 `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` 并在插件更新后继续生效——设置只需运行一次。
+您的配置存储于 `legal-profile/product-legal.md` 并在插件更新后继续生效——设置只需运行一次。

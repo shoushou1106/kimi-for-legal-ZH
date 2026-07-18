@@ -4,7 +4,6 @@ description: >
   为多客户执业场景管理案件工作空间——创建、列表、切换、关闭或脱离活跃案件。
   当用户需要创建新案件工作空间、切换活跃案件、列出案件、归档案件或
   仅在实务级工作而不关联特定案件时使用。
-argument-hint: "<new | list | switch | close | none> [代号]"
 ---
 
 # /matter-workspace
@@ -13,23 +12,23 @@ argument-hint: "<new | list | switch | close | none> [代号]"
 
 ## 子命令
 
-- `/litigation-legal:matter-workspace new <代号>` —— 创建新案件工作空间，运行简要登记，写入 `matter.md`
-- `/litigation-legal:matter-workspace list` —— 列出案件及其状态和活跃标记
-- `/litigation-legal:matter-workspace switch <代号>` —— 设置活跃案件
-- `/litigation-legal:matter-workspace close <代号>` —— 归档案件（移至 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/_archived/`，永不清除）
-- `/litigation-legal:matter-workspace none` —— 脱离任何活跃案件，仅在实务级工作
+- `「matter-workspace」工作流（加载 litigation-legal/skills/matter-workspace/SKILL.md） new <代号>` —— 创建新案件工作空间，运行简要登记，写入 `matter.md`
+- `「matter-workspace」工作流（加载 litigation-legal/skills/matter-workspace/SKILL.md） list` —— 列出案件及其状态和活跃标记
+- `「matter-workspace」工作流（加载 litigation-legal/skills/matter-workspace/SKILL.md） switch <代号>` —— 设置活跃案件
+- `「matter-workspace」工作流（加载 litigation-legal/skills/matter-workspace/SKILL.md） close <代号>` —— 归档案件（移至 `legal-profile/litigation-legal/matters/_archived/`，永不清除）
+- `「matter-workspace」工作流（加载 litigation-legal/skills/matter-workspace/SKILL.md） none` —— 脱离任何活跃案件，仅在实务级工作
 
-注意：`/litigation-legal:matter-briefing [代号]`（无子命令）是单独的命令，生成特定案件的简报——适用于法务案件组合审查。案件工作空间管理在此。
+注意：`「matter-briefing」工作流（加载 litigation-legal/skills/matter-briefing/SKILL.md） [代号]`（无子命令）是单独的命令，生成特定案件的简报——适用于法务案件组合审查。案件工作空间管理在此。
 
 ## 指令
 
-1. 读取 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` —— 确认 `## 案件工作空间` 部分已填充。如果 `Enabled` 为 `✗`，告知用户："案件工作空间已关闭——你配置为单一客户的法务实践，插件自动使用实务级上下文。如果你确实服务于多个客户，重新运行 `/litigation-legal:cold-start-interview --redo` 并选择外部执业设置。否则，你完全不需要 `/matter-workspace`。"不要报错——禁用状态是法务用户的预期状态。
+1. 读取 `legal-profile/litigation-legal.md` —— 确认 `## 案件工作空间` 部分已填充。如果 `Enabled` 为 `✗`，告知用户："案件工作空间已关闭——你配置为单一客户的法务实践，插件自动使用实务级上下文。如果你确实服务于多个客户，重新运行 `「cold-start-interview」工作流（加载 litigation-legal/skills/cold-start-interview/SKILL.md） --redo` 并选择外部执业设置。否则，你完全不需要 `/matter-workspace`。"不要报错——禁用状态是法务用户的预期状态。
 2. 按以下工作流操作。
 3. 按 `$ARGUMENTS` 的第一个 token 分发：
-   - `new` → 运行登记访谈，写入 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/<代号>/matter.md`，播种 `history.md`。
-   - `list` → 枚举 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/*/matter.md`，打印表格，标记活跃案件。
+   - `new` → 运行登记访谈，写入 `legal-profile/litigation-legal/matters/<代号>/matter.md`，播种 `history.md`。
+   - `list` → 枚举 `legal-profile/litigation-legal/matters/*/matter.md`，打印表格，标记活跃案件。
    - `switch` → 更新实务级 CLAUDE.md 中的 `Active matter:` 行。
-   - `close` → 将 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/<代号>/` 移至 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/_archived/<代号>/`，在 `history.md` 中记录关闭日期。
+   - `close` → 将 `legal-profile/litigation-legal/matters/<代号>/` 移至 `legal-profile/litigation-legal/matters/_archived/<代号>/`，在 `history.md` 中记录关闭日期。
    - `none` → 设置 `Active matter:` 为 `none — 仅实务级上下文`。
 4. 展示变更内容并在写入前确认。
 
@@ -52,7 +51,7 @@ argument-hint: "<new | list | switch | close | none> [代号]"
 所有案件数据存放在：
 
 ```
-~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/
+legal-profile/litigation-legal/
 ├── CLAUDE.md                       # 实务级实践画像
 └── matters/
     ├── <代号>/
@@ -84,7 +83,7 @@ argument-hint: "<new | list | switch | close | none> [代号]"
    - **关联案件**（任何有关联案件的代号）
 3. 使用以下模板写入 `matters/<代号>/matter.md`。
 4. 播种 `matters/<代号>/history.md`，含一条"立案/登记"条目。
-5. **不**自动切换到新案件。询问："是否要现在切换到 `<代号>`？（`/litigation-legal:matter-workspace switch <代号>`）"
+5. **不**自动切换到新案件。询问："是否要现在切换到 `<代号>`？（`「matter-workspace」工作流（加载 litigation-legal/skills/matter-workspace/SKILL.md） switch <代号>`）"
 
 ### `list`
 
@@ -97,7 +96,7 @@ argument-hint: "<new | list | switch | close | none> [代号]"
 
 ### `switch <代号>`
 
-1. 确认 `matters/<代号>/matter.md` 存在。如否，提供 `/litigation-legal:matter-workspace new <代号>`。
+1. 确认 `matters/<代号>/matter.md` 存在。如否，提供 `「matter-workspace」工作流（加载 litigation-legal/skills/matter-workspace/SKILL.md） new <代号>`。
 2. 编辑实务级 CLAUDE.md 中的 `Active matter:` 行为 `Active matter: <代号>`。
 3. 向用户展示 matter.md 摘要以便确认在正确的案件上。
 

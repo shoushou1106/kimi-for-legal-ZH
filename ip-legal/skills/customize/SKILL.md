@@ -7,14 +7,13 @@ description: >
   clearance thresholds, OSS review rules, or matter workspace paths. Use when
   the user says "change my [thing]", "update my profile", "edit my config",
   or "customize".
-argument-hint: "[section name, or describe what you want to change]"
 ---
 
 # /customize
 
 ## When this runs
 
-The user typed `/ip-legal:customize`. They want to change something in their
+The user typed `「customize」工作流（加载 ip-legal/skills/customize/SKILL.md）`. They want to change something in their
 practice profile — a risk posture, an escalation contact, a portfolio
 position, an enforcement tactic — without re-running the whole cold-start
 interview and without hand-editing YAML.
@@ -22,12 +21,12 @@ interview and without hand-editing YAML.
 ## What to do
 
 1. **Read the config.** Read
-   `~/.claude/plugins/config/claude-for-legal-zh/ip-legal/CLAUDE.md`
-   (and `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md` one
+   `legal-profile/ip-legal.md`
+   (and `legal-profile/company-profile.md` one
    level up). If the plugin config does not exist or still contains
    `[PLACEHOLDER]` values, say:
 
-   > You haven't run setup yet. Run `/ip-legal:cold-start-interview` first —
+   > You haven't run setup yet. Run `「cold-start-interview」工作流（加载 ip-legal/skills/cold-start-interview/SKILL.md）` first —
    > customize is for adjusting a profile you already have.
 
 2. **Show the customizable map.** List what's in the profile, grouped, with a
@@ -78,7 +77,7 @@ interview and without hand-editing YAML.
 
 5. **For shared-profile changes** (company name, industry, jurisdictions,
    practice setting, stage): write to
-   `~/.claude/plugins/config/claude-for-legal-zh/company-profile.md` and note:
+   `legal-profile/company-profile.md` and note:
 
    > This change affects all 12 plugins — any plugin that reads your
    > jurisdiction footprint now sees [new value].
@@ -86,7 +85,7 @@ interview and without hand-editing YAML.
 6. **Close.**
 
    > Done. Your next output will reflect the change. Anything else? You can
-   > run `/ip-legal:customize` anytime.
+   > run `「customize」工作流（加载 ip-legal/skills/customize/SKILL.md）` anytime.
 
 ## Guardrails
 

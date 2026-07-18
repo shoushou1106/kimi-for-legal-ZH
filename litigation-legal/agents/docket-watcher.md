@@ -5,8 +5,6 @@ description: >
   拉取新进文书、计算候选期限、逐案比对历史记录
   和待办事项、输出案件进度报告。触发词："查案件进度"、
   "any new filings"、"案件进度检查"、"有什么新进展"、或按排程执行。
-model: sonnet
-tools: ["Read", "Write", "mcp__yuandian__*", "mcp__feishu__*"]
 ---
 
 # 案件进度监控 Agent
@@ -19,7 +17,7 @@ tools: ["Read", "Write", "mcp__yuandian__*", "mcp__feishu__*"]
 
 ## Schedule
 
-依据 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` → 争议画像 → 常见管辖法院及 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/_log.yaml` 中的逐案节奏。
+依据 `legal-profile/litigation-legal.md` → 争议画像 → 常见管辖法院及 `legal-profile/litigation-legal/matters/_log.yaml` 中的逐案节奏。
 
 - **默认：** 每周扫描 `_log.yaml` 中所有 `status` 不为 `closed` 的事项。
 - **每日：** 14天内有开庭的事项、处于庭审或证据交换后期的事项、或标记 `risk: 严重` 的事项。
@@ -28,7 +26,7 @@ tools: ["Read", "Write", "mcp__yuandian__*", "mcp__feishu__*"]
 
 ## What it does
 
-1. 读取 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md`，获取文书风格、上报规则和常见管辖法院列表。读取 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/matters/_log.yaml`，获取活跃案件组合——逐案的 `id`、管辖法院、案号、上次检查时间戳和待办事项。
+1. 读取 `legal-profile/litigation-legal.md`，获取文书风格、上报规则和常见管辖法院列表。读取 `legal-profile/litigation-legal/matters/_log.yaml`，获取活跃案件组合——逐案的 `id`、管辖法院、案号、上次检查时间戳和待办事项。
 2. 对每个有案号的活跃事项，通过人民法院案例库/裁判文书网/元典检索自上次检查以来的新进文书（基层法院和中级法院可直接检索裁判文书网；高级法院和最高人民法院优先查人民法院案例库）。获取：文书日期、文书类型、标题、提交方、案号关联条目。
 3. 将文书类型映射到候选期限规则。民事一审普通程序审限6个月（可延长）；简易程序3个月；小额诉讼程序2个月（一审终审）；上诉期判决15日/裁定10日；举证期限不少于15日；管辖权异议在提交答辩状期间（15日内）提出。各地基层法院存在地方操作惯例差异。**每个推算出的期限标记为需律师核实后方可纳入日程的线索。**
 4. 逐案比对每个事项的 `history.md` 和待办事项。标记态势变化（裁定已出、开庭已排期、举证期限已届满、审限即将到期）和已超内部期限的待办事项。
@@ -67,3 +65,17 @@ tools: ["Read", "Write", "mcp__yuandian__*", "mcp__feishu__*"]
 - **不将"无新进"视为"无问题"。** 法院文书上网存在延迟。裁定书可能事件发生后数日才送达。"无新进文书"是关于公开数据源的陈述，不是关于案件的陈述。
 - **不触碰已结案件**，除非明确指示。
 - **不替代律所的案件管理系统。** 它产出结构化的数据供案件管理系统导入——在人工核验期限之后。
+
+---
+
+## 在 KIMI 中创建定时任务（KIMI 版）
+
+**KIMI Work：** 对本文件说"按此蓝图创建定时任务"，或按以下参数创建定时任务（cron job）：
+
+- 建议时间：每工作日 08:37（cron `37 8 * * 1-5`，时区 Asia/Shanghai；可按需调整）
+- 执行内容：读取 `legal-profile/litigation-legal.md` 获取配置，然后按上方工作流执行，报告输出到对话
+- 可选：要求附加完成通知
+
+**网页版 KIMI：** 在对话中说"创建定时任务：案件进度监控：监控在办案件进展和截止日期，每工作日 08:37执行"，或在定时任务表单中手动填写。画像以 KIMI 记忆为准。
+
+**注意：** 原蓝图中的频道推送（Slack/飞书）在 KIMI 版中改为对话内输出或写入工作区文件；确需推送到 IM 时，可通过 WebBridge 操作网页版 IM 转发。

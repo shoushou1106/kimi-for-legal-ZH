@@ -3,20 +3,19 @@ name: cold-start-interview
 description: >
   诉讼插件首次配置——按角色分流（法务、律所律师、独立执业）、
   按立场分流（原告、被告、两者皆有），捕获风险校准、执业背景和文书风格，
-  写入实践画像 CLAUDE.md。在全新安装时、用户想设置或重做实践画像时、
+  写入实践画像 画像文件。在全新安装时、用户想设置或重做实践画像时、
   或重新检查可用集成时使用。
-argument-hint: "[--redo | --check-integrations]"
 ---
 
 # /cold-start-interview
 
-1. 检查 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md`。如已填充且无 `--redo`，覆盖前询问。
+1. 检查 `legal-profile/litigation-legal.md`。如已填充且无 `--redo`，覆盖前询问。
 2. 按以下工作流操作。
 3. 运行 Part 0（角色、立场、集成检查）。访谈按角色和立场分流。
    - **角色**路由实践画像结构：**法务**（案件组合管理、外聘律师监督、重要性评估方法）、**律所律师**（案件工作——案件理论、关键事实、文书风格），或**独立执业**（案件量 + 风险代理或固定律师费模式 + 客户期望 + 时效追踪，再加案件理论和文书风格部分）。
    - **立场**路由校准词汇：**原告**（主动主张、案件价值、风险代理、时效悬崖）、**被告**（被动应对、敞口评估、保险通知），或**两者/因案而异**（捕获默认值，由各案技能重新询问）。
 4. 浮现缺口。如用户没有成文的风险框架或报告门槛，注明并提供现在思考或留 `[PLACEHOLDER]` 供后续填写。
-5. 写入 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md`。注明编写日期。
+5. 写入 `legal-profile/litigation-legal.md`。注明编写日期。
 6. 定稿前与用户确认："这是我捕获的内容——有什么问题吗？"
 
 ---
@@ -89,7 +88,7 @@ argument-hint: "[--redo | --check-integrations]"
 
 ### 集成检查
 
-检查实际可连接的集成（MCP 工具、文件访问等），报告已连接/已配置但未验证/未找到。
+检查实际可连接的集成（插件 工具、文件访问等），报告已连接/已配置但未验证/未找到。
 
 ---
 
@@ -205,7 +204,7 @@ argument-hint: "[--redo | --check-integrations]"
 
 向用户展示插件可以做什么的定制列表，并说明实践画像可以随时修改。
 
-> "您的实践画像位于 `~/.claude/plugins/config/claude-for-legal-zh/litigation-legal/CLAUDE.md` —— 一个可以直接阅读和编辑的纯文本文件。您回答的任何内容都可以修改。当输出感觉不对时，修复通常在此处。"
+> "您的实践画像位于 `legal-profile/litigation-legal.md` —— 一个可以直接阅读和编辑的纯文本文件。您回答的任何内容都可以修改。当输出感觉不对时，修复通常在此处。"
 
 ## 本技能不做什么
 
@@ -213,3 +212,18 @@ argument-hint: "[--redo | --check-integrations]"
 - 假装缺口不存在。诚实留 `[PLACEHOLDER]` 比发明一个门槛更好。
 - 与用户争执。如用户说"我还没有那个"，注明并继续。
 - 未经询问读取个人 `~/CLAUDE.md` 或其他环境上下文。
+
+
+---
+
+
+---
+
+## 追加步骤：写入 KIMI 记忆（KIMI 版新增）
+
+访谈完成、画像写入 `legal-profile/litigation-legal.md` 后：
+
+1. 将画像**要点摘要**写入 KIMI 长期记忆，**每条记忆必须以「kimi-for-legal-ZH 法律画像」开头，标注来源与适用范围**。例如：「kimi-for-legal-ZH 法律画像（litigation-legal）：用户为企业法务，采购方立场，风险偏好中等……仅在处理法律工作任务时适用」。摘要内容包括：执业场景、使用者角色、所在领域、风险偏好、升级阈值，以及画像文件位置 `legal-profile/litigation-legal.md`。
+2. KIMI 的记忆在所有会话中始终生效——标注"仅在法律工作任务中适用"是为了防止法律画像渗入无关对话（日常聊天、非法律工作）。
+3. 详细审查指引以画像文件为唯一真实来源；记忆中只放摘要和文件指针，避免两处不一致。
+4. 如果用户使用**网页版 KIMI**（无工作区文件系统），则将画像全文写入 KIMI 记忆（同样以「kimi-for-legal-ZH 法律画像」开头标注），并在后续法律会话开始时主动读取。

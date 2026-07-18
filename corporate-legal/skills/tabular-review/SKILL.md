@@ -10,7 +10,7 @@ description: >
 
 # /tabular-review
 
-1. 加载 `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/CLAUDE.md` → 尽调结构、阈值、内部格式。
+1. 加载 `legal-profile/corporate-legal.md` → 尽调结构、阈值、内部格式。
 2. 确认：什么文件、什么列、输出到哪里。
 3. 构建类型化模式。写入 `.review-schema.yaml`。与用户确认。
 4. 样本运行（3-5份文件）。调整模式。确认。
@@ -20,9 +20,9 @@ description: >
 8. 摘要：核实工作量（每列 not_present / unclear / needs_review 的计数）、标记的列、文件位置、提醒每个单元格是线索而非发现。
 
 ```
-/corporate-legal:tabular-review
-/corporate-legal:tabular-review --schema .review-schema.yaml --docs ./vdr/02-Contracts/
-/corporate-legal:tabular-review --template ma-diligence
+「tabular-review」工作流（加载 corporate-legal/skills/tabular-review/SKILL.md）
+「tabular-review」工作流（加载 corporate-legal/skills/tabular-review/SKILL.md） --schema .review-schema.yaml --docs ./vdr/02-Contracts/
+「tabular-review」工作流（加载 corporate-legal/skills/tabular-review/SKILL.md） --template ma-diligence
 ```
 
 **`--schema <路径>`:** 使用已有的模式文件而非新建。用于重新运行和增量添加。
@@ -39,7 +39,7 @@ description: >
 
 ## 事项上下文
 
-**事项上下文。** 检查实务级 CLAUDE.md 中的 `## 事项工作区`。如果 `Enabled` 为 `✗`（企业法务用户的默认值），跳过本段其余内容——技能使用实务级上下文，事项机制不可见。如果已启用且无活跃事项，询问："这是哪个事项？运行 `/corporate-legal:matter-workspace switch <事项简称>` 或说 `实务级`。"加载活跃事项的 `matter.md` 获取事项特定上下文和覆盖规则。输出写入事项文件夹 `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/matters/<事项简称>/`。除非 `跨事项上下文` 为 `开`，否则绝不读取其他事项的文件。
+**事项上下文。** 检查实务级 CLAUDE.md 中的 `## 事项工作区`。如果 `Enabled` 为 `✗`（企业法务用户的默认值），跳过本段其余内容——技能使用实务级上下文，事项机制不可见。如果已启用且无活跃事项，询问："这是哪个事项？运行 `「matter-workspace」工作流（加载 corporate-legal/skills/matter-workspace/SKILL.md） switch <事项简称>` 或说 `实务级`。"加载活跃事项的 `matter.md` 获取事项特定上下文和覆盖规则。输出写入事项文件夹 `legal-profile/corporate-legal/matters/<事项简称>/`。除非 `跨事项上下文` 为 `开`，否则绝不读取其他事项的文件。
 
 ---
 
@@ -53,8 +53,8 @@ description: >
 
 ## 加载上下文
 
-- `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/CLAUDE.md` → 尽调结构、重要性阈值、内部格式偏好
-- `~/.claude/plugins/config/claude-for-legal-zh/corporate-legal/deals/[代码]/deal-context.md`（如处理特定交易）
+- `legal-profile/corporate-legal.md` → 尽调结构、重要性阈值、内部格式偏好
+- `legal-profile/corporate-legal/deals/[代码]/deal-context.md`（如处理特定交易）
 - 用户已有的模式文件（`.review-schema.yaml`）
 
 ## 列类型系统
@@ -92,7 +92,7 @@ description: >
 ### 第0步：什么和哪里
 
 确认：
-1. **文件。** 它们在哪里？数据室MCP（数据室/飞书/坚果云）、本地文件夹、云文档文件夹或文件列表。数量？如果 >200，警告这将花费一些时间并提供从经重要性过滤的子集开始。
+1. **文件。** 它们在哪里？数据室插件（数据室/飞书/坚果云）、本地文件夹、云文档文件夹或文件列表。数量？如果 >200，警告这将花费一些时间并提供从经重要性过滤的子集开始。
 2. **模式。** 哪些列？两条路径：
    - 用户从 `references/` 中选择模板（并购尽调标准是默认）
    - 用户用自然语言描述列，你将其结构化为类型化模式
@@ -192,7 +192,7 @@ schema:
 **CSV**（`.csv`，始终）：
 一个文件存值，一个伴随文件存引文和位置（`_sources.csv`）。保持主文件干净、证据线索完整。
 
-**Excel**（`.xlsx`）或**在线表格**——取决于用户的工作环境。询问；不猜测。两者遵循相同的工作簿结构（见 `references/excel-output.md` 和 `references/gsheets-output.md`）。对 Excel：如可用则用 Claude in Excel（Office 代理），`openpyxl` 为备选。对 Sheets：如可用则用 Sheets MCP，通过 ADC 使用 Sheets API，CSV 导入为备选。在电子表格输出中：
+**Excel**（`.xlsx`）或**在线表格**——取决于用户的工作环境。询问；不猜测。两者遵循相同的工作簿结构（见 `references/excel-output.md` 和 `references/gsheets-output.md`）。对 Excel：如可用则用 Claude in Excel（Office 代理），`openpyxl` 为备选。对 Sheets：如可用则用 Sheets 插件，通过 ADC 使用 Sheets API，CSV 导入为备选。在电子表格输出中：
 - 每个数据列与包含引文和位置的隐藏来源列配对。可见列上的单元格评论（Excel）或备注（Sheets）在悬停时显示引文。
 - 按状态颜色编码：白色 = answered，黄色 = unclear 或 needs_review，灰色 = not_present。
 - 每个数据列一个 `Verified` 列，默认为空白。审查者标记。这是使表格可审计的核实/标记模式——交易团队可一眼看出人工已实际检查了什么。

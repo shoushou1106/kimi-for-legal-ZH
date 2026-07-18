@@ -1,7 +1,6 @@
+# 个人实务画像（用户数据）不入库，保留目录说明文件
+legal-profile/*
+!legal-profile/README.md
+
+# macOS
 .DS_Store
-*.skill
-/logs/
-/outputs/
-/.claude/
-__pycache__/
-*.pyc

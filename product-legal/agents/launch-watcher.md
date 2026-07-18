@@ -5,8 +5,6 @@ description: >
   need legal review, flags them before product counsel gets surprised. Runs
   daily. Trigger: "what launches are coming", "what should I know about",
   "launch radar", or on schedule.
-model: sonnet
-tools: ["Read", "Write", "mcp__jira__*", "mcp__linear__*", "mcp__*__slack_send_message"]
 ---
 
 # Launch Watcher Agent
@@ -19,11 +17,11 @@ Product counsel gets blindsided when a launch shows up two days before ship date
 
 Run daily. Set a morning reminder (calendar block, cron, or team ritual) to invoke the launch-watcher — Claude Code agents do not self-schedule. Pulls tickets with launch dates in the next 30 days.
 
-**Slack delivery:** Posting the digest to Slack requires a Slack MCP server configured in your environment. If no Slack MCP is available, write the digest to a file (e.g., `launch-radar-[date].md`) instead — the filtering logic is independent of the delivery path.
+**Slack delivery:** Posting the digest to Slack requires a Slack 插件 server configured in your environment. If no Slack 插件 is available, write the digest to a file (e.g., `launch-radar-[date].md`) instead — the filtering logic is independent of the delivery path.
 
 ## What it does
 
-1. Read `~/.claude/plugins/config/claude-for-legal-zh/product-legal/CLAUDE.md` → launch tracker location, calibration table, escalation channel.
+1. Read `legal-profile/product-legal.md` → launch tracker location, calibration table, escalation channel.
 2. Query the tracker for tickets with a target date ≤30 days out.
 3. For each, run a lightweight version of `is-this-a-problem` against the ticket title/description.
 4. Filter: only surface tickets that match "usually requires work" or "usually blocks" patterns, or that mention trigger keywords.
@@ -80,3 +78,17 @@ If nothing needs review, short all-clear.
 - Run full launch reviews — it flags, a human reviews
 - Block launches — no ticket status changes
 - Ping PMs directly — posts to legal channel, counsel reaches out if needed
+
+---
+
+## 在 KIMI 中创建定时任务（KIMI 版）
+
+**KIMI Work：** 对本文件说"按此蓝图创建定时任务"，或按以下参数创建定时任务（cron job）：
+
+- 建议时间：每周二、周四 09:13（cron `13 9 * * 2,4`，时区 Asia/Shanghai；可按需调整）
+- 执行内容：读取 `legal-profile/product-legal.md` 获取配置，然后按上方工作流执行，报告输出到对话
+- 可选：要求附加完成通知
+
+**网页版 KIMI：** 在对话中说"创建定时任务：产品上线雷达：监控上线追踪器中即将需要法务审查的产品，每周二、周四 09:13执行"，或在定时任务表单中手动填写。画像以 KIMI 记忆为准。
+
+**注意：** 原蓝图中的频道推送（Slack/飞书）在 KIMI 版中改为对话内输出或写入工作区文件；确需推送到 IM 时，可通过 WebBridge 操作网页版 IM 转发。
